@@ -1,0 +1,21 @@
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+
+## Repo workflow
+
+- The active app lives at the workspace root. Run app commands from `/Users/artemsuslov/Downloads/Design/Code/portfolio`, not from `portfolio-app/`.
+- Use the root scripts for validation and serving: `npm run dev`, `npm run build`, `npm run start`, `npm run lint`.
+- There is no separate root test script or Playwright config right now; for pre-handoff validation, use `npm run build` and `npx eslint src`.
+- For root-app-only lint checks, prefer `npx eslint src` until the workspace lint ignores are tightened; it avoids traversing the nested copy's generated files.
+- Current validation baseline: `npm run build` passes at the workspace root, while `npx eslint src` still reports the root-app `react-hooks/set-state-in-effect` error in `src/components/language-provider.tsx` plus `@next/next/no-img-element` warnings in `src/app/about/page.tsx` and `src/components/case-card.tsx`.
+- `next.config.ts` sets `turbopack.root` to the workspace root. Keep that in place unless the app is intentionally moved.
+- Preserve the global scrollbar-stability approach in `src/app/globals.css`: keep scroll ownership on `html`, not on an inner layout wrapper.
+
+## Nested copy
+
+- `portfolio-app/` is a separate nested Git repo with an older app copy/template. Do not change it unless the task explicitly targets that directory.
+- Git commands from the workspace root fail because the root is not itself a Git repo; target `portfolio-app/` only when Git history/status is specifically needed there.
+- `npm run lint` at the workspace root currently traverses generated files under `portfolio-app/.next` because the ESLint config only ignores the root `.next/**`; root-app findings are mixed with nested-copy noise until those ignores are tightened.

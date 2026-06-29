@@ -1,0 +1,358 @@
+.viewport {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: clip;
+  background: #f2f2f2;
+  color: #051e1d;
+  font-family: var(--font-geist-sans), Geist, system-ui, sans-serif;
+  padding: 72px max(24px, calc((100vw - 700px) / 2));
+}
+
+.ruler {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 0;
+  width: 28px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rulerMarker {
+  position: absolute;
+  left: 0;
+  width: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.rulerLabel {
+  color: #c2c2c2;
+  font-family: var(--font-geist-mono), "Geist Mono", monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.rulerTick {
+  width: 8px;
+  height: 2px;
+  flex: 0 0 auto;
+  background: #c2c2c2;
+}
+
+.navigation {
+  position: fixed;
+  z-index: 2;
+  left: 37px;
+  top: 50%;
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(-50%);
+}
+
+.navigation a {
+  padding: 4px 0;
+  color: #051e1d;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.navigation a:hover,
+.navigation a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.portfolio {
+  position: relative;
+  width: 700px;
+  min-height: calc(100vh - 144px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  margin: 0 auto;
+  padding: 32px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 1px 3px rgb(0 0 0 / 10%),
+    0 1px 2px rgb(0 0 0 / 6%);
+}
+
+.intro {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.name {
+  margin: 0;
+  color: #051e1d;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+}
+
+.intro h1 {
+  max-width: 604px;
+  margin: 0;
+  color: #051e1d;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.variableWord {
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.variableLetterSlot {
+  display: inline-grid;
+  line-height: inherit;
+  vertical-align: baseline;
+}
+
+.variableLetter {
+  grid-area: 1 / 1;
+  justify-self: center;
+  font-variation-settings: "wght" 400;
+  transition: font-variation-settings 120ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: font-variation-settings;
+}
+
+.accentText {
+  position: relative;
+  display: inline-block;
+  color: #20b6ac;
+  white-space: nowrap;
+}
+
+.accentUnderline {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  width: 280px;
+  height: 12px;
+  max-width: none;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transform: translateX(-50%);
+  animation: accent-underline-reveal 700ms
+    cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards;
+}
+
+@keyframes accent-underline-reveal {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .variableLetter {
+    font-variation-settings: "wght" 400 !important;
+    transition: none;
+    will-change: auto;
+  }
+}
+
+.work {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 48px;
+}
+
+.case {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.caseImage {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 636 / 348.19;
+  display: block;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.emptyCaseVisual {
+  width: 100%;
+  aspect-ratio: 636 / 348.19;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid #f1f3f3;
+  border-radius: 24px;
+  background: #f7f8f8;
+}
+
+.caseTitle,
+.secondCaseTitle {
+  position: relative;
+  display: inline-block;
+  color: #051e1d;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+}
+
+.secondCaseTitle {
+  align-self: center;
+  color: #121217;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.caseMetric {
+  position: relative;
+  display: inline-block;
+  color: #20b6ac;
+  white-space: nowrap;
+}
+
+.caseMetricUnderline {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  width: 87px;
+  height: 6px;
+  max-width: none;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transform: translateX(-50%);
+  animation: accent-underline-reveal 700ms
+    cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards;
+}
+
+.anchor {
+  position: absolute;
+  inset: auto;
+}
+
+@media (max-width: 1040px) {
+  .ruler {
+    display: none;
+  }
+
+  .viewport {
+    padding-inline: 24px;
+    padding-top: 72px;
+  }
+
+  .navigation {
+    top: 20px;
+    left: 50%;
+    width: min(700px, calc(100vw - 48px));
+    flex-direction: row;
+    gap: 24px;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 760px) {
+  .viewport {
+    padding: 64px 12px 12px;
+  }
+
+  .navigation {
+    left: 24px;
+    width: calc(100vw - 48px);
+    gap: 20px;
+    transform: none;
+  }
+
+  .portfolio {
+    width: 100%;
+    min-height: calc(100vh - 76px);
+    padding: 24px 20px;
+    border-radius: 14px;
+  }
+
+  .intro h1 {
+    font-size: clamp(24px, 7vw, 28px);
+  }
+
+  .caseImage {
+    border-radius: 18px;
+  }
+
+  .emptyCaseVisual {
+    border-radius: 18px;
+  }
+
+  .caseTitle,
+  .secondCaseTitle {
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .secondCaseTitle {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 430px) {
+  .navigation {
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .navigation a {
+    font-size: 13px;
+  }
+
+  .portfolio {
+    gap: 40px;
+    padding-inline: 16px;
+  }
+
+  .work {
+    gap: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accentUnderline,
+  .caseMetricUnderline {
+    clip-path: inset(0 0 0 0);
+    animation: none;
+  }
+
+  .viewport {
+    scroll-behavior: auto;
+  }
+
+  .variableLetter {
+    font-variation-settings: "wght" 400 !important;
+    transition: none;
+    will-change: auto;
+  }
+}
