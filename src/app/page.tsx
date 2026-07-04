@@ -54,8 +54,20 @@ export default function NewPortfolioPage() {
 
       <article className={styles.portfolio}>
         <header className={styles.intro}>
-          <p className={styles.name}>Artem Suslov</p>
-          <HeroHeading />
+          <video
+            aria-hidden="true"
+            autoPlay
+            className={styles.portraitVideo}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            src="/videos/me_video_2.mp4"
+          />
+          <div className={styles.introCopy}>
+            <p className={styles.name}>Artem Suslov</p>
+            <HeroHeading />
+          </div>
           <AnimatedTabs defaultTab="all" tabs={workTabs} />
         </header>
 
