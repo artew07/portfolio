@@ -31,7 +31,7 @@ export function AnimatedTabs({
       {tabs.map((tab) => (
         <button
           className={`
-            relative rounded-[var(--radius-3xl)] px-3 py-1.5 text-sm font-medium
+            relative rounded-[var(--radius-3xl)] px-3 py-1.5 text-sm font-regular
             text-[#051E1D] outline-ring transition
             focus-visible:outline-2
             ${activeTab === tab.id ? "" : "hover:text-foreground/50"}

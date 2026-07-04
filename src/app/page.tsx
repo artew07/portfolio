@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const workTabs = [
-  { id: "all", label: "All" },
+  { id: "all", label: "All projects" },
   { id: "case-study", label: "Case Study" },
   { id: "concepts", label: "Concepts" },
 ];
