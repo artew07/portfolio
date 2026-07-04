@@ -31,10 +31,10 @@ export function AnimatedTabs({
       {tabs.map((tab) => (
         <button
           className={`
-            relative rounded-[--radius] px-3 py-1.5 text-sm font-medium
-            text-foreground outline-ring transition
+            relative rounded-[var(--radius-3xl)] px-3 py-1.5 text-sm font-medium
+            text-[#051E1D] outline-ring transition
             focus-visible:outline-2
-            ${activeTab === tab.id ? "" : "hover:text-foreground/60"}
+            ${activeTab === tab.id ? "" : "hover:text-foreground/50"}
           `}
           key={tab.id}
           onClick={() => handleTabChange(tab.id)}
@@ -45,9 +45,9 @@ export function AnimatedTabs({
         >
           {activeTab === tab.id && (
             <motion.span
-              className="absolute inset-0 z-10 bg-foreground mix-blend-difference"
+              className="absolute inset-0 z-10 bg-[#F1F3F3] mix-blend-darken"
               layoutId="bubble"
-              style={{ borderRadius: "var(--radius)" }}
+              style={{ borderRadius: "var(--radius-3xl)" }}
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
