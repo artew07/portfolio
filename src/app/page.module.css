@@ -92,11 +92,95 @@
   text-align: center;
 }
 
-.portraitVideo {
-  width: 172px;
-  height: 209px;
+.heroToolbar {
+  z-index: 1;
+  width: calc(100% + 64px);
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline: -32px;
+  margin-bottom: -16px;
+  padding: 12px 32px;
+  border-radius: 12px 12px 0 0;
+  background: rgb(255 255 255 / 50%);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+.heroIdentity,
+.heroActions {
+  display: flex;
+  align-items: center;
+}
+
+.heroIdentity {
+  justify-content: center;
+  gap: 8px;
+}
+
+.identityMark {
+  width: 15px;
+  height: 8px;
   display: block;
-  margin-bottom: 16px;
+  flex: 0 0 auto;
+  border-radius: 36px;
+  background: #051e1d;
+}
+
+.heroActions {
+  gap: 8px;
+}
+
+.iconButton,
+.contactButton {
+  border: 0;
+  color: #051e1d;
+  font: inherit;
+  cursor: default;
+}
+
+.iconButton {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  border: 0.5px solid #e6e6e6;
+  border-radius: 21px;
+  background: #fff;
+}
+
+.contactButton {
+  padding: 6px 12px;
+  border-radius: 53px;
+  background: #f1f2f3;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.iconButton:focus-visible,
+.contactButton:focus-visible {
+  outline: 2px solid #051e1d;
+  outline-offset: 2px;
+}
+
+.heroContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.portraitVideo {
+  width: 222px;
+  height: 255px;
+  display: block;
   object-fit: cover;
   -webkit-mask-image: linear-gradient(
     to bottom,
@@ -112,36 +196,40 @@
   );
 }
 
-.introCopy {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
 .name {
   margin: 0;
-  color: var(--text-secondary);
-  font-size: 12px;
+  color: #051e1d;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 0;
-  text-align: center;
 }
 
 .intro h1 {
-  max-width: 604px;
+  width: 100%;
+  max-width: none;
   margin: 0;
   color: #051e1d;
-  font-size: 36px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 400;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.4px;
   text-align: center;
+}
+
+.heroDivider {
+  width: 76px;
+  height: 1px;
+  display: block;
+  margin-top: 24px;
+  background: #e6e6e6;
+}
+
+.heroTabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
 }
 
 .variableWord {
@@ -327,6 +415,12 @@
     border-radius: 8px;
   }
 
+  .heroToolbar {
+    width: calc(100% + 40px);
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+
   .intro h1 {
     font-size: clamp(28px, 7vw, 36px);
   }
@@ -364,6 +458,39 @@
   .portfolio {
     gap: 40px;
     padding-inline: 16px;
+  }
+
+  .heroToolbar {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+    padding-inline: 12px;
+  }
+
+  .heroIdentity {
+    gap: 6px;
+  }
+
+  .identityMark {
+    width: 12px;
+    height: 7px;
+  }
+
+  .name,
+  .contactButton {
+    font-size: 13px;
+  }
+
+  .heroActions {
+    gap: 6px;
+  }
+
+  .iconButton {
+    width: 28px;
+    height: 28px;
+  }
+
+  .contactButton {
+    padding: 5px 10px;
   }
 
   .work {

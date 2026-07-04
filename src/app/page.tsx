@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Sun, Volume2 } from "lucide-react";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 import styles from "./page.module.css";
 import { HeroHeading } from "./hero-heading";
@@ -54,21 +55,52 @@ export default function NewPortfolioPage() {
 
       <article className={styles.portfolio}>
         <header className={styles.intro}>
-          <video
-            aria-hidden="true"
-            autoPlay
-            className={styles.portraitVideo}
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            src="/videos/me_video_2.mp4"
-          />
-          <div className={styles.introCopy}>
-            <p className={styles.name}>Artem Suslov</p>
+          <div className={styles.heroToolbar}>
+            <div className={styles.heroIdentity}>
+              <span className={styles.identityMark} aria-hidden="true" />
+              <span className={styles.name}>Artem Suslov</span>
+            </div>
+
+            <div className={styles.heroActions}>
+              <button
+                aria-label="Toggle color theme"
+                className={styles.iconButton}
+                type="button"
+              >
+                <Sun aria-hidden="true" size={16} strokeWidth={1.5} />
+              </button>
+              <button
+                aria-label="Toggle sound"
+                className={styles.iconButton}
+                type="button"
+              >
+                <Volume2 aria-hidden="true" size={16} strokeWidth={1.5} />
+              </button>
+              <button className={styles.contactButton} type="button">
+                Contact me
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.heroContent}>
+            <video
+              aria-hidden="true"
+              autoPlay
+              className={styles.portraitVideo}
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              src="/videos/me_cycle_2.mp4"
+            />
             <HeroHeading />
           </div>
-          <AnimatedTabs defaultTab="all" tabs={workTabs} />
+
+          <span className={styles.heroDivider} aria-hidden="true" />
+
+          <div className={styles.heroTabs}>
+            <AnimatedTabs defaultTab="all" tabs={workTabs} />
+          </div>
         </header>
 
         <section className={styles.work} id="work" aria-label="Selected work">
