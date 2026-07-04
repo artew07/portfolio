@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Sun, Volume2 } from "lucide-react";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 import styles from "./page.module.css";
+import { ContactButton } from "./contact-button";
 import { HeroHeading } from "./hero-heading";
 import { PortfolioCase } from "./portfolio-case";
 import { VerticalRuler } from "./vertical-ruler";
@@ -20,25 +21,85 @@ const workTabs = [
 
 const portfolioCases: Array<{
   accent?: string;
-  href: string;
-  title: string;
-  videoSrc: string;
+  cover: {
+    alt: string;
+    height: number;
+    src: string;
+    type: "image";
+    variant: "steamify" | "loop" | "s7" | "safe";
+    width: number;
+  } | {
+    type: "interactive-card";
+  } | {
+    src: string;
+    type: "video";
+  };
+  id: string;
+  title: string | false;
 }> = [
   {
     accent: "20% to 50%",
-    href: "#steamify-case",
+    cover: {
+      alt: "",
+      height: 302,
+      src: "/images/steamify_2.png",
+      type: "image",
+      variant: "steamify",
+      width: 494,
+    },
+    id: "steamify-case",
     title: "How I increased CTR Web-to-Telegram button from",
-    videoSrc: "/videos/steamify_demo.mp4",
   },
   {
-    href: "#steamify-case-2",
+    cover: {
+      type: "interactive-card",
+    },
+    id: "mesh-card-demo",
+    title: "Interactive mesh card demo",
+  },
+  {
+    cover: {
+      alt: "",
+      height: 320,
+      src: "/images/loop_case.png",
+      type: "image",
+      variant: "loop",
+      width: 512,
+    },
+    id: "steamify-case-2",
     title: "Managing end-to-end AI agents",
-    videoSrc: "/videos/aiagents_demo.mp4",
   },
   {
-    href: "#steamify-case-3",
+    cover: {
+      src: "/videos/demo_wallet_ai.mp4",
+      type: "video",
+    },
+    id: "wallet-ai-case",
+    title: false,
+  },
+  {
+    cover: {
+      alt: "",
+      height: 3318,
+      src: "/images/S7_case.png",
+      type: "image",
+      variant: "s7",
+      width: 6082,
+    },
+    id: "s7-case",
+    title: false,
+  },
+  {
+    cover: {
+      alt: "",
+      height: 350,
+      src: "/images/safe_case.png",
+      type: "image",
+      variant: "safe",
+      width: 450,
+    },
+    id: "steamify-case-3",
     title: "Open source design system for Safe{Wallet} with 1400 users",
-    videoSrc: "/videos/steamify_demo.mp4",
   },
 ];
 
@@ -76,9 +137,7 @@ export default function NewPortfolioPage() {
               >
                 <Volume2 aria-hidden="true" size={16} strokeWidth={1.5} />
               </button>
-              <button className={styles.contactButton} type="button">
-                Contact me
-              </button>
+              <ContactButton className={styles.contactButton} />
             </div>
           </div>
 
@@ -104,12 +163,11 @@ export default function NewPortfolioPage() {
         </header>
 
         <section className={styles.work} id="work" aria-label="Selected work">
-          {portfolioCases.map(({ accent, href, title, videoSrc }) => (
+          {portfolioCases.map(({ accent, cover, id, title }) => (
             <PortfolioCase
               accent={accent}
-              cover={{ type: "video", src: videoSrc }}
-              href={href}
-              key={href}
+              cover={cover}
+              key={id}
               title={title}
             />
           ))}
@@ -117,7 +175,10 @@ export default function NewPortfolioPage() {
 
         <span className={styles.anchor} id="tools" aria-hidden="true" />
         <span className={styles.anchor} id="steamify-case" aria-hidden="true" />
+        <span className={styles.anchor} id="mesh-card-demo" aria-hidden="true" />
         <span className={styles.anchor} id="steamify-case-2" aria-hidden="true" />
+        <span className={styles.anchor} id="wallet-ai-case" aria-hidden="true" />
+        <span className={styles.anchor} id="s7-case" aria-hidden="true" />
         <span className={styles.anchor} id="steamify-case-3" aria-hidden="true" />
       </article>
     </main>

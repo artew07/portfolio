@@ -1,13 +1,20 @@
 import Image from "next/image";
+import { InteractiveCardCover } from "@/components/interactive-card-cover";
 import styles from "./page.module.css";
 
+type CaseImageVariant = "steamify" | "loop" | "s7" | "safe";
+
 type CaseCover =
+  | {
+      type: "interactive-card";
+    }
   | {
       type: "image";
       src: string;
       alt: string;
       width: number;
       height: number;
+      variant: CaseImageVariant;
       sizes?: string;
     }
   | {
@@ -19,20 +26,31 @@ interface PortfolioCaseProps {
   accent?: string;
   centeredTitle?: boolean;
   cover: CaseCover;
-  href: string;
   title?: string | false;
 }
+
+const caseImageClassNames: Record<CaseImageVariant, string> = {
+  steamify: styles.steamifyCaseImage,
+  loop: styles.loopCaseImage,
+  s7: styles.s7CaseImage,
+  safe: styles.safeCaseImage,
+};
 
 export function PortfolioCase({
   accent,
   centeredTitle = false,
   cover,
-  href,
   title = false,
 }: PortfolioCaseProps) {
   return (
-    <a className={styles.case} href={href}>
-      {cover.type === "video" ? (
+    <article className={styles.case}>
+      {cover.type === "interactive-card" ? (
+        <div
+          className={`${styles.caseVisual} ${styles.interactiveCaseVisual}`}
+        >
+          <InteractiveCardCover />
+        </div>
+      ) : cover.type === "video" ? (
         <video
           aria-hidden="true"
           autoPlay
@@ -44,14 +62,16 @@ export function PortfolioCase({
           src={cover.src}
         />
       ) : (
-        <Image
-          alt={cover.alt}
-          className={styles.caseImage}
-          height={cover.height}
-          sizes={cover.sizes}
-          src={cover.src}
-          width={cover.width}
-        />
+        <div className={styles.caseVisual}>
+          <Image
+            alt={cover.alt}
+            className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
+            height={cover.height}
+            sizes={cover.sizes}
+            src={cover.src}
+            width={cover.width}
+          />
+        </div>
       )}
 
       {title ? (
@@ -80,6 +100,6 @@ export function PortfolioCase({
           ) : null}
         </span>
       ) : null}
-    </a>
+    </article>
   );
 }
