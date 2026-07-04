@@ -71,14 +71,6 @@ const portfolioCases: Array<{
   },
   {
     cover: {
-      src: "/videos/demo_wallet_ai.mp4",
-      type: "video",
-    },
-    id: "wallet-ai-case",
-    title: false,
-  },
-  {
-    cover: {
       alt: "",
       height: 3318,
       src: "/images/S7_case.png",
@@ -87,7 +79,7 @@ const portfolioCases: Array<{
       width: 6082,
     },
     id: "s7-case",
-    title: false,
+    title: "App for flight attendants that works offline",
   },
   {
     cover: {
@@ -177,7 +169,6 @@ export default function NewPortfolioPage() {
         <span className={styles.anchor} id="steamify-case" aria-hidden="true" />
         <span className={styles.anchor} id="mesh-card-demo" aria-hidden="true" />
         <span className={styles.anchor} id="steamify-case-2" aria-hidden="true" />
-        <span className={styles.anchor} id="wallet-ai-case" aria-hidden="true" />
         <span className={styles.anchor} id="s7-case" aria-hidden="true" />
         <span className={styles.anchor} id="steamify-case-3" aria-hidden="true" />
       </article>
