@@ -62,7 +62,13 @@ export function PortfolioCase({
           src={cover.src}
         />
       ) : (
-        <div className={styles.caseVisual}>
+        <div
+          className={`${styles.caseVisual} ${
+            cover.variant === "s7" || cover.variant === "safe"
+              ? styles.caseVisualFlushBottom
+              : ""
+          }`}
+        >
           <Image
             alt={cover.alt}
             className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}

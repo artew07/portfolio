@@ -1,4 +1,10 @@
 .demo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.composition {
   width: 100%;
   height: 100%;
   display: flex;
@@ -6,7 +12,7 @@
   align-items: center;
   justify-content: center;
   gap: 34px;
-  transform: scale(0.8);
+  transform: translateY(-12px) scale(0.8);
   transform-origin: center;
 }
 
@@ -82,6 +88,134 @@
   transform-origin: center;
 }
 
+.controls {
+  position: absolute;
+  z-index: 40;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.hint,
+.expandButton,
+.closeButton {
+  min-height: 36px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  color: #fff;
+  background: rgb(255 255 255 / 10%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.hint {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+
+.expandButton,
+.closeButton {
+  width: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 160ms ease,
+    border-color 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.expandButton {
+  width: 32px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 999px;
+}
+
+.closeButton {
+  border: 0;
+  border-radius: 999px;
+}
+
+.expandButton:active,
+.closeButton:active {
+  transform: scale(0.94);
+}
+
+.expandButton:focus-visible,
+.closeButton:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.modalBackdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(0 0 0 / 72%);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  animation: modal-backdrop-in 180ms ease-out;
+}
+
+.modalPanel {
+  position: relative;
+  width: min(680px, calc(100vw - 48px));
+  min-height: min(480px, calc(100vh - 48px));
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 20px;
+  background: #0e1010;
+  box-shadow: 0 32px 96px rgb(0 0 0 / 45%);
+  animation: modal-panel-in 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.modalPanel .closeButton {
+  position: absolute;
+  z-index: 50;
+  top: 16px;
+  right: 16px;
+}
+
+.modalStage {
+  width: min(392px, calc(100vw - 96px));
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
 .swatch {
   width: 28px;
   height: 28px;
@@ -116,11 +250,12 @@
 
 .logo {
   position: absolute;
-  bottom: 18px;
-  left: 16px;
+  bottom: 7.35%;
+  left: 4.08%;
   z-index: 10;
-  width: 48px;
-  height: 48px;
+  width: 12.25%;
+  height: auto;
+  aspect-ratio: 1;
   pointer-events: none;
   opacity: 1;
   mix-blend-mode: overlay;
@@ -135,32 +270,43 @@
   .swatch[aria-checked="true"]:hover {
     border-color: rgb(255 255 255 / 90%);
   }
+
+  .expandButton:hover,
+  .closeButton:hover {
+    border-color: rgb(255 255 255 / 24%);
+    background: rgb(255 255 255 / 16%);
+  }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 760px) {
+  .composition {
+    justify-content: center;
+    gap: 0;
+    transform: none;
+  }
+
   .stage {
-    width: min(392px, calc(100% - 24px));
+    width: min(251px, 68.64%);
   }
 
   .selector {
-    gap: 8px;
+    display: none;
   }
 
-  .swatch {
-    width: 26px;
-    height: 26px;
-  }
-
-  .swatchColor {
-    width: 18px;
-    height: 18px;
+  .controls {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card,
   .swatch,
-  .spotlight {
+  .spotlight,
+  .expandButton,
+  .closeButton,
+  .modalBackdrop,
+  .modalPanel {
     transition: none;
+    animation: none;
   }
 }

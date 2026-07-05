@@ -14,6 +14,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `next.config.ts` sets `turbopack.root` to the workspace root. Keep that in place unless the app is intentionally moved.
 - Preserve the global scrollbar-stability approach in `src/app/globals.css`: keep scroll ownership on `html`, not on an inner layout wrapper.
 
+## UI conventions
+
+- All button components must use fully rounded geometry. Text buttons should be pill-shaped; icon-only buttons should be circular.
+- Do not introduce square or partially rounded buttons unless the user explicitly requests an exception.
+
 ## Nested copy
 
 - `portfolio-app/` is a separate nested Git repo with an older app copy/template. Do not change it unless the task explicitly targets that directory.

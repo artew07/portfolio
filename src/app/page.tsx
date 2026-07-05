@@ -55,7 +55,7 @@ const portfolioCases: Array<{
       type: "interactive-card",
     },
     id: "mesh-card-demo",
-    title: "Interactive mesh card demo",
+    title: "Interactive bank card",
   },
   {
     cover: {

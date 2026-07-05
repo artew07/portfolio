@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { Maximize2, X } from "lucide-react";
+import { createPortal } from "react-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Dithering, MeshGradient } from "@paper-design/shaders-react";
 import styles from "./interactive-card-demo.module.css";
@@ -35,9 +37,7 @@ const rawCardThemes: Array<{
 const cardThemes: CardTheme[] = rawCardThemes.map(normalizeTheme);
 
 export default function InteractiveCardDemo() {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const spotlightRef = useRef<HTMLDivElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedThemeId, setSelectedThemeId] =
     useState<ThemeId>("ember");
 
@@ -51,6 +51,109 @@ export default function InteractiveCardDemo() {
     selectedTheme,
     COLOR_MORPH_DURATION,
   );
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsModalOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isModalOpen]);
+
+  return (
+    <div className={styles.demo}>
+      <div className={styles.composition}>
+        <CardStage theme={animatedTheme} />
+
+        <div
+          aria-label="Card color"
+          className={styles.selector}
+          role="radiogroup"
+        >
+          {cardThemes.map((theme) => (
+            <button
+              aria-checked={selectedThemeId === theme.id}
+              aria-label={theme.id}
+              className={styles.swatch}
+              key={theme.id}
+              onClick={() => setSelectedThemeId(theme.id)}
+              role="radio"
+              type="button"
+            >
+              <span
+                className={styles.swatchColor}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${theme.colors[0]} 0 50%, ${theme.colors[1]} 50% 100%)`,
+                }}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.controls}>
+        <span className={styles.hint}>Hover on card</span>
+        <button
+          aria-label="Open card in modal"
+          className={styles.expandButton}
+          onClick={() => setIsModalOpen(true)}
+          type="button"
+        >
+          <Maximize2 aria-hidden="true" size={16} strokeWidth={1.5} />
+        </button>
+      </div>
+
+      {isModalOpen
+        ? createPortal(
+            <div
+              aria-label="Interactive card preview"
+              aria-modal="true"
+              className={styles.modalBackdrop}
+              onClick={() => setIsModalOpen(false)}
+              role="dialog"
+            >
+              <div
+                className={styles.modalPanel}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <button
+                  aria-label="Close card preview"
+                  autoFocus
+                  className={styles.closeButton}
+                  onClick={() => setIsModalOpen(false)}
+                  type="button"
+                >
+                  <X aria-hidden="true" size={18} strokeWidth={1.75} />
+                </button>
+                <CardStage modal theme={animatedTheme} />
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
+    </div>
+  );
+}
+
+function CardStage({
+  modal = false,
+  theme,
+}: {
+  modal?: boolean;
+  theme: CardTheme;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(
     () => () => {
@@ -108,124 +211,94 @@ export default function InteractiveCardDemo() {
   };
 
   return (
-    <div className={styles.demo}>
-      <div className={styles.stage}>
-        <MeshGradient
-          colors={animatedTheme.glowColors}
-          distortion={0.7}
-          frame={4724338.63399413}
-          scale={0.5}
-          speed={1}
-          style={{
-            filter: "blur(100px)",
-            height: "250px",
-            left: "50%",
-            opacity: 0.6,
-            pointerEvents: "none",
-            position: "absolute",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "400px",
-          }}
-          swirl={0.1}
-        />
-
-        <div
-          className={styles.card}
-          onPointerLeave={handlePointerLeave}
-          onPointerMove={handlePointerMove}
-          ref={cardRef}
-          style={{ transitionTimingFunction: EASE_OUT }}
-        >
-          <div
-            className={styles.face}
-            style={{ backgroundColor: animatedTheme.base }}
-          >
-            <Image
-              alt="Vezdekarta"
-              className={styles.cardArtwork}
-              fill
-              priority={false}
-              sizes="392px"
-              src="/assets/redcard.svg"
-              unoptimized
-            />
-
-            <MeshGradient
-              colors={animatedTheme.meshColors}
-              distortion={0.9}
-              frame={4645010.753993971}
-              grainMixer={CARD_GRAIN_MIXER}
-              grainOverlay={CARD_GRAIN_OVERLAY}
-              scale={1}
-              speed={2}
-              style={{
-                height: "331px",
-                left: "50%",
-                opacity: 1,
-                pointerEvents: "none",
-                position: "absolute",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "520px",
-                zIndex: 1,
-              }}
-              swirl={0.69}
-            />
-
-            {animatedTheme.id === "gold" ? (
-              <Dithering
-                colorBack="#00000000"
-                colorFront="#E983324D"
-                frame={599502.1000000839}
-                scale={1}
-                shape="swirl"
-                size={1.9}
-                speed={1}
-                style={{
-                  backgroundColor: "#00000000",
-                  height: "406px",
-                  left: "50%",
-                  pointerEvents: "none",
-                  position: "absolute",
-                  top: "-63px",
-                  transform: "translateX(-50%)",
-                  width: "542px",
-                  zIndex: 2,
-                }}
-                type="4x4"
-              />
-            ) : null}
-
-            <CardLogoOverlay />
-            <div className={styles.spotlight} ref={spotlightRef} />
-          </div>
-        </div>
-      </div>
+    <div className={`${styles.stage} ${modal ? styles.modalStage : ""}`}>
+      <MeshGradient
+        colors={theme.glowColors}
+        distortion={0.7}
+        frame={4724338.63399413}
+        scale={0.5}
+        speed={1}
+        style={{
+          filter: "blur(100px)",
+          height: "250px",
+          left: "50%",
+          opacity: 0.6,
+          pointerEvents: "none",
+          position: "absolute",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "400px",
+        }}
+        swirl={0.1}
+      />
 
       <div
-        aria-label="Card color"
-        className={styles.selector}
-        role="radiogroup"
+        className={styles.card}
+        onPointerLeave={handlePointerLeave}
+        onPointerMove={handlePointerMove}
+        ref={cardRef}
+        style={{ transitionTimingFunction: EASE_OUT }}
       >
-        {cardThemes.map((theme) => (
-          <button
-            aria-checked={selectedThemeId === theme.id}
-            aria-label={theme.id}
-            className={styles.swatch}
-            key={theme.id}
-            onClick={() => setSelectedThemeId(theme.id)}
-            role="radio"
-            type="button"
-          >
-            <span
-              className={styles.swatchColor}
+        <div className={styles.face} style={{ backgroundColor: theme.base }}>
+          <Image
+            alt="Vezdekarta"
+            className={styles.cardArtwork}
+            fill
+            priority={false}
+            sizes="392px"
+            src="/assets/redcard.svg"
+            unoptimized
+          />
+
+          <MeshGradient
+            colors={theme.meshColors}
+            distortion={0.9}
+            frame={4645010.753993971}
+            grainMixer={CARD_GRAIN_MIXER}
+            grainOverlay={CARD_GRAIN_OVERLAY}
+            scale={1}
+            speed={2}
+            style={{
+              height: "331px",
+              left: "50%",
+              opacity: 1,
+              pointerEvents: "none",
+              position: "absolute",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "520px",
+              zIndex: 1,
+            }}
+            swirl={0.69}
+          />
+
+          {theme.id === "gold" ? (
+            <Dithering
+              colorBack="#00000000"
+              colorFront="#E983324D"
+              frame={599502.1000000839}
+              scale={1}
+              shape="swirl"
+              size={1.9}
+              speed={1}
               style={{
-                backgroundImage: `linear-gradient(135deg, ${theme.colors[0]} 0 50%, ${theme.colors[1]} 50% 100%)`,
+                backgroundColor: "#00000000",
+                height: "406px",
+                left: "50%",
+                pointerEvents: "none",
+                position: "absolute",
+                top: "-63px",
+                transform: "translateX(-50%)",
+                width: "542px",
+                zIndex: 2,
               }}
+              type="4x4"
             />
-          </button>
-        ))}
+          ) : null}
+
+          <CardLogoOverlay />
+          <div className={styles.spotlight} ref={spotlightRef} />
+        </div>
       </div>
     </div>
   );
