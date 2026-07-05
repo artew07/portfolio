@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Sun, Volume2 } from "lucide-react";
-import { PortfolioDebugPanel } from "@/components/portfolio-debug-panel";
 import styles from "./page.module.css";
 import { AboutMeContent } from "./about-me-content";
 import { ContactButton } from "./contact-button";
@@ -82,11 +80,11 @@ const portfolioCases: Array<{
   {
     cover: {
       alt: "",
-      height: 3318,
-      src: "/images/S7_case.png",
+      height: 873,
+      src: "/images/S7_case.webp",
       type: "image",
       variant: "s7",
-      width: 6082,
+      width: 1600,
     },
     id: "s7-case",
     title: "App for flight attendants that works offline",
@@ -105,16 +103,16 @@ const portfolioCases: Array<{
   },
 ];
 
-export default function NewPortfolioPage() {
+export default async function NewPortfolioPage() {
+  const DebugPanel =
+    process.env.NODE_ENV === "development"
+      ? (await import("@/components/portfolio-debug-panel"))
+          .PortfolioDebugPanel
+      : null;
+
   return (
     <main className={styles.viewport}>
       <VerticalRuler />
-
-      <nav className={styles.navigation} aria-label="Portfolio navigation">
-        <a href="#work">Work</a>
-        <Link href="/about">About me</Link>
-        <a href="#tools">Tool I use</a>
-      </nav>
 
       <article className={styles.portfolio}>
         <PortfolioTabsProvider>
@@ -205,12 +203,14 @@ export default function NewPortfolioPage() {
         </PortfolioTabsProvider>
       </article>
 
-      <PortfolioDebugPanel
-        cases={portfolioCases.map(({ id, title }) => ({
-          id,
-          label: title || id,
-        }))}
-      />
+      {DebugPanel ? (
+        <DebugPanel
+          cases={portfolioCases.map(({ id, title }) => ({
+            id,
+            label: title || id,
+          }))}
+        />
+      ) : null}
     </main>
   );
 }

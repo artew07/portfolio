@@ -113,7 +113,7 @@ export function PortfolioCase({
                   alt=""
                   className={styles.caseMetricUnderline}
                   height={6}
-                  src="/svg/underline_small.svg"
+                  src="/svg/underline_small.webp"
                   unoptimized
                   width={87}
                 />

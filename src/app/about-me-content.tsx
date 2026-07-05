@@ -32,7 +32,7 @@ export function AboutMeContent() {
           <InlineImage
             alt="People using digital products"
             grouped
-            src="/images/About_me/users.png"
+            src="/images/About_me/users.webp"
           />
           B2C
         </span>{" "}
@@ -41,9 +41,9 @@ export function AboutMeContent() {
 
       <p>
         I actively keep up with the latest trends in
-        <InlineImage alt="Color palette" src="/images/About_me/palette.png" />
+        <InlineImage alt="Color palette" src="/images/About_me/palette.webp" />
         product design,
-        <InlineImage alt="AI" src="/images/About_me/ai-stars.png" />
+        <InlineImage alt="AI" src="/images/About_me/ai-stars.webp" />
         AI, and emerging technologies, constantly exploring new tools and
         workflows to improve the way digital products are built.
       </p>
@@ -84,13 +84,15 @@ export function AboutMeContent() {
 
       <p>
         Outside of work, I enjoy playing
-        <InlineImage alt="Tennis" src="/images/About_me/tennis.png" />
+        <InlineImage alt="Tennis" src="/images/About_me/tennis.webp" />
         tennis, going to the
-        <InlineImage alt="Gym" src="/images/About_me/gym.png" />
-        gym, and competing
-        <br />
-        <span className={styles.aboutInlineGroup}>
-          <InlineImage alt="Gaming PC" grouped src="/images/About_me/pc.png" />
+        <InlineImage alt="Gym" src="/images/About_me/gym.webp" />
+        gym, and competing{" "}
+        <br className={styles.aboutDesktopBreak} />
+        <span
+          className={`${styles.aboutInlineGroup} ${styles.aboutCounterStrikeGroup}`}
+        >
+          <InlineImage alt="Gaming PC" grouped src="/images/About_me/pc.webp" />
           in Counter-Strike 2.
         </span>
       </p>

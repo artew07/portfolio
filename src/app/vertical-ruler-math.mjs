@@ -1,5 +1,5 @@
-export const RULER_STEP = 200;
-export const RULER_TOP_OFFSET = 44;
+const RULER_STEP = 200;
+const RULER_TOP_OFFSET = 44;
 
 /**
  * @param {number} height
