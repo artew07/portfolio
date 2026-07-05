@@ -21,10 +21,12 @@ type CaseCover =
   | {
       type: "video";
       src: string;
+      variant: "loop";
     };
 
 interface PortfolioCaseProps {
   accent?: string;
+  caseId: string;
   centeredTitle?: boolean;
   cover: CaseCover;
   title?: string | false;
@@ -39,29 +41,36 @@ const caseImageClassNames: Record<CaseImageVariant, string> = {
 
 export function PortfolioCase({
   accent,
+  caseId,
   centeredTitle = false,
   cover,
   title = false,
 }: PortfolioCaseProps) {
   return (
-    <article className={styles.case}>
+    <article className={styles.case} data-case-id={caseId}>
       {cover.type === "interactive-card" ? (
         <div
           className={`${styles.caseVisual} ${styles.interactiveCaseVisual}`}
+          data-debug-frame
         >
-          <InteractiveCardCover />
+          <div className={styles.interactiveCaseMedia} data-debug-media>
+            <InteractiveCardCover />
+          </div>
         </div>
       ) : cover.type === "video" ? (
-        <video
-          aria-hidden="true"
-          autoPlay
-          className={styles.caseVideo}
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          src={cover.src}
-        />
+        <div className={styles.caseVisual} data-debug-frame>
+          <video
+            aria-hidden="true"
+            autoPlay
+            className={`${styles.caseVideo} ${styles.loopCaseVideo}`}
+            data-debug-media
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            src={cover.src}
+          />
+        </div>
       ) : (
         <div
           className={`${styles.caseVisual} ${
@@ -69,10 +78,12 @@ export function PortfolioCase({
               ? styles.caseVisualFlushBottom
               : ""
           }`}
+          data-debug-frame
         >
           <Image
             alt={cover.alt}
             className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
+            data-debug-media
             height={cover.height}
             preload={cover.preload}
             sizes={
