@@ -4,9 +4,7 @@ import { Footer } from "@/components/footer";
 import { PageShell } from "@/components/page-shell";
 import { useLanguage, type Language } from "@/components/language-provider";
 import { Send } from "lucide-react";
-
-const portraitUrl =
-  "https://app.paper.design/file-assets/01KRKT3AQCT20NN9QQFQVTYW0X/7SNSNR0HFTGXEB2SN3K1EZ5QSM.webp";
+import Image from "next/image";
 
 const aboutCopy = {
   eng: {
@@ -53,11 +51,13 @@ export default function AboutPage() {
       <PageShell active="about">
         <section className="px-5 pb-14 pt-[128px] sm:px-8 lg:min-h-[899px]">
           <div className="mx-auto flex max-w-[600px] flex-col gap-10 overflow-hidden">
-            <div className="w-full shrink-0 overflow-hidden rounded-md bg-[#f7f7f8] lg:w-[344px]">
-              <img
+            <div className="relative aspect-[0.666/1] w-full shrink-0 overflow-hidden rounded-md bg-[#f7f7f8] lg:w-[344px]">
+              <Image
                 alt={copy.portraitAlt}
-                className="aspect-[0.666/1] w-full object-cover object-[50%_20%] lg:h-[517px]"
-                src={portraitUrl}
+                className="object-cover object-[50%_20%]"
+                fill
+                sizes="(max-width: 640px) calc(100vw - 40px), 344px"
+                src="/images/about-portrait.webp"
               />
             </div>
 

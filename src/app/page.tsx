@@ -24,6 +24,7 @@ const portfolioCases: Array<{
   cover: {
     alt: string;
     height: number;
+    preload?: boolean;
     src: string;
     type: "image";
     variant: "steamify" | "loop" | "s7" | "safe";
@@ -42,6 +43,7 @@ const portfolioCases: Array<{
     cover: {
       alt: "",
       height: 302,
+      preload: true,
       src: "/images/steamify_2.png",
       type: "image",
       variant: "steamify",
@@ -142,8 +144,10 @@ export default function NewPortfolioPage() {
               muted
               playsInline
               preload="metadata"
-              src="/videos/me_cycle_2.mp4"
-            />
+              poster="/videos/me_cycle_2-poster.webp"
+            >
+              <source src="/videos/me_cycle_2.mp4" type="video/mp4" />
+            </video>
             <HeroHeading />
           </div>
 

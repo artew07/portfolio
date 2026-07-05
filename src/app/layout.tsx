@@ -17,9 +17,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Artem Suslov - Product Designer",
+  metadataBase: new URL("https://artem-portfolio.layero.ru"),
+  title: "Artem Suslov — Software Designer",
   description:
-    "Portfolio of Artem Suslov, a product designer learning code with AI.",
+    "Software designer focused on B2C web and mobile products.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Artem Suslov — Software Designer",
+    description: "Software designer focused on B2C web and mobile products.",
+    siteName: "Artem Suslov",
+    type: "website",
+    url: "/",
+  },
+  robots: {
+    follow: true,
+    index: true,
+  },
 };
 
 export default function RootLayout({

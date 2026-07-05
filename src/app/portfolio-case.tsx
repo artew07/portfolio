@@ -15,6 +15,7 @@ type CaseCover =
       width: number;
       height: number;
       variant: CaseImageVariant;
+      preload?: boolean;
       sizes?: string;
     }
   | {
@@ -73,7 +74,11 @@ export function PortfolioCase({
             alt={cover.alt}
             className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
             height={cover.height}
-            sizes={cover.sizes}
+            preload={cover.preload}
+            sizes={
+              cover.sizes ??
+              "(max-width: 760px) calc(100vw - 40px), 636px"
+            }
             src={cover.src}
             width={cover.width}
           />

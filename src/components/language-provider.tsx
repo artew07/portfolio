@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -17,17 +17,41 @@ type LanguageContextValue = {
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
+const languageStorageKey = "portfolio-language";
+const languageChangeEvent = "portfolio-language-change";
+
+function getLanguageSnapshot(): Language {
+  const savedLanguage = window.localStorage.getItem(languageStorageKey);
+
+  return savedLanguage === "ru" ? "ru" : "eng";
+}
+
+function getServerLanguageSnapshot(): Language {
+  return "eng";
+}
+
+function subscribeToLanguage(onStoreChange: () => void) {
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === languageStorageKey) {
+      onStoreChange();
+    }
+  };
+
+  window.addEventListener("storage", handleStorage);
+  window.addEventListener(languageChangeEvent, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorage);
+    window.removeEventListener(languageChangeEvent, onStoreChange);
+  };
+}
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("eng");
-
-  useEffect(() => {
-    const savedLanguage = window.localStorage.getItem("portfolio-language");
-
-    if (savedLanguage === "eng" || savedLanguage === "ru") {
-      setLanguageState(savedLanguage);
-    }
-  }, []);
+  const language = useSyncExternalStore(
+    subscribeToLanguage,
+    getLanguageSnapshot,
+    getServerLanguageSnapshot,
+  );
 
   useEffect(() => {
     document.documentElement.lang = language === "ru" ? "ru" : "en";
@@ -37,8 +61,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     () => ({
       language,
       setLanguage: (nextLanguage) => {
-        setLanguageState(nextLanguage);
-        window.localStorage.setItem("portfolio-language", nextLanguage);
+        window.localStorage.setItem(languageStorageKey, nextLanguage);
+        window.dispatchEvent(new Event(languageChangeEvent));
       },
     }),
     [language],

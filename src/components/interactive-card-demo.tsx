@@ -151,6 +151,7 @@ function CardStage({
   modal?: boolean;
   theme: CardTheme;
 }) {
+  const [supportsWebGL2] = useState(canUseWebGL2);
   const cardRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -212,25 +213,43 @@ function CardStage({
 
   return (
     <div className={`${styles.stage} ${modal ? styles.modalStage : ""}`}>
-      <MeshGradient
-        colors={theme.glowColors}
-        distortion={0.7}
-        frame={4724338.63399413}
-        scale={0.5}
-        speed={1}
-        style={{
-          filter: "blur(100px)",
-          height: "250px",
-          left: "50%",
-          opacity: 0.6,
-          pointerEvents: "none",
-          position: "absolute",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "400px",
-        }}
-        swirl={0.1}
-      />
+      {supportsWebGL2 ? (
+        <MeshGradient
+          colors={theme.glowColors}
+          distortion={0.7}
+          frame={4724338.63399413}
+          scale={0.5}
+          speed={1}
+          style={{
+            filter: "blur(100px)",
+            height: "250px",
+            left: "50%",
+            opacity: 0.6,
+            pointerEvents: "none",
+            position: "absolute",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "400px",
+          }}
+          swirl={0.1}
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          style={{
+            background: `radial-gradient(circle, ${theme.glowColors[0]}, ${theme.glowColors[1]} 70%)`,
+            filter: "blur(100px)",
+            height: "250px",
+            left: "50%",
+            opacity: 0.6,
+            pointerEvents: "none",
+            position: "absolute",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "400px",
+          }}
+        />
+      )}
 
       <div
         className={styles.card}
@@ -250,29 +269,43 @@ function CardStage({
             unoptimized
           />
 
-          <MeshGradient
-            colors={theme.meshColors}
-            distortion={0.9}
-            frame={4645010.753993971}
-            grainMixer={CARD_GRAIN_MIXER}
-            grainOverlay={CARD_GRAIN_OVERLAY}
-            scale={1}
-            speed={2}
-            style={{
-              height: "331px",
-              left: "50%",
-              opacity: 1,
-              pointerEvents: "none",
-              position: "absolute",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "520px",
-              zIndex: 1,
-            }}
-            swirl={0.69}
-          />
+          {supportsWebGL2 ? (
+            <MeshGradient
+              colors={theme.meshColors}
+              distortion={0.9}
+              frame={4645010.753993971}
+              grainMixer={CARD_GRAIN_MIXER}
+              grainOverlay={CARD_GRAIN_OVERLAY}
+              scale={1}
+              speed={2}
+              style={{
+                height: "331px",
+                left: "50%",
+                opacity: 1,
+                pointerEvents: "none",
+                position: "absolute",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "520px",
+                zIndex: 1,
+              }}
+              swirl={0.69}
+            />
+          ) : (
+            <div
+              aria-hidden="true"
+              style={{
+                background: `linear-gradient(135deg, ${theme.meshColors[0]}, ${theme.meshColors[1]})`,
+                inset: 0,
+                opacity: 0.42,
+                pointerEvents: "none",
+                position: "absolute",
+                zIndex: 1,
+              }}
+            />
+          )}
 
-          {theme.id === "gold" ? (
+          {supportsWebGL2 && theme.id === "gold" ? (
             <Dithering
               colorBack="#00000000"
               colorFront="#E983324D"
@@ -302,6 +335,19 @@ function CardStage({
       </div>
     </div>
   );
+}
+
+function canUseWebGL2() {
+  try {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("webgl2");
+
+    context?.getExtension("WEBGL_lose_context")?.loseContext();
+
+    return context !== null;
+  } catch {
+    return false;
+  }
 }
 
 function normalizeTheme(theme: {

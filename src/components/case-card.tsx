@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 export type CaseCardData = {
   title: string;
@@ -12,10 +13,12 @@ export type CaseCardData = {
 export function CaseCard({ project }: { project: CaseCardData }) {
   return (
     <article className="flex flex-col gap-6">
-      <div className="overflow-hidden rounded-md bg-[#f4f4f6]">
-        <img
+      <div className="relative aspect-[1.835/1] overflow-hidden rounded-md bg-[#f4f4f6]">
+        <Image
           alt={`${project.title} interface`}
-          className="aspect-[1.835/1] w-full object-cover"
+          className="object-cover"
+          fill
+          sizes="(max-width: 1024px) 100vw, 900px"
           src={project.image}
         />
       </div>
