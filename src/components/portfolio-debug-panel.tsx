@@ -149,7 +149,7 @@ export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
       <div className="mt-4 flex flex-col gap-3">
         <DebugRange
           label="Scale %"
-          max={300}
+          max={500}
           min={10}
           onChange={(scale) => {
             const ratio = scale / settings.scale;
@@ -183,14 +183,14 @@ export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
         />
         <DebugRange
           label="Width"
-          max={900}
+          max={3200}
           min={40}
           onChange={(width) => updateSettings({ ...settings, width })}
           value={settings.width}
         />
         <DebugRange
           label="Height"
-          max={700}
+          max={1800}
           min={40}
           onChange={(height) => updateSettings({ ...settings, height })}
           value={settings.height}

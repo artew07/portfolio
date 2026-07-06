@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Sun, Volume2 } from "lucide-react";
+import type { StaticImageData } from "next/image";
+// import { Sun } from "lucide-react";
+import safeCaseImage from "../../public/images/safe_case.png";
 import styles from "./page.module.css";
 import { AboutMeContent } from "./about-me-content";
 import { ContactButton } from "./contact-button";
 import { HeroHeading } from "./hero-heading";
 import { HeroVideo } from "./hero-video";
 import { PortfolioCase } from "./portfolio-case";
+import { SoundProvider } from "./sound-provider";
+import { SoundToggleButton } from "./sound-toggle-button";
 import {
   PortfolioTabList,
   PortfolioTabPanels,
@@ -29,11 +33,11 @@ const portfolioCases: Array<{
   accent?: string;
   cover: {
     alt: string;
+    eager?: boolean;
     height: number;
-    preload?: boolean;
-    src: string;
+    src: string | StaticImageData;
     type: "image";
-    variant: "steamify" | "loop" | "s7" | "safe";
+    variant: "steamify" | "loop" | "ccp" | "safe";
     width: number;
   } | {
     type: "interactive-card";
@@ -43,20 +47,22 @@ const portfolioCases: Array<{
     variant: "loop";
   };
   id: string;
+  metadata?: string[];
   title: string | false;
 }> = [
   {
     accent: "20% to 50%",
     cover: {
       alt: "",
+      eager: true,
       height: 302,
-      preload: true,
       src: "/images/steamify_2.png",
       type: "image",
       variant: "steamify",
       width: 494,
     },
     id: "steamify-case",
+    metadata: ["Steamify", "2024"],
     title: "How I increased CTR Web-to-Telegram button from",
   },
   {
@@ -69,37 +75,40 @@ const portfolioCases: Array<{
   {
     cover: {
       alt: "",
-      height: 320,
-      src: "/images/loop_case.png",
+      height: 1393,
+      src: "/images/loop_case.png?v=20260706-2",
       type: "image",
       variant: "loop",
-      width: 512,
+      width: 2544,
     },
     id: "steamify-case-2",
+    metadata: ["Personal research", "Concept", "2026"],
     title: "Managing end-to-end AI agents",
   },
   {
     cover: {
       alt: "",
-      height: 873,
-      src: "/images/S7_case.webp",
+      height: 669,
+      src: "/images/CCP_case.png",
       type: "image",
-      variant: "s7",
-      width: 1600,
+      variant: "ccp",
+      width: 939,
     },
     id: "s7-case",
+    metadata: ["KOTELOV", "iPad App", "2020"],
     title: "App for flight attendants that works offline",
   },
   {
     cover: {
       alt: "",
-      height: 350,
-      src: "/images/safe_case.png",
+      height: 697,
+      src: safeCaseImage,
       type: "image",
       variant: "safe",
-      width: 450,
+      width: 1272,
     },
     id: "steamify-case-3",
+    metadata: ["Safe {Wallet}", "Design System", "2024"],
     title: "Open source design system for Safe{Wallet} with 1400 users",
   },
 ];
@@ -115,83 +124,90 @@ export default async function NewPortfolioPage() {
     <main className={styles.viewport}>
       <VerticalRuler />
 
-      <article className={styles.portfolio}>
-        <PortfolioTabsProvider>
-          <header className={styles.intro}>
-            <div className={styles.heroToolbar}>
-              <div className={styles.heroIdentity}>
-                <span className={styles.identityMark} aria-hidden="true" />
-                <span className={styles.name}>Artem Suslov</span>
+      <SoundProvider>
+        <article className={styles.portfolio}>
+          <PortfolioTabsProvider>
+            <header className={styles.intro}>
+              <div className={styles.heroToolbar}>
+                <div className={styles.heroIdentity}>
+                  <span className={styles.identityMark} aria-hidden="true" />
+                  <span className={styles.name}>Artem Suslov</span>
+                </div>
+
+                <div className={styles.heroActions}>
+                  {/* <button
+                    aria-label="Toggle color theme"
+                    className={styles.iconButton}
+                    type="button"
+                  >
+                    <Sun aria-hidden="true" size={16} strokeWidth={1.5} />
+                  </button> */}
+                  <SoundToggleButton className={styles.iconButton} />
+                  <ContactButton className={styles.contactButton} />
+                </div>
               </div>
 
-              <div className={styles.heroActions}>
-                <button
-                  aria-label="Toggle color theme"
-                  className={styles.iconButton}
-                  type="button"
-                >
-                  <Sun aria-hidden="true" size={16} strokeWidth={1.5} />
-                </button>
-                <button
-                  aria-label="Toggle sound"
-                  className={styles.iconButton}
-                  type="button"
-                >
-                  <Volume2 aria-hidden="true" size={16} strokeWidth={1.5} />
-                </button>
-                <ContactButton className={styles.contactButton} />
+              <div className={styles.heroContent}>
+                <HeroVideo />
+                <HeroHeading />
               </div>
-            </div>
 
-            <div className={styles.heroContent}>
-              <HeroVideo />
-              <HeroHeading />
-            </div>
+              <span className={styles.heroDivider} aria-hidden="true" />
 
-            <span className={styles.heroDivider} aria-hidden="true" />
+              <div className={styles.heroTabs}>
+                <PortfolioTabList tabs={workTabs} />
+              </div>
+            </header>
 
-            <div className={styles.heroTabs}>
-              <PortfolioTabList tabs={workTabs} />
-            </div>
-          </header>
+            <PortfolioTabPanels
+              about={<AboutMeContent />}
+              work={
+                <section
+                  className={styles.work}
+                  id="work"
+                  aria-label="Selected work"
+                >
+                  {portfolioCases.map(
+                    ({ accent, cover, id, metadata, title }) => (
+                      <PortfolioCase
+                        accent={accent}
+                        caseId={id}
+                        cover={cover}
+                        key={id}
+                        metadata={metadata}
+                        title={title}
+                      />
+                    ),
+                  )}
+                </section>
+              }
+            />
 
-          <PortfolioTabPanels
-            about={<AboutMeContent />}
-            work={
-              <section
-                className={styles.work}
-                id="work"
-                aria-label="Selected work"
-              >
-                {portfolioCases.map(({ accent, cover, id, title }) => (
-                  <PortfolioCase
-                    accent={accent}
-                    caseId={id}
-                    cover={cover}
-                    key={id}
-                    title={title}
-                  />
-                ))}
-              </section>
-            }
-          />
-
-          <span className={styles.anchor} id="tools" aria-hidden="true" />
-          <span className={styles.anchor} id="steamify-case" aria-hidden="true" />
-          <span className={styles.anchor} id="mesh-card-demo" aria-hidden="true" />
-          <span
-            className={styles.anchor}
-            id="steamify-case-2"
-            aria-hidden="true"
-          />
-          <span className={styles.anchor} id="s7-case" aria-hidden="true" />
-          <span
-            className={styles.anchor}
-            id="steamify-case-3"
-            aria-hidden="true"
-          />
-        </PortfolioTabsProvider>
-      </article>
+            <span className={styles.anchor} id="tools" aria-hidden="true" />
+            <span
+              className={styles.anchor}
+              id="steamify-case"
+              aria-hidden="true"
+            />
+            <span
+              className={styles.anchor}
+              id="mesh-card-demo"
+              aria-hidden="true"
+            />
+            <span
+              className={styles.anchor}
+              id="steamify-case-2"
+              aria-hidden="true"
+            />
+            <span className={styles.anchor} id="s7-case" aria-hidden="true" />
+            <span
+              className={styles.anchor}
+              id="steamify-case-3"
+              aria-hidden="true"
+            />
+          </PortfolioTabsProvider>
+        </article>
+      </SoundProvider>
 
       {DebugPanel ? (
         <DebugPanel

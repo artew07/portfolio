@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useInteractionSound } from "@/app/sound-provider";
 
 interface Tab {
   id: string;
@@ -20,8 +21,14 @@ export function AnimatedTabs({
   onChange,
 }: AnimatedTabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0].id);
+  const { playTap } = useInteractionSound();
 
   const handleTabChange = (tabId: string) => {
+    if (tabId === activeTab) {
+      return;
+    }
+
+    playTap();
     setActiveTab(tabId);
     onChange?.(tabId);
   };

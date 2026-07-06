@@ -1,8 +1,11 @@
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
+import { Fragment } from "react";
 import { InteractiveCardCover } from "@/components/interactive-card-cover";
+import { DashboardCasePreview } from "./dashboard-case-preview";
 import styles from "./page.module.css";
 
-type CaseImageVariant = "steamify" | "loop" | "s7" | "safe";
+type CaseImageVariant = "steamify" | "loop" | "ccp" | "safe";
 
 type CaseCover =
   | {
@@ -10,12 +13,12 @@ type CaseCover =
     }
   | {
       type: "image";
-      src: string;
+      src: string | StaticImageData;
       alt: string;
+      eager?: boolean;
       width: number;
       height: number;
       variant: CaseImageVariant;
-      preload?: boolean;
       sizes?: string;
     }
   | {
@@ -29,13 +32,14 @@ interface PortfolioCaseProps {
   caseId: string;
   centeredTitle?: boolean;
   cover: CaseCover;
+  metadata?: string[];
   title?: string | false;
 }
 
 const caseImageClassNames: Record<CaseImageVariant, string> = {
   steamify: styles.steamifyCaseImage,
   loop: styles.loopCaseImage,
-  s7: styles.s7CaseImage,
+  ccp: styles.ccpCaseImage,
   safe: styles.safeCaseImage,
 };
 
@@ -44,6 +48,7 @@ export function PortfolioCase({
   caseId,
   centeredTitle = false,
   cover,
+  metadata,
   title = false,
 }: PortfolioCaseProps) {
   return (
@@ -74,53 +79,85 @@ export function PortfolioCase({
       ) : (
         <div
           className={`${styles.caseVisual} ${
-            cover.variant === "s7" || cover.variant === "safe"
+            cover.variant === "steamify"
+              ? styles.steamifyCaseVisual
+              : ""
+          } ${
+            cover.variant === "loop" ? styles.loopCaseVisual : ""
+          } ${
+            cover.variant === "ccp" ? styles.ccpCaseVisual : ""
+          } ${
+            cover.variant === "ccp" || cover.variant === "safe"
               ? styles.caseVisualFlushBottom
               : ""
           }`}
           data-debug-frame
         >
-          <Image
-            alt={cover.alt}
-            className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
-            data-debug-media
-            height={cover.height}
-            preload={cover.preload}
-            sizes={
-              cover.sizes ??
-              "(max-width: 760px) calc(100vw - 40px), 636px"
-            }
-            src={cover.src}
-            width={cover.width}
-          />
+          {cover.variant === "loop" ? (
+            <DashboardCasePreview
+              alt={cover.alt}
+              sizes={
+                cover.sizes ??
+                "(max-width: 760px) calc(100vw - 40px), 512px"
+              }
+              src={cover.src}
+            />
+          ) : (
+            <Image
+              alt={cover.alt}
+              className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
+              data-debug-media
+              height={cover.height}
+              loading={cover.eager ? "eager" : undefined}
+              sizes={
+                cover.sizes ??
+                "(max-width: 760px) calc(100vw - 40px), 636px"
+              }
+              src={cover.src}
+              width={cover.width}
+            />
+          )}
         </div>
       )}
 
       {title ? (
-        <span
-          className={
-            centeredTitle ? styles.secondCaseTitle : styles.caseTitle
-          }
-        >
-          {title}
-          {accent ? (
-            <>
-              {" "}
-              <span className={styles.caseMetric}>
-                {accent}
-                <Image
-                  aria-hidden="true"
-                  alt=""
-                  className={styles.caseMetricUnderline}
-                  height={6}
-                  src="/svg/underline_small.webp"
-                  unoptimized
-                  width={87}
-                />
-              </span>
-            </>
+        <div className={styles.caseCaption}>
+          <span
+            className={
+              centeredTitle ? styles.secondCaseTitle : styles.caseTitle
+            }
+          >
+            {title}
+            {accent ? (
+              <>
+                {" "}
+                <span className={styles.caseMetric}>
+                  {accent}
+                  <Image
+                    aria-hidden="true"
+                    alt=""
+                    className={styles.caseMetricUnderline}
+                    height={6}
+                    src="/svg/underline_small.webp"
+                    unoptimized
+                    width={87}
+                  />
+                </span>
+              </>
+            ) : null}
+          </span>
+
+          {metadata?.length ? (
+            <span className={styles.caseMetadata}>
+              {metadata.map((item, index) => (
+                <Fragment key={item}>
+                  {index > 0 ? <span aria-hidden="true">•</span> : null}
+                  <span>{item}</span>
+                </Fragment>
+              ))}
+            </span>
           ) : null}
-        </span>
+        </div>
       ) : null}
     </article>
   );

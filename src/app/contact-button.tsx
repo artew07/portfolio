@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 import { GradientShimmer } from "gradient-shimmer";
+import { useInteractionSound } from "./sound-provider";
 
 export function ContactButton({ className }: { className: string }) {
   const [isHovered, setIsHovered] = useState(false);
+  const { playTap } = useInteractionSound();
 
   return (
     <button
       className={className}
+      onClick={playTap}
       onPointerEnter={(event) => {
         const supportsHover = window.matchMedia(
           "(hover: hover) and (pointer: fine)",

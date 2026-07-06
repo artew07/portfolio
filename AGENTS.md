@@ -18,6 +18,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - All button components must use fully rounded geometry. Text buttons should be pill-shaped; icon-only buttons should be circular.
 - Do not introduce square or partially rounded buttons unless the user explicitly requests an exception.
+- New production buttons, links, tabs, toggles, and clickable cards must call the shared `playTap()` interaction-sound API after a successful activation.
+- Do not play interaction sounds on hover, individual keystrokes, slider movement, or repeated activation of an already-active control.
+- Do not create standalone `Audio` instances outside the shared sound provider. Development-only and debug-panel controls are exempt from interaction sounds.
 
 ## Nested copy
 
