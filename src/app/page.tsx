@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { AboutMeContent } from "./about-me-content";
 import { ContactButton } from "./contact-button";
 import { HeroHeading } from "./hero-heading";
+import { HeroVideo } from "./hero-video";
 import { PortfolioCase } from "./portfolio-case";
 import {
   PortfolioTabList,
@@ -143,18 +144,7 @@ export default async function NewPortfolioPage() {
             </div>
 
             <div className={styles.heroContent}>
-              <video
-                aria-hidden="true"
-                autoPlay
-                className={styles.portraitVideo}
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                poster="/videos/me_cycle_2-poster.webp"
-              >
-                <source src="/videos/me_cycle_2.mp4" type="video/mp4" />
-              </video>
+              <HeroVideo />
               <HeroHeading />
             </div>
 

@@ -194,40 +194,60 @@
   gap: 8px;
 }
 
-.portraitVideo {
+.heroVideo {
+  position: relative;
   width: 222px;
   height: 280px;
   display: block;
+  flex: 0 0 auto;
+  overflow: hidden;
+  transform: translateY(-12px);
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 20%, #000 100%),
+    radial-gradient(
+      ellipse 86% 78% at 50% 60%,
+      #000 52%,
+      rgb(0 0 0 / 85%) 68%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 20%, #000 100%),
+    radial-gradient(
+      ellipse 86% 78% at 50% 60%,
+      #000 52%,
+      rgb(0 0 0 / 85%) 68%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.heroVideoLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
   object-position: center bottom;
-  transform: translateY(-12px);
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgb(0 0 0 / 45%) 0%,
-    #000 18%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    rgb(0 0 0 / 45%) 0%,
-    #000 18%,
-    #000 100%
-  );
-  /*
-   * Previous bottom fade, kept for quick comparison.
-   -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    transparent 100%
-  );
-  */
+}
+
+.heroReactionVideo {
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.heroVideo[data-reaction-phase="playing"] .heroReactionVideo {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .heroReactionVideo {
+    display: none;
+    transition: none;
+  }
 }
 
 .name {
