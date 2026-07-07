@@ -16,6 +16,14 @@ interface SoundContextValue {
   toggleSound: () => void;
 }
 
+const interactionSounds = {
+  tap: "/sounds/tap_05.wav",
+  toggleOff: "/sounds/toggle_off.wav",
+  toggleOn: "/sounds/toggle_on.wav",
+} as const;
+
+type InteractionSound = keyof typeof interactionSounds;
+
 const soundPreferenceStorageKey = "portfolio-interaction-sound-enabled";
 const soundPreferenceChangeEvent = "portfolio-sound-preference-change";
 const SoundContext = createContext<SoundContextValue | null>(null);
@@ -62,15 +70,19 @@ function saveSoundPreference(isEnabled: boolean) {
 }
 
 export function SoundProvider({ children }: PropsWithChildren) {
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRefs = useRef<Record<InteractionSound, HTMLAudioElement | null>>({
+    tap: null,
+    toggleOff: null,
+    toggleOn: null,
+  });
   const isSoundEnabled = useSyncExternalStore(
     subscribeToSoundPreference,
     getSoundPreferenceSnapshot,
     getServerSoundPreferenceSnapshot,
   );
 
-  const playAudio = useCallback(() => {
-    const audio = audioRef.current;
+  const playAudio = useCallback((sound: InteractionSound) => {
+    const audio = audioRefs.current[sound];
 
     if (!audio) {
       return;
@@ -84,22 +96,15 @@ export function SoundProvider({ children }: PropsWithChildren) {
 
   const playTap = useCallback(() => {
     if (isSoundEnabled) {
-      playAudio();
+      playAudio("tap");
     }
   }, [isSoundEnabled, playAudio]);
 
   const toggleSound = useCallback(() => {
     const nextIsEnabled = !isSoundEnabled;
 
-    if (isSoundEnabled) {
-      playAudio();
-    }
-
     saveSoundPreference(nextIsEnabled);
-
-    if (nextIsEnabled) {
-      playAudio();
-    }
+    playAudio(nextIsEnabled ? "toggleOn" : "toggleOff");
   }, [isSoundEnabled, playAudio]);
 
   const value = useMemo(
@@ -109,12 +114,17 @@ export function SoundProvider({ children }: PropsWithChildren) {
 
   return (
     <SoundContext.Provider value={value}>
-      <audio
-        aria-hidden="true"
-        preload="auto"
-        ref={audioRef}
-        src="/sounds/tap_05.wav"
-      />
+      {Object.entries(interactionSounds).map(([sound, src]) => (
+        <audio
+          aria-hidden="true"
+          key={sound}
+          preload="auto"
+          ref={(element) => {
+            audioRefs.current[sound as InteractionSound] = element;
+          }}
+          src={src}
+        />
+      ))}
       {children}
     </SoundContext.Provider>
   );

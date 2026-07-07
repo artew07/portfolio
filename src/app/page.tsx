@@ -15,7 +15,7 @@ import {
   PortfolioTabPanels,
   PortfolioTabsProvider,
 } from "./portfolio-tabs";
-import { VerticalRuler } from "./vertical-ruler";
+// import { VerticalRuler } from "./vertical-ruler";
 
 export const metadata: Metadata = {
   title: "Artem Suslov — Software Designer",
@@ -41,6 +41,8 @@ const portfolioCases: Array<{
     width: number;
   } | {
     type: "interactive-card";
+  } | {
+    type: "phantom-glow";
   } | {
     src: string;
     type: "video";
@@ -100,6 +102,14 @@ const portfolioCases: Array<{
   },
   {
     cover: {
+      type: "phantom-glow",
+    },
+    id: "glow-hover-effect",
+    metadata: ["Concept", "2026"],
+    title: "Phantom logo hover effect",
+  },
+  {
+    cover: {
       alt: "",
       height: 697,
       src: safeCaseImage,
@@ -122,7 +132,7 @@ export default async function NewPortfolioPage() {
 
   return (
     <main className={styles.viewport}>
-      <VerticalRuler />
+      {/* <VerticalRuler /> */}
 
       <SoundProvider>
         <article className={styles.portfolio}>
@@ -200,6 +210,11 @@ export default async function NewPortfolioPage() {
               aria-hidden="true"
             />
             <span className={styles.anchor} id="s7-case" aria-hidden="true" />
+            <span
+              className={styles.anchor}
+              id="glow-hover-effect"
+              aria-hidden="true"
+            />
             <span
               className={styles.anchor}
               id="steamify-case-3"

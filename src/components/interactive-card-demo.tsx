@@ -3,8 +3,15 @@
 import Image from "next/image";
 import { Maximize2, X } from "lucide-react";
 import { createPortal } from "react-dom";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Dithering, MeshGradient } from "@paper-design/shaders-react";
+import { useInteractionSound } from "@/app/sound-provider";
 import styles from "./interactive-card-demo.module.css";
 
 const RESET_TRANSFORM =
@@ -40,6 +47,7 @@ export default function InteractiveCardDemo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedThemeId, setSelectedThemeId] =
     useState<ThemeId>("ember");
+  const { playTap } = useInteractionSound();
 
   const selectedTheme = useMemo(
     () =>
@@ -52,12 +60,39 @@ export default function InteractiveCardDemo() {
     COLOR_MORPH_DURATION,
   );
 
+  const selectTheme = useCallback((themeId: ThemeId) => {
+    if (themeId === selectedThemeId) {
+      return;
+    }
+
+    playTap();
+    setSelectedThemeId(themeId);
+  }, [playTap, selectedThemeId]);
+
+  const openModal = useCallback(() => {
+    if (isModalOpen) {
+      return;
+    }
+
+    playTap();
+    setIsModalOpen(true);
+  }, [isModalOpen, playTap]);
+
+  const closeModal = useCallback(() => {
+    if (!isModalOpen) {
+      return;
+    }
+
+    playTap();
+    setIsModalOpen(false);
+  }, [isModalOpen, playTap]);
+
   useEffect(() => {
     if (!isModalOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsModalOpen(false);
+      if (event.key === "Escape") closeModal();
     };
 
     document.body.style.overflow = "hidden";
@@ -67,7 +102,7 @@ export default function InteractiveCardDemo() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isModalOpen]);
+  }, [closeModal, isModalOpen]);
 
   return (
     <div className={styles.demo}>
@@ -85,7 +120,7 @@ export default function InteractiveCardDemo() {
               aria-label={theme.id}
               className={styles.swatch}
               key={theme.id}
-              onClick={() => setSelectedThemeId(theme.id)}
+              onClick={() => selectTheme(theme.id)}
               role="radio"
               type="button"
             >
@@ -105,7 +140,7 @@ export default function InteractiveCardDemo() {
         <button
           aria-label="Open card in modal"
           className={styles.expandButton}
-          onClick={() => setIsModalOpen(true)}
+          onClick={openModal}
           type="button"
         >
           <Maximize2 aria-hidden="true" size={16} strokeWidth={1.5} />
@@ -118,7 +153,7 @@ export default function InteractiveCardDemo() {
               aria-label="Interactive card preview"
               aria-modal="true"
               className={styles.modalBackdrop}
-              onClick={() => setIsModalOpen(false)}
+              onClick={closeModal}
               role="dialog"
             >
               <div
@@ -129,7 +164,7 @@ export default function InteractiveCardDemo() {
                   aria-label="Close card preview"
                   autoFocus
                   className={styles.closeButton}
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={closeModal}
                   type="button"
                 >
                   <X aria-hidden="true" size={18} strokeWidth={1.75} />

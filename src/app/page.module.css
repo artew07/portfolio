@@ -432,9 +432,49 @@
   background: #0e1010;
 }
 
+.phantomCaseVisual {
+  background: #0b0b0e;
+}
+
 .interactiveCaseMedia {
   position: absolute;
   inset: 0;
+}
+
+.phantomCaseLogo {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.phantomCaseTarget {
+  aspect-ratio: 1823 / 1518;
+  max-width: calc(100% - 48px);
+  cursor: default;
+}
+
+.phantomCaseGlow {
+  transition: opacity 150ms ease-out;
+  mix-blend-mode: screen;
+}
+
+.phantomCaseHint {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 4;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.1);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  pointer-events: none;
 }
 
 .caseImage {
@@ -1008,7 +1048,8 @@
   .steamifyCaseImage,
   .loopCaseImage,
   .ccpCaseImage,
-  .safeCaseImage {
+  .safeCaseImage,
+  .phantomCaseLogo {
     position: static;
     width: auto;
     height: auto;
@@ -1021,6 +1062,10 @@
   .steamifyCaseImage {
     width: 100%;
     height: 100%;
+  }
+
+  .phantomCaseLogo {
+    width: 100%;
   }
 
   .dashboardCaseEmbed {
