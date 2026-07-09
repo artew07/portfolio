@@ -37,6 +37,7 @@ const portfolioCases: Array<{
     height: number;
     src: string | StaticImageData;
     type: "image";
+    unoptimized?: boolean;
     variant: "steamify" | "loop" | "ccp" | "safe";
     width: number;
   } | {
@@ -58,8 +59,9 @@ const portfolioCases: Array<{
       alt: "",
       eager: true,
       height: 302,
-      src: "/images/steamify_2.png",
+      src: "/images/steamify_2.webp",
       type: "image",
+      unoptimized: true,
       variant: "steamify",
       width: 494,
     },

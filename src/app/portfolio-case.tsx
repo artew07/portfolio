@@ -34,6 +34,7 @@ type CaseCover =
       height: number;
       variant: CaseImageVariant;
       sizes?: string;
+      unoptimized?: boolean;
     }
   | {
       type: "video";
@@ -347,6 +348,7 @@ export function PortfolioCase({
                 "(max-width: 760px) 100vw, 700px"
               }
               src={cover.src}
+              unoptimized={cover.unoptimized}
               width={cover.width}
             />
           )}

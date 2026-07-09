@@ -2,7 +2,7 @@
   min-height: 100vh;
   position: relative;
   overflow-x: clip;
-  background: #fff;
+  background: #f2f2f2;
   color: #051e1d;
   font-family: var(--font-geist-sans), Geist, system-ui, sans-serif;
   padding: 48px max(24px, calc((100vw - 700px) / 2));
@@ -54,15 +54,17 @@
   align-items: center;
   gap: 24px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 32px 32px;
   overflow: hidden;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    0 1px 3px rgb(0 0 0 / 10%),
+    0 1px 2px rgb(0 0 0 / 6%);
 }
 
 .intro {
-  width: 100%;
+  width: calc(100% + 64px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,10 +80,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-inline: 0;
+  margin-inline: -32px;
   margin-bottom: -16px;
-  padding: 24px 0 0;
-  border-radius: 0;
+  padding: 24px 32px 0;
+  border-radius: 12px 12px 0 0;
   background: rgb(255 255 255 / 50%);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -1018,15 +1020,15 @@
     width: 100%;
     min-height: 100vh;
     margin: 0;
-    padding: 0;
+    padding: 0 20px 24px;
     border-radius: 0;
     box-shadow: none;
   }
 
   .heroToolbar {
-    width: 100%;
-    margin-inline: 0;
-    padding-inline: 0;
+    width: calc(100% + 40px);
+    margin-inline: -20px;
+    padding-inline: 20px;
   }
 
   .intro h1 {
