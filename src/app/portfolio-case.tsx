@@ -341,10 +341,10 @@ export function PortfolioCase({
               className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
               data-debug-media
               height={cover.height}
-              loading={cover.eager ? "eager" : undefined}
+              preload={cover.eager ? true : undefined}
               sizes={
                 cover.sizes ??
-                "(max-width: 760px) calc(100vw - 40px), 636px"
+                "(max-width: 760px) 100vw, 700px"
               }
               src={cover.src}
               width={cover.width}

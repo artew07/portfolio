@@ -298,7 +298,6 @@ function CardStage({
             alt="Vezdekarta"
             className={styles.cardArtwork}
             fill
-            priority={false}
             sizes="392px"
             src="/assets/redcard.svg"
             unoptimized

@@ -2,7 +2,7 @@
   min-height: 100vh;
   position: relative;
   overflow-x: clip;
-  background: #f2f2f2;
+  background: #fff;
   color: #051e1d;
   font-family: var(--font-geist-sans), Geist, system-ui, sans-serif;
   padding: 48px max(24px, calc((100vw - 700px) / 2));
@@ -54,13 +54,11 @@
   align-items: center;
   gap: 24px;
   margin: 0 auto;
-  padding: 0 32px 32px;
+  padding: 0;
   overflow: hidden;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow:
-    0 1px 3px rgb(0 0 0 / 10%),
-    0 1px 2px rgb(0 0 0 / 6%);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .intro {
@@ -75,15 +73,15 @@
 
 .heroToolbar {
   z-index: 1;
-  width: calc(100% + 64px);
+  width: 100%;
   min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-inline: -32px;
+  margin-inline: 0;
   margin-bottom: -16px;
-  padding: 24px 32px 0;
-  border-radius: 12px 12px 0 0;
+  padding: 24px 0 0;
+  border-radius: 0;
   background: rgb(255 255 255 / 50%);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -411,19 +409,19 @@
 }
 
 .steamifyCaseVisual {
-  background-image: url("/images/AI_Bg_01.png");
+  background-image: url("/images/AI_Bg_01.webp");
   background-position: center;
   background-size: cover;
 }
 
 .loopCaseVisual {
-  background-image: url("/images/AI_Bg_02.png");
+  background-image: url("/images/AI_Bg_02.webp");
   background-position: center;
   background-size: cover;
 }
 
 .ccpCaseVisual {
-  background-image: url("/images/AI_Bg_03.png");
+  background-image: url("/images/AI_Bg_03.webp");
   background-position: center;
   background-size: cover;
 }
@@ -1020,15 +1018,15 @@
     width: 100%;
     min-height: 100vh;
     margin: 0;
-    padding: 0 20px 24px;
+    padding: 0;
     border-radius: 0;
     box-shadow: none;
   }
 
   .heroToolbar {
-    width: calc(100% + 40px);
-    margin-inline: -20px;
-    padding-inline: 20px;
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
   }
 
   .intro h1 {
