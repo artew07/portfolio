@@ -5,7 +5,7 @@
   background: #f2f2f2;
   color: #051e1d;
   font-family: var(--font-geist-sans), Geist, system-ui, sans-serif;
-  padding: 48px max(24px, calc((100vw - 700px) / 2));
+  padding: 24px max(24px, calc((100vw - 700px) / 2));
 }
 
 .ruler {
@@ -204,33 +204,42 @@
   gap: 8px;
 }
 
-.heroVideo {
+.heroVideoShell {
   position: relative;
   width: 222px;
   height: 280px;
   display: block;
   flex: 0 0 auto;
-  overflow: hidden;
   transform: translateY(-12px);
+}
+
+.heroVideo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
   -webkit-mask-image:
     linear-gradient(
       to right,
       transparent 0%,
-      #000 12%,
-      #000 88%,
+      #000 var(--hero-video-mask-x-fade, 12%),
+      #000 calc(100% - var(--hero-video-mask-x-fade, 12%)),
       transparent 100%
     ),
     linear-gradient(
       to bottom,
       transparent 0%,
-      #000 16%,
-      #000 82%,
+      #000 var(--hero-video-mask-y-fade, 28%),
+      #000 calc(100% - var(--hero-video-mask-y-fade, 28%)),
       transparent 100%
     ),
     radial-gradient(
-      ellipse 92% 82% at 50% 58%,
-      #000 56%,
-      rgb(0 0 0 / 78%) 72%,
+      ellipse var(--hero-video-mask-radial-width, 92%)
+        var(--hero-video-mask-radial-height, 77%)
+        at 50% var(--hero-video-mask-center-y, 57%),
+      #000 var(--hero-video-mask-radial-solid, 56%),
+      rgb(0 0 0 / var(--hero-video-mask-radial-opacity, 78%))
+        var(--hero-video-mask-radial-soft, 72%),
       transparent 100%
     );
   -webkit-mask-composite: source-in, source-in;
@@ -238,21 +247,24 @@
     linear-gradient(
       to right,
       transparent 0%,
-      #000 12%,
-      #000 88%,
+      #000 var(--hero-video-mask-x-fade, 12%),
+      #000 calc(100% - var(--hero-video-mask-x-fade, 12%)),
       transparent 100%
     ),
     linear-gradient(
       to bottom,
       transparent 0%,
-      #000 16%,
-      #000 82%,
+      #000 var(--hero-video-mask-y-fade, 28%),
+      #000 calc(100% - var(--hero-video-mask-y-fade, 28%)),
       transparent 100%
     ),
     radial-gradient(
-      ellipse 92% 82% at 50% 58%,
-      #000 56%,
-      rgb(0 0 0 / 78%) 72%,
+      ellipse var(--hero-video-mask-radial-width, 92%)
+        var(--hero-video-mask-radial-height, 77%)
+        at 50% var(--hero-video-mask-center-y, 57%),
+      #000 var(--hero-video-mask-radial-solid, 56%),
+      rgb(0 0 0 / var(--hero-video-mask-radial-opacity, 78%))
+        var(--hero-video-mask-radial-soft, 72%),
       transparent 100%
     );
   mask-composite: intersect, intersect;
@@ -285,12 +297,155 @@
   filter: blur(0);
 }
 
+.heroCursorLabel {
+  position: absolute;
+  left: var(--hero-cursor-label-x, 0);
+  top: var(--hero-cursor-label-y, 0);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 11px;
+  border: 1px solid rgb(5 30 29 / 10%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.84);
+  box-shadow: 0 12px 28px rgb(5 30 29 / 0.12);
+  color: #051e1d;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(14px, 14px) scale(0.96);
+  transition:
+    opacity 120ms ease,
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  white-space: nowrap;
+}
+
+.heroCursorLabel[data-visible="true"] {
+  opacity: 1;
+  transform: translate(14px, 14px) scale(1);
+}
+
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
   .heroReactionVideo {
     display: none;
     transition: none;
   }
+
+  .heroCursorLabel {
+    display: none;
+  }
+
+  /*
+  .heroMaskDebugToggle,
+  .heroMaskDebugPanel {
+    display: none;
+  }
+  */
 }
+
+/*
+.heroMaskDebugToggle,
+.heroMaskDebugIconButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #28282f;
+  border-radius: 999px;
+  background: rgb(15 15 16 / 0.92);
+  color: #f5f5f5;
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.heroMaskDebugToggle {
+  position: absolute;
+  right: -6px;
+  bottom: 10px;
+  z-index: 5;
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.22);
+}
+
+.heroMaskDebugIconButton {
+  width: 24px;
+  height: 24px;
+}
+
+.heroMaskDebugToggle:hover,
+.heroMaskDebugIconButton:hover {
+  border-color: #3a3a44;
+  background: #18181c;
+}
+
+.heroMaskDebugToggle:active,
+.heroMaskDebugIconButton:active {
+  transform: scale(0.96);
+}
+
+.heroMaskDebugPanel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: -6px;
+  z-index: 6;
+  width: min(342px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #28282f;
+  border-radius: 8px;
+  background: rgb(15 15 16 / 0.96);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.28);
+  color: #f5f5f5;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.heroMaskDebugHeader,
+.heroMaskDebugSlider {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+}
+
+.heroMaskDebugHeader {
+  grid-template-columns: 1fr auto;
+  padding-bottom: 2px;
+  color: #aeb9bd;
+}
+
+.heroMaskDebugActions {
+  display: flex;
+  gap: 6px;
+}
+
+.heroMaskDebugSlider {
+  grid-template-columns: 62px minmax(0, 1fr) 54px;
+  color: #aeb9bd;
+}
+
+.heroMaskDebugSlider input {
+  width: 100%;
+  height: 16px;
+  accent-color: #614fee;
+}
+
+.heroMaskDebugSlider span:last-child {
+  color: #f5f5f5;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+*/
 
 .name {
   margin: 0;
@@ -1055,7 +1210,7 @@
 
   .viewport {
     padding-inline: 24px;
-    padding-top: 48px;
+    padding-top: 24px;
   }
 
 }
@@ -1143,7 +1298,7 @@
     gap: 0;
   }
 
-  .heroVideo {
+  .heroVideoShell {
     width: 188px;
     height: 216px;
     transform: none;
@@ -1286,8 +1441,16 @@
   .caseMetadata {
     justify-content: center;
     gap: 8px;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .caseMetric {
+    color: inherit;
+  }
+
+  .caseMetricUnderline {
+    display: none;
   }
 
   .aboutDesktopBreak {
