@@ -1135,6 +1135,13 @@
   border-radius: 8px 0 0;
 }
 
+.ccpCaseVideo {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.015);
+}
+
 .caseCaption {
   display: flex;
   flex-direction: column;

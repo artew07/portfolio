@@ -45,9 +45,10 @@ const portfolioCases: Array<{
   } | {
     type: "phantom-glow";
   } | {
+    mobileSrc?: string;
     src: string;
     type: "video";
-    variant: "loop";
+    variant: "loop" | "ccp";
   };
   id: string;
   metadata?: string[];
@@ -91,12 +92,10 @@ const portfolioCases: Array<{
   },
   {
     cover: {
-      alt: "",
-      height: 669,
-      src: "/images/CCP_case.png",
-      type: "image",
+      mobileSrc: "/videos/ccp-animation-mobile-compress.mp4",
+      src: "/videos/CCP-new-updated-compress.mp4",
+      type: "video",
       variant: "ccp",
-      width: 939,
     },
     id: "s7-case",
     metadata: ["KOTELOV", "iPad App", "2020"],

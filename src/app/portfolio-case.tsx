@@ -37,9 +37,10 @@ type CaseCover =
       unoptimized?: boolean;
     }
   | {
+      mobileSrc?: string;
       type: "video";
       src: string;
-      variant: "loop";
+      variant: "loop" | "ccp";
     };
 
 interface PortfolioCaseProps {
@@ -270,6 +271,63 @@ function PhantomGlowCover() {
   );
 }
 
+function ViewportCaseVideo({
+  className,
+  mobileSrc,
+  src,
+}: {
+  className: string;
+  mobileSrc?: string;
+  src: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        void video.play().catch(() => undefined);
+        observer.disconnect();
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      aria-hidden="true"
+      className={className}
+      data-debug-media
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      {...(mobileSrc ? {} : { src })}
+    >
+      {mobileSrc ? (
+        <>
+          <source media="(max-width: 760px)" src={mobileSrc} />
+          <source src={src} />
+        </>
+      ) : null}
+    </video>
+  );
+}
+
 export function PortfolioCase({
   accent,
   caseId,
@@ -298,15 +356,13 @@ export function PortfolioCase({
         </div>
       ) : cover.type === "video" ? (
         <div className={styles.caseVisual} data-debug-frame>
-          <video
-            aria-hidden="true"
-            autoPlay
-            className={`${styles.caseVideo} ${styles.loopCaseVideo}`}
-            data-debug-media
-            loop
-            muted
-            playsInline
-            preload="metadata"
+          <ViewportCaseVideo
+            className={`${styles.caseVideo} ${
+              cover.variant === "ccp"
+                ? styles.ccpCaseVideo
+                : styles.loopCaseVideo
+            }`}
+            mobileSrc={cover.mobileSrc}
             src={cover.src}
           />
         </div>
