@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-// import Image from "next/image";
+import Image from "next/image";
 import type { StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
@@ -30,10 +30,6 @@ export function DashboardCasePreview({
 }: DashboardCasePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
-
-  void alt;
-  void sizes;
-  void src;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -66,14 +62,14 @@ export function DashboardCasePreview({
       ref={containerRef}
       className={styles.dashboardCaseEmbed}
     >
-      {/* <Image
+      <Image
         alt={alt}
         className={styles.dashboardCasePreview}
         fill
         sizes={sizes}
         src={src}
         unoptimized
-      /> */}
+      />
       {shouldLoad ? <LocalDashboardOverview /> : null}
     </div>
   );

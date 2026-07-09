@@ -114,6 +114,7 @@
 }
 
 .iconButton,
+.cvButton,
 .contactButton {
   border: 0;
   color: #051e1d;
@@ -139,6 +140,10 @@
   background: #fff;
 }
 
+.cvButton {
+  display: none;
+}
+
 .contactButton {
   width: 100px;
   height: 32px;
@@ -154,18 +159,21 @@
 }
 
 .iconButton:focus-visible,
+.cvButton:focus-visible,
 .contactButton:focus-visible {
   outline: 2px solid #051e1d;
   outline-offset: 2px;
 }
 
 .iconButton:active,
+.cvButton:active,
 .contactButton:active {
   transform: scale(0.97);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .iconButton:hover,
+  .cvButton:hover,
   .contactButton:hover {
     border-color: #d7dddd;
     background-color: #f7f9f9;
@@ -174,6 +182,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .iconButton,
+  .cvButton,
   .contactButton {
     transition:
       border-color 160ms ease,
@@ -181,6 +190,7 @@
   }
 
   .iconButton:active,
+  .cvButton:active,
   .contactButton:active {
     transform: none;
   }
@@ -203,23 +213,49 @@
   overflow: hidden;
   transform: translateY(-12px);
   -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0%, #000 20%, #000 100%),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 16%,
+      #000 82%,
+      transparent 100%
+    ),
     radial-gradient(
-      ellipse 86% 78% at 50% 60%,
-      #000 52%,
-      rgb(0 0 0 / 85%) 68%,
+      ellipse 92% 82% at 50% 58%,
+      #000 56%,
+      rgb(0 0 0 / 78%) 72%,
       transparent 100%
     );
-  -webkit-mask-composite: source-in;
+  -webkit-mask-composite: source-in, source-in;
   mask-image:
-    linear-gradient(to bottom, transparent 0%, #000 20%, #000 100%),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 16%,
+      #000 82%,
+      transparent 100%
+    ),
     radial-gradient(
-      ellipse 86% 78% at 50% 60%,
-      #000 52%,
-      rgb(0 0 0 / 85%) 68%,
+      ellipse 92% 82% at 50% 58%,
+      #000 56%,
+      rgb(0 0 0 / 78%) 72%,
       transparent 100%
     );
-  mask-composite: intersect;
+  mask-composite: intersect, intersect;
 }
 
 .heroVideoLayer {
@@ -405,9 +441,13 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid #f1f3f3;
+  border: 0;
   border-radius: 12px;
   background: #f7f8f8;
+}
+
+.case[data-case-id="steamify-case-3"] .caseVisual {
+  border: 1px solid #f1f3f3;
 }
 
 .steamifyCaseVisual {
@@ -507,13 +547,14 @@
 .dashboardCaseEmbed {
   position: absolute;
   inset: 0;
-  overflow: visible;
+  overflow: hidden;
   pointer-events: none;
 }
 
 .dashboardCasePreview {
   z-index: 0;
   object-fit: cover;
+  object-position: left top;
 }
 
 .localDashboardStage {
@@ -975,9 +1016,9 @@
   align-items: flex-start;
   gap: 8px;
   color: #616b6a;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 20px;
   white-space: nowrap;
 }
 
@@ -1030,28 +1071,139 @@
     width: 100%;
     min-height: 100vh;
     margin: 0;
-    padding: 0 20px 24px;
+    gap: 24px;
+    padding: 0 16px 24px;
     border-radius: 0;
     box-shadow: none;
   }
 
+  .intro {
+    width: calc(100% + 32px);
+    gap: 0;
+  }
+
   .heroToolbar {
-    width: calc(100% + 40px);
-    margin-inline: -20px;
-    padding-inline: 20px;
+    width: 100%;
+    min-height: 60px;
+    margin-inline: 0;
+    margin-bottom: 0;
+    padding: 12px 16px;
+  }
+
+  .heroIdentity {
+    gap: 8px;
+  }
+
+  .identityMark {
+    width: 16px;
+    height: 8px;
+  }
+
+  .name {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+  }
+
+  .heroActions {
+    gap: 8px;
+  }
+
+  .iconButton,
+  .cvButton {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0.5px solid #e6e6e6;
+    border-radius: 21px;
+    background: #fff;
+  }
+
+  .cvButton {
+    width: 44px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+  }
+
+  .contactButton {
+    width: 99px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+  }
+
+  .heroContent {
+    gap: 0;
+  }
+
+  .heroVideo {
+    width: 188px;
+    height: 216px;
+    transform: none;
   }
 
   .intro h1 {
-    font-size: clamp(28px, 7vw, 36px);
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: -0.25px;
+  }
+
+  .heroDivider {
+    margin-top: 32px;
+  }
+
+  .heroTabs {
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .heroTabs > div {
+    width: min(377px, calc(100vw - 25px));
+    justify-content: stretch;
+    gap: 0;
+  }
+
+  .heroTabs > div > * + * {
+    margin-left: 0 !important;
+  }
+
+  .heroTabs button {
+    width: 25%;
+    height: 32px;
+    padding: 0;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+  }
+
+  .work {
+    gap: 44px;
+  }
+
+  .case[data-case-id="mesh-card-demo"],
+  .case[data-case-id="glow-hover-effect"] {
+    display: none;
+  }
+
+  .case {
+    gap: 16px;
   }
 
   .caseVisual {
-    padding-block: 12px;
+    aspect-ratio: 37 / 30;
+    padding: 0;
     border-radius: 12px;
   }
 
   .caseVisualFlushBottom {
-    align-items: flex-end;
+    align-items: center;
     padding-bottom: 0;
   }
 
@@ -1070,8 +1222,36 @@
   }
 
   .steamifyCaseImage {
-    width: 100%;
-    height: 100%;
+    position: absolute !important;
+    inset: auto !important;
+    top: 15.16% !important;
+    left: 4.15% !important;
+    width: 91.8% !important;
+    height: 69.3% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    transform: none !important;
+  }
+
+  .ccpCaseImage {
+    width: 88.65% !important;
+    height: 75.36% !important;
+  }
+
+  .safeCaseImage {
+    position: absolute !important;
+    inset: auto !important;
+    top: -10.6% !important;
+    left: -11.1% !important;
+    width: 122.4% !important;
+    height: 121.4% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    object-fit: cover !important;
+    transform: none !important;
   }
 
   .phantomCaseLogo {
@@ -1092,13 +1272,22 @@
 
   .caseTitle,
   .secondCaseTitle {
-    width: 100%;
+    width: auto;
+    max-width: min(292px, 100%);
     font-size: 14px;
     line-height: 20px;
+    letter-spacing: -0.14px;
   }
 
   .secondCaseTitle {
     align-self: center;
+  }
+
+  .caseMetadata {
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 16px;
   }
 
   .aboutDesktopBreak {
@@ -1112,51 +1301,8 @@
 }
 
 @media (max-width: 430px) {
-  .portfolio {
-    gap: 40px;
-    padding-inline: 16px;
-  }
-
-  .heroToolbar {
-    width: calc(100% + 32px);
-    margin-inline: -16px;
-    padding-inline: 12px;
-  }
-
-  .heroIdentity {
-    gap: 6px;
-  }
-
-  .identityMark {
-    width: 12px;
-    height: 7px;
-  }
-
-  .name,
-  .contactButton {
-    font-size: 13px;
-  }
-
   .heroActions {
-    gap: 6px;
-  }
-
-  .iconButton {
-    width: 28px;
-    height: 28px;
-  }
-
-  .contactButton {
-    padding: 5px 10px;
-  }
-
-  .heroTabs button {
-    padding-inline: 6px;
-    font-size: 13px;
-  }
-
-  .work {
-    gap: 40px;
+    gap: max(4px, calc((100vw - 370px) / 4));
   }
 }
 

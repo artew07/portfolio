@@ -121,7 +121,7 @@ const portfolioCases: Array<{
     },
     id: "steamify-case-3",
     metadata: ["Safe {Wallet}", "Design System", "2024"],
-    title: "Open source design system for Safe{Wallet} with 1400 users",
+    title: "Open source design system with 1400 users",
   },
 ];
 
@@ -155,6 +155,7 @@ export default async function NewPortfolioPage() {
                     <Sun aria-hidden="true" size={16} strokeWidth={1.5} />
                   </button> */}
                   <SoundToggleButton className={styles.iconButton} />
+                  {/* <CvButton className={styles.cvButton} /> */}
                   <ContactButton className={styles.contactButton} />
                 </div>
               </div>
