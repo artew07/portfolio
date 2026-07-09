@@ -186,7 +186,7 @@ function CardStage({
   modal?: boolean;
   theme: CardTheme;
 }) {
-  const [supportsWebGL2] = useState(canUseWebGL2);
+  const canUseShaders = useCanUseShaders();
   const cardRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -248,7 +248,7 @@ function CardStage({
 
   return (
     <div className={`${styles.stage} ${modal ? styles.modalStage : ""}`}>
-      {supportsWebGL2 ? (
+      {canUseShaders ? (
         <MeshGradient
           colors={theme.glowColors}
           distortion={0.7}
@@ -303,7 +303,7 @@ function CardStage({
             unoptimized
           />
 
-          {supportsWebGL2 ? (
+          {canUseShaders ? (
             <MeshGradient
               colors={theme.meshColors}
               distortion={0.9}
@@ -339,7 +339,7 @@ function CardStage({
             />
           )}
 
-          {supportsWebGL2 && theme.id === "gold" ? (
+          {canUseShaders && theme.id === "gold" ? (
             <Dithering
               colorBack="#00000000"
               colorFront="#E983324D"
@@ -369,6 +369,20 @@ function CardStage({
       </div>
     </div>
   );
+}
+
+function useCanUseShaders() {
+  const [canUseShaders, setCanUseShaders] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setCanUseShaders(canUseWebGL2());
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  return canUseShaders;
 }
 
 function canUseWebGL2() {

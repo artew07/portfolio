@@ -485,8 +485,18 @@
 }
 
 .steamifyCaseImage {
-  width: min(494px, calc(100% - 32px));
-  height: 302px;
+  position: absolute;
+  inset: auto;
+  top: 9px;
+  left: 44px;
+  width: 543px;
+  height: 332px;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  flex: none;
+  object-fit: contain;
+  transform: none;
 }
 
 .loopCaseImage {
