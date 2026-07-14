@@ -23,7 +23,7 @@ export function V2Hero({ showDivider = true }: { showDivider?: boolean }) {
       <div className={styles.v2Content}>
         <p className={styles.v2Name}>Artem Suslov</p>
         <h1 className={testFamily.className}>
-          Software designer focused on B2C
+          Software designer focused on B2C{" "}
           <br className={styles.v2DesktopBreak} />
           products for web and mobile
         </h1>
