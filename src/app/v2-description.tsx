@@ -26,7 +26,7 @@ export function V2Description() {
         and run a{" "}
         <a
           className={styles.v2InlineLink}
-          href="https://t.me/artem_designich"
+          href="https://telegram.me/artem_designich"
           onClick={playTap}
           rel="noreferrer"
           target="_blank"

@@ -268,7 +268,7 @@ export function ContactButton({ className }: { className: string }) {
                   </button>
                   <a
                     className={styles.contactOption}
-                    href="https://t.me/art_ew"
+                    href="https://telegram.me/art_ew"
                     onClick={playTap}
                     rel="noreferrer"
                     target="_blank"

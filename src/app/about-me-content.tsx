@@ -68,7 +68,7 @@ export function AboutMeContent() {
         how the industry is evolving. I also run a{" "}
         <a
           className={styles.aboutInlineLink}
-          href="https://t.me/artem_designich"
+          href="https://telegram.me/artem_designich"
           rel="noreferrer"
           target="_blank"
         >
