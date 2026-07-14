@@ -57,13 +57,9 @@ export function PortfolioTabList({ tabs }: { tabs: Tab[] }) {
 }
 
 export function PortfolioTabPanels({
-  about,
   work,
 }: {
-  about: ReactNode;
   work: ReactNode;
 }) {
-  const { activeTab } = usePortfolioTabs();
-
-  return activeTab === "about" ? about : work;
+  return work;
 }

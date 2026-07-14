@@ -271,7 +271,7 @@ function PhantomGlowCover() {
   );
 }
 
-function ViewportCaseVideo({
+function AutoPlayCaseVideo({
   className,
   mobileSrc,
   src,
@@ -280,36 +280,10 @@ function ViewportCaseVideo({
   mobileSrc?: string;
   src: string;
 }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-
-    if (!video) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        void video.play().catch(() => undefined);
-        observer.disconnect();
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(video);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <video
-      ref={videoRef}
       aria-hidden="true"
+      autoPlay
       className={className}
       data-debug-media
       loop
@@ -356,7 +330,7 @@ export function PortfolioCase({
         </div>
       ) : cover.type === "video" ? (
         <div className={styles.caseVisual} data-debug-frame>
-          <ViewportCaseVideo
+          <AutoPlayCaseVideo
             className={`${styles.caseVideo} ${
               cover.variant === "ccp"
                 ? styles.ccpCaseVideo

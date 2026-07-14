@@ -48,7 +48,7 @@ function isMatchingBaseFrame(currentTime: number) {
   );
 }
 
-export function HeroVideo() {
+export function HeroVideo({ className }: { className?: string }) {
   const baseVideoRef = useRef<HTMLVideoElement>(null);
   const reactionVideoRef = useRef<HTMLVideoElement>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -261,7 +261,7 @@ export function HeroVideo() {
   return (
     <div
       data-reaction-phase={phase}
-      className={styles.heroVideoShell}
+      className={[styles.heroVideoShell, className].filter(Boolean).join(" ")}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}

@@ -153,15 +153,14 @@ export function LocalDashboardOverview() {
                     className={styles.localDashboardNavItem}
                     key={run.name}
                     type="button"
-                  >
-                    <span
-                      className={styles.localDashboardHash}
-                      style={{ color: run.groupColor }}
                     >
-                      #
-                    </span>
-                    <span>{run.name}</span>
-                  </button>
+                      <span
+                        aria-hidden="true"
+                        className={styles.localDashboardStatusDot}
+                        style={{ background: run.groupColor }}
+                      />
+                      <span>{run.name}</span>
+                    </button>
                 ))}
               </div>
             </section>

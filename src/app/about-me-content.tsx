@@ -24,7 +24,7 @@ function InlineImage({ alt, grouped = false, src }: InlineImageProps) {
 
 export function AboutMeContent() {
   return (
-    <section className={styles.aboutContent} aria-label="About me">
+    <div className={styles.aboutContent}>
       <p>
         I&apos;ve been designing digital products for over{" "}
         <strong>5 years,</strong> with a primary focus on{" "}
@@ -96,6 +96,6 @@ export function AboutMeContent() {
           in Counter-Strike 2.
         </span>
       </p>
-    </section>
+    </div>
   );
 }
