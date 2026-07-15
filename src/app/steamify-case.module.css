@@ -29,7 +29,7 @@
 .heroVideo, .mediaVideo, .media { width: 100%; height: auto; display: block; border-radius: 12px; background: #f4f6f5; }
 .expandableMedia { position: relative; width: 100%; }
 .expandButton, .closeButton { display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.expandButton { position: absolute; z-index: 1; right: 12px; bottom: 12px; width: 32px; height: 32px; background: #e6e6e6; color: #051e1d; opacity: 1; transition: opacity 160ms ease, transform 140ms cubic-bezier(.23, 1, .32, 1), background-color 160ms ease; }
+.expandButton { position: absolute; z-index: 1; right: 12px; bottom: 12px; width: 32px; height: 32px; background: #ededed; color: #051e1d; opacity: 1; transition: opacity 160ms ease, transform 140ms cubic-bezier(.23, 1, .32, 1), background-color 160ms ease; }
 .expandButton:active, .closeButton:active { transform: scale(.96); }
 .expandButton:focus-visible, .closeButton:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .modalBackdrop { position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: 24px; background: rgb(5 30 29 / 56%); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity var(--modal-open-dur) var(--modal-ease); }
@@ -77,7 +77,7 @@
   .lede { font-size: 17px; }
   .details { gap: 16px; }
   .metrics { grid-template-columns: 1fr; margin-top: 28px; }
-  .metrics > div { min-height: 96px; }
+  .metrics > div { min-height: 0; }
   .modalBackdrop { padding: 12px; }
   .modalPanel { width: calc(100vw - 24px); max-height: calc(100vh - 24px); }
   .modalImage, .modalVideo { max-height: calc(100vh - 24px); }

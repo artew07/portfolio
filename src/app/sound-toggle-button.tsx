@@ -12,6 +12,7 @@ export function SoundToggleButton({ className }: { className: string }) {
 
   return (
     <button
+      data-sound-toggle
       aria-label={label}
       aria-pressed={isSoundEnabled}
       className={className}

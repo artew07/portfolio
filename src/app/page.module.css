@@ -533,7 +533,8 @@
     ),
     linear-gradient(
       to bottom,
-      #000 0%,
+      transparent 0%,
+      #000 6%,
       #000 calc(100% - var(--hero-video-mask-y-fade, 28%)),
       transparent 100%
     );
@@ -547,7 +548,8 @@
     ),
     linear-gradient(
       to bottom,
-      #000 0%,
+      transparent 0%,
+      #000 6%,
       #000 calc(100% - var(--hero-video-mask-y-fade, 28%)),
       transparent 100%
     );
@@ -1497,6 +1499,10 @@
 }
 
 @media (max-width: 760px) {
+  .viewport :global([data-sound-toggle]) {
+    display: none !important;
+  }
+
   .viewport {
     min-height: 100vh;
     padding: 0;

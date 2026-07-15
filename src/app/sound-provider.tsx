@@ -40,6 +40,14 @@ function getServerSoundPreferenceSnapshot() {
   return true;
 }
 
+function getMobileDeviceSnapshot() {
+  return window.matchMedia("(max-width: 760px)").matches;
+}
+
+function getServerMobileDeviceSnapshot() {
+  return true;
+}
+
 function subscribeToSoundPreference(onStoreChange: () => void) {
   const handleStorage = (event: StorageEvent) => {
     if (event.key === soundPreferenceStorageKey) {
@@ -54,6 +62,14 @@ function subscribeToSoundPreference(onStoreChange: () => void) {
     window.removeEventListener("storage", handleStorage);
     window.removeEventListener(soundPreferenceChangeEvent, onStoreChange);
   };
+}
+
+function subscribeToMobileDevice(onStoreChange: () => void) {
+  const mediaQuery = window.matchMedia("(max-width: 760px)");
+
+  mediaQuery.addEventListener("change", onStoreChange);
+
+  return () => mediaQuery.removeEventListener("change", onStoreChange);
 }
 
 function saveSoundPreference(isEnabled: boolean) {
@@ -80,6 +96,11 @@ export function SoundProvider({ children }: PropsWithChildren) {
     getSoundPreferenceSnapshot,
     getServerSoundPreferenceSnapshot,
   );
+  const isMobileDevice = useSyncExternalStore(
+    subscribeToMobileDevice,
+    getMobileDeviceSnapshot,
+    getServerMobileDeviceSnapshot,
+  );
 
   const playAudio = useCallback((sound: InteractionSound) => {
     const audio = audioRefs.current[sound];
@@ -95,17 +116,21 @@ export function SoundProvider({ children }: PropsWithChildren) {
   }, []);
 
   const playTap = useCallback(() => {
-    if (isSoundEnabled) {
+    if (isSoundEnabled && !isMobileDevice) {
       playAudio("tap");
     }
-  }, [isSoundEnabled, playAudio]);
+  }, [isMobileDevice, isSoundEnabled, playAudio]);
 
   const toggleSound = useCallback(() => {
+    if (isMobileDevice) {
+      return;
+    }
+
     const nextIsEnabled = !isSoundEnabled;
 
     saveSoundPreference(nextIsEnabled);
     playAudio(nextIsEnabled ? "toggleOn" : "toggleOff");
-  }, [isSoundEnabled, playAudio]);
+  }, [isMobileDevice, isSoundEnabled, playAudio]);
 
   const value = useMemo(
     () => ({ isSoundEnabled, playTap, toggleSound }),
@@ -114,17 +139,19 @@ export function SoundProvider({ children }: PropsWithChildren) {
 
   return (
     <SoundContext.Provider value={value}>
-      {Object.entries(interactionSounds).map(([sound, src]) => (
-        <audio
-          aria-hidden="true"
-          key={sound}
-          preload="auto"
-          ref={(element) => {
-            audioRefs.current[sound as InteractionSound] = element;
-          }}
-          src={src}
-        />
-      ))}
+      {!isMobileDevice
+        ? Object.entries(interactionSounds).map(([sound, src]) => (
+            <audio
+              aria-hidden="true"
+              key={sound}
+              preload="auto"
+              ref={(element) => {
+                audioRefs.current[sound as InteractionSound] = element;
+              }}
+              src={src}
+            />
+          ))
+        : null}
       {children}
     </SoundContext.Provider>
   );
