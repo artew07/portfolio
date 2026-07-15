@@ -43,6 +43,10 @@ function getCloseDuration() {
   );
 }
 
+function shouldManageDialogFocus() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
 export function ContactButton({ className }: { className: string }) {
   const [isHovered, setIsHovered] = useState(false);
   const [modalState, setModalState] = useState<ModalState>("closed");
@@ -61,7 +65,9 @@ export function ContactButton({ className }: { className: string }) {
     }
 
     setModalState("closed");
-    triggerRef.current?.focus();
+    if (shouldManageDialogFocus()) {
+      triggerRef.current?.focus();
+    }
   }, []);
 
   const openModal = () => {
@@ -117,7 +123,7 @@ export function ContactButton({ className }: { className: string }) {
   }, [modalState]);
 
   useEffect(() => {
-    if (modalState === "open") {
+    if (modalState === "open" && shouldManageDialogFocus()) {
       closeButtonRef.current?.focus();
     }
   }, [modalState]);
