@@ -22,6 +22,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Do not play interaction sounds on hover, individual keystrokes, slider movement, or repeated activation of an already-active control.
 - Do not create standalone `Audio` instances outside the shared sound provider. Development-only and debug-panel controls are exempt from interaction sounds.
 
+## Mobile layout consistency
+
+- At `max-width: 760px`, portfolio case-study pages must use the same outer layout as the main page: a white full-viewport surface with no outer card, shadow, or gray page gutter; `16px` inline content padding; and `72px` bottom padding. Keep page-specific content spacing inside that shared outer frame.
+
 ## Nested copy
 
 - `portfolio-app/` is a separate nested Git repo with an older app copy/template. Do not change it unless the task explicitly targets that directory.

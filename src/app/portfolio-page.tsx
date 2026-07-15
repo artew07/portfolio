@@ -39,6 +39,7 @@ const portfolioCases: Array<{
         variant: "loop" | "ccp";
       };
   id: string;
+  href?: string;
   metadata?: string[];
   title: string | false;
 }> = [
@@ -55,6 +56,7 @@ const portfolioCases: Array<{
       width: 494,
     },
     id: "steamify-case",
+    href: "/steamify-skins-cashout",
     metadata: ["Steamify", "2024", "Soon"],
     title: "How I increased CTR Web-to-Telegram button from",
   },
@@ -120,8 +122,8 @@ export async function PortfolioPage({
             <PortfolioTabPanels
               work={
                 <section className={styles.work} id="work" aria-label="Selected work">
-                  {portfolioCases.map(({ accent, cover, id, metadata, title }) => (
-                    <PortfolioCase accent={accent} caseId={id} cover={cover} key={id} metadata={metadata} title={title} />
+                  {portfolioCases.map(({ accent, cover, href, id, metadata, title }) => (
+                    <PortfolioCase accent={accent} caseId={id} cover={cover} href={href} key={id} metadata={metadata} title={title} />
                   ))}
                 </section>
               }

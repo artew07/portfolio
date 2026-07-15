@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { StaticImageData } from "next/image";
 import dynamic from "next/dynamic";
 import {
@@ -14,6 +15,7 @@ import {
 } from "react";
 import { InteractiveCardCover } from "@/components/interactive-card-cover";
 import { DashboardCasePreview } from "./dashboard-case-preview";
+import { useInteractionSound } from "./sound-provider";
 import styles from "./page.module.css";
 
 type CaseImageVariant = "steamify" | "loop" | "ccp" | "safe";
@@ -48,6 +50,7 @@ interface PortfolioCaseProps {
   caseId: string;
   centeredTitle?: boolean;
   cover: CaseCover;
+  href?: string;
   metadata?: string[];
   title?: string | false;
 }
@@ -307,9 +310,11 @@ export function PortfolioCase({
   caseId,
   centeredTitle = false,
   cover,
+  href,
   metadata,
   title = false,
 }: PortfolioCaseProps) {
+  const { playTap } = useInteractionSound();
   return (
     <article className={styles.case} data-case-id={caseId}>
       {cover.type === "interactive-card" ? (
@@ -423,6 +428,15 @@ export function PortfolioCase({
             </span>
           ) : null}
         </div>
+      ) : null}
+
+      {href && title ? (
+        <Link
+          aria-label={title}
+          className={styles.caseLinkOverlay}
+          href={href}
+          onClick={playTap}
+        />
       ) : null}
     </article>
   );
