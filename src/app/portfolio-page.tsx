@@ -57,7 +57,7 @@ const portfolioCases: Array<{
     },
     id: "steamify-case",
     href: "/steamify-skins-cashout",
-    metadata: ["Steamify", "2024", "Soon"],
+    metadata: ["Steamify", "2024"],
     title: "How I increased CTR Web-to-Telegram button from",
   },
   { cover: { type: "interactive-card" }, id: "mesh-card-demo", title: "Interactive bank card" },

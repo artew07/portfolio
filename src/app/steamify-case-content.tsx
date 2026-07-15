@@ -8,27 +8,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useInteractionSound } from "./sound-provider";
 import styles from "./steamify-case.module.css";
 
-const desktopSlides = [
-  "/images/steamify-case/desktop-01.jpg",
-  "/images/steamify-case/desktop-02.jpg",
-  "/images/steamify-case/desktop-03.jpg",
-];
-
 export function SteamifyCaseContent() {
   const { playTap } = useInteractionSound();
-  const [slide, setSlide] = useState(0);
-
-  function changeSlide(nextSlide: number) {
-    setSlide((nextSlide + desktopSlides.length) % desktopSlides.length);
-    playTap();
-  }
 
   return (
     <main className={styles.page}>
       <article className={styles.caseStudy}>
         <section className={styles.intro}>
           <div className={styles.caseToolbar}>
-            <Link className={styles.homeButton} href="/" onClick={playTap}>← Home</Link>
+            <Link className={styles.homeButton} href="/" onClick={playTap}>
+              <Image alt="" aria-hidden="true" height={20} src="/images/steamify-case/chevron-left.svg" width={7} />
+              <span>Home</span>
+            </Link>
           </div>
           <Image alt="Steamify" className={styles.caseLogo} height={24} src="/images/steamify-case/steamify-logo.svg" width={24} />
           <div className={styles.introTitleRow}>
@@ -126,17 +117,14 @@ export function SteamifyCaseContent() {
           <CaseImage alt="Steamify analytics dashboard" src="/images/steamify-case/analytics.png" />
         </section>
 
-        <section className={styles.section}>
-          <p className={styles.eyebrow}>Desktop</p>
-          <h2>And desktop version...</h2>
-          <div className={styles.carousel}>
-            <ExpandableCaseImage alt="Steamify desktop interface" className={styles.carouselImage} priority src={desktopSlides[slide]} />
-            <div className={styles.carouselControls}>
-              <button aria-label="Previous slide" onClick={() => changeSlide(slide - 1)} type="button"><Image alt="" height={40} src="/images/steamify-case/arrow-left.svg" width={40} /></button>
-              <span>{slide + 1} / {desktopSlides.length}</span>
-              <button aria-label="Next slide" onClick={() => changeSlide(slide + 1)} type="button"><Image alt="" height={40} src="/images/steamify-case/arrow-right.svg" width={40} /></button>
-            </div>
-          </div>
+        <section className={`${styles.section} ${styles.impactSection}`}>
+          <p className={styles.eyebrow}>Impact</p>
+          <h2 className={styles.achievementsHeading}>My achievements</h2>
+          <ol className={styles.impactList}>
+            <li><span>01</span><p>Redesigned the cashout flow, increasing web-to-Telegram app button CTR from 20% to 50%.</p></li>
+            <li><span>02</span><p>Created a design system with 45+ reusable components and Figma Variables-based color tokens.</p></li>
+            <li><span>03</span><p>Led frontend design reviews and helped drive the transition from Vue to React, Next.js, and shadcn/ui—improving consistency and delivery speed.</p></li>
+          </ol>
         </section>
 
       </article>
