@@ -68,7 +68,7 @@ const portfolioCases: Array<{
     title: "Managing end-to-end AI agents",
   },
   {
-    cover: { mobileSrc: "/videos/ccp-animation-mobile-compress.mp4", src: "/videos/CCP-60FPS-compressed.mp4", type: "video", variant: "ccp" },
+    cover: { mobileSrc: "/videos/Mobile_CCP_Animation .mp4", src: "/videos/Desktop_CCP_Animation_Compress.mp4", type: "video", variant: "ccp" },
     id: "s7-case",
     metadata: ["KOTELOV", "iPad App", "2020", "Soon"],
     title: "App for flight attendants that works offline",

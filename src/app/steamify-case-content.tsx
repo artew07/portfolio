@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Maximize2, X } from "lucide-react";
+import { Maximize2, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInteractionSound } from "./sound-provider";
@@ -33,12 +33,6 @@ export function SteamifyCaseContent() {
             <div><dt>My role</dt><dd>Product Design, Research, Design System, Handoff, Design Review, Analytics</dd></div>
             <div><dt>Timeline</dt><dd>2024–2025</dd></div>
           </dl>
-        </section>
-
-        <section className={styles.metrics} aria-label="Project results">
-          <div><strong><span>0</span><ArrowRight aria-hidden="true" size={20} strokeWidth={1.75} /><span>50 000</span></strong><span>MAU</span></div>
-          <div><strong><span>0</span><ArrowRight aria-hidden="true" size={20} strokeWidth={1.75} /><span>500</span></strong><span>daily skins cashouts</span></div>
-          <div><strong><span>20</span><ArrowRight aria-hidden="true" size={20} strokeWidth={1.75} /><span>50%</span></strong><span>web-to-app button CTR</span></div>
         </section>
 
         <section className={styles.section}>

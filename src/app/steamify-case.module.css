@@ -21,7 +21,7 @@
 .introTitleRow > span, .details dt { color: #747c79; font-size: 15px; line-height: 20px; }
 .introTitleRow > span { font-size: 14px; }
 .eyebrow { color: rgb(82, 90, 87); font-size: 15px; line-height: 20px; }
-.lede { max-width: 476px; margin: 0; color: #616b6a; font-size: 16px; line-height: 1.4; letter-spacing: -.02em; }
+.lede { max-width: 476px; margin: 0; color: #616b6a; font-size: 16px; line-height: 1.6; letter-spacing: 0; }
 .details { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0; padding: 16px 0; }
 .details div { display: grid; gap: 4px; }
 .details dd { margin: 0; color: #051e1d; font-size: 16px; line-height: 24px; }
@@ -48,26 +48,26 @@
 .metrics > div > span { color: #68716e; font-size: 14px; line-height: 18px; }
 .heroVideo { margin-top: 0; aspect-ratio: 2048 / 1117; object-fit: cover; }
 .section { display: flex; flex-direction: column; gap: 20px; margin-top: 116px; }
-.section h2 { max-width: 650px; font-size: 24px; }
+.section h2 { max-width: 650px; font-size: 24px; line-height: 1.2; }
 .section h2 { letter-spacing: 0; }
 .section h2.compactHeading { font-size: 24px; }
 .subheading { margin: 10px 0 0; font-size: 24px; font-weight: 500; line-height: 1.1; letter-spacing: -.035em; }
-.section p:not(.eyebrow) { max-width: 625px; margin: 0; color: #525a57; font-size: 16px; line-height: 1.42; letter-spacing: -.02em; }
+.section p:not(.eyebrow) { max-width: 625px; margin: 0; color: #616b6a; font-size: 16px; line-height: 1.6; letter-spacing: 0; }
 .section p.compactCopy { font-size: 16px; }
 .impactSection { gap: 24px; }
 .section h2.achievementsHeading { font-size: 30px; letter-spacing: -.045em; }
 .impactList { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid #e7eae9; }
 .impactList li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid #e7eae9; }
 .impactList span { color: #747c79; font-size: 13px; line-height: 1.4; }
-.impactList p { max-width: none; margin: 0; color: #333a38; font-size: 16px; line-height: 1.4; letter-spacing: -.02em; }
+.impactList p { max-width: none; margin: 0; color: #616b6a; font-size: 16px; line-height: 1.6; letter-spacing: 0; }
 .numberedList { display: grid; gap: 0; margin: 4px 0; padding: 0; list-style: none; border-top: 1px solid #e7eae9; }
 .numberedList li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid #e7eae9; }
 .numberedList span, .solutionGrid span { color: #747c79; font-size: 13px; }
-.numberedList p { margin: 0; color: #333a38; font-size: 16px; line-height: 1.4; }
+.numberedList p { margin: 0; color: #616b6a; font-size: 16px; line-height: 1.6; letter-spacing: 0; }
 .solutionGrid { display: grid; grid-template-columns: 1fr; border-top: 1px solid #e7eae9; }
 .solutionGrid > div { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid #e7eae9; }
 .solutionGrid > div + div { padding-left: 0; border-left: 0; }
-.solutionGrid p { margin: 0; color: #333a38; font-size: 16px; line-height: 1.4; }
+.solutionGrid p { margin: 0; color: #616b6a; font-size: 16px; line-height: 1.6; letter-spacing: 0; }
 @media (max-width: 760px) {
   .page { padding: 0; background: #fff; }
   .caseStudy { width: 100%; min-height: 100vh; margin: 0; padding: 0 16px 72px; border-radius: 0; box-shadow: none; }
