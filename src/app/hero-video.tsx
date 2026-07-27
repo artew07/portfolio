@@ -318,7 +318,7 @@ export function HeroVideo({ className }: { className?: string }) {
           "--hero-cursor-label-y": `${cursorLabel.y}px`,
         } as CSSProperties}
       >
-        Smile
+        Say Hi
       </span>
     </div>
   );
