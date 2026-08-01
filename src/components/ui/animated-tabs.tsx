@@ -12,7 +12,7 @@ interface Tab {
 interface AnimatedTabsProps {
   tabs: Tab[];
   defaultTab?: string;
-  onChange?: (tabId: string) => void;
+  onChange?: (tabId: string, shouldAnimate: boolean) => void;
 }
 
 export function AnimatedTabs({
@@ -23,14 +23,14 @@ export function AnimatedTabs({
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0].id);
   const { playTap } = useInteractionSound();
 
-  const handleTabChange = (tabId: string) => {
+  const handleTabChange = (tabId: string, shouldAnimate: boolean) => {
     if (tabId === activeTab) {
       return;
     }
 
     playTap();
     setActiveTab(tabId);
-    onChange?.(tabId);
+    onChange?.(tabId, shouldAnimate);
   };
 
   return (
@@ -44,7 +44,7 @@ export function AnimatedTabs({
             ${activeTab === tab.id ? "" : "hover:text-[#051E1D]/50"}
           `}
           key={tab.id}
-          onClick={() => handleTabChange(tab.id)}
+          onClick={(event) => handleTabChange(tab.id, event.detail !== 0)}
           style={{
             WebkitTapHighlightColor: "transparent",
           }}
@@ -52,7 +52,7 @@ export function AnimatedTabs({
         >
           {activeTab === tab.id && (
             <motion.span
-              className="absolute inset-0 z-10 bg-[#F1F3F3] mix-blend-darken"
+              className="absolute inset-0 z-10 bg-[#F4F4F6] mix-blend-darken"
               layoutId="bubble"
               style={{ borderRadius: 9999 }}
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}

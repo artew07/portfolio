@@ -54,6 +54,7 @@ export function HeroVideo({ className }: { className?: string }) {
   const animationFrameRef = useRef<number | null>(null);
   const hoveredRef = useRef(false);
   const hasHeldRef = useRef(false);
+  const isIntroductionRef = useRef(false);
   const phaseRef = useRef<ReactionPhase>("idle");
   const [phase, setPhase] = useState<ReactionPhase>("idle");
   const [cursorLabel, setCursorLabel] = useState({
@@ -111,6 +112,7 @@ export function HeroVideo({ className }: { className?: string }) {
     }
 
     hasHeldRef.current = false;
+    isIntroductionRef.current = false;
     updatePhase("idle");
   }
 
@@ -229,6 +231,7 @@ export function HeroVideo({ className }: { className?: string }) {
     if (
       !reactionVideo ||
       phaseRef.current !== "playing" ||
+      isIntroductionRef.current ||
       !hoveredRef.current ||
       hasHeldRef.current ||
       reactionVideo.currentTime < REACTION_HOLD_TIME
@@ -257,6 +260,32 @@ export function HeroVideo({ className }: { className?: string }) {
       finishReaction();
     }
   }
+
+  useEffect(() => {
+    const supportsHover = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!supportsHover || prefersReducedMotion) {
+      return;
+    }
+
+    const introductionTimer = window.setTimeout(() => {
+      isIntroductionRef.current = true;
+      updatePhase("waiting");
+      waitForMatchingFrame(window.performance.now());
+    }, 0);
+
+    return () => {
+      window.clearTimeout(introductionTimer);
+    };
+
+    // The introduction should run once when this mounted hero is hydrated.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div

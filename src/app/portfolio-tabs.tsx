@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 
 interface Tab {
@@ -16,7 +17,8 @@ interface Tab {
 
 interface PortfolioTabsContextValue {
   activeTab: string;
-  setActiveTab: (tabId: string) => void;
+  selectTab: (tabId: string, shouldAnimate: boolean) => void;
+  shouldAnimatePanel: boolean;
 }
 
 const PortfolioTabsContext =
@@ -35,10 +37,15 @@ function usePortfolioTabs() {
 }
 
 export function PortfolioTabsProvider({ children }: { children: ReactNode }) {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("favourites");
+  const [shouldAnimatePanel, setShouldAnimatePanel] = useState(false);
+  const selectTab = (tabId: string, shouldAnimate: boolean) => {
+    setShouldAnimatePanel(shouldAnimate);
+    setActiveTab(tabId);
+  };
   const value = useMemo(
-    () => ({ activeTab, setActiveTab }),
-    [activeTab],
+    () => ({ activeTab, selectTab, shouldAnimatePanel }),
+    [activeTab, shouldAnimatePanel],
   );
 
   return (
@@ -49,17 +56,43 @@ export function PortfolioTabsProvider({ children }: { children: ReactNode }) {
 }
 
 export function PortfolioTabList({ tabs }: { tabs: Tab[] }) {
-  const { setActiveTab } = usePortfolioTabs();
+  const { selectTab } = usePortfolioTabs();
 
   return (
-    <AnimatedTabs defaultTab="all" onChange={setActiveTab} tabs={tabs} />
+    <AnimatedTabs
+      defaultTab="favourites"
+      onChange={selectTab}
+      tabs={tabs}
+    />
   );
 }
 
 export function PortfolioTabPanels({
-  work,
+  panels,
 }: {
-  work: ReactNode;
+  panels: Record<string, ReactNode>;
 }) {
-  return work;
+  const { activeTab, shouldAnimatePanel } = usePortfolioTabs();
+  const prefersReducedMotion = useReducedMotion();
+  const shouldAnimate = shouldAnimatePanel && !prefersReducedMotion;
+
+  return (
+    <motion.div
+      animate={{ opacity: 1, transform: "translateY(0)" }}
+      initial={
+        shouldAnimate
+          ? { opacity: 0, transform: "translateY(6px)" }
+          : false
+      }
+      key={activeTab}
+      style={{ width: "100%" }}
+      transition={
+        shouldAnimate
+          ? { duration: 0.18, ease: [0.23, 1, 0.32, 1] }
+          : { duration: 0 }
+      }
+    >
+      {panels[activeTab] ?? null}
+    </motion.div>
+  );
 }

@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export default function NewPortfolioPage() {
   return (
     <PortfolioPage
-      hero={<V2Hero showDivider={false} />}
+      hero={<V2Hero />}
       showAbout={false}
-      showTabs={false}
+      showTabs
       variant="v2"
     />
   );

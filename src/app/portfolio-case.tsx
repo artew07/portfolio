@@ -22,10 +22,23 @@ type CaseImageVariant = "steamify" | "loop" | "ccp" | "safe";
 
 type CaseCover =
   | {
+      foreground?: {
+        alt: string;
+        height: number;
+        src: string;
+        width: number;
+      };
+      src: string;
+      type: "background";
+    }
+  | {
       type: "interactive-card";
     }
   | {
       type: "phantom-glow";
+    }
+  | {
+      type: "placeholder";
     }
   | {
       type: "image";
@@ -42,7 +55,7 @@ type CaseCover =
       mobileSrc?: string;
       type: "video";
       src: string;
-      variant: "loop" | "ccp";
+      variant: "loop" | "ccp" | "animator" | "steamify";
     };
 
 interface PortfolioCaseProps {
@@ -52,6 +65,10 @@ interface PortfolioCaseProps {
   cover: CaseCover;
   href?: string;
   metadata?: string[];
+  metadataLinks?: Array<{
+    href: string;
+    item: string;
+  }>;
   title?: string | false;
 }
 
@@ -312,12 +329,30 @@ export function PortfolioCase({
   cover,
   href,
   metadata,
+  metadataLinks,
   title = false,
 }: PortfolioCaseProps) {
   const { playTap } = useInteractionSound();
   return (
     <article className={styles.case} data-case-id={caseId}>
-      {cover.type === "interactive-card" ? (
+      {cover.type === "background" ? (
+        <div
+          className={`${styles.caseVisual} ${styles.backgroundCaseVisual}`}
+          data-debug-frame
+          style={{ backgroundImage: `url("${cover.src}")` }}
+        >
+          {cover.foreground ? (
+            <Image
+              alt={cover.foreground.alt}
+              className={styles.backgroundCaseImage}
+              data-debug-media
+              height={cover.foreground.height}
+              src={cover.foreground.src}
+              width={cover.foreground.width}
+            />
+          ) : null}
+        </div>
+      ) : cover.type === "interactive-card" ? (
         <div
           className={`${styles.caseVisual} ${styles.interactiveCaseVisual}`}
           data-debug-frame
@@ -333,13 +368,24 @@ export function PortfolioCase({
         >
           <PhantomGlowCover />
         </div>
+      ) : cover.type === "placeholder" ? (
+        <div
+          aria-label="Case visual coming soon"
+          className={`${styles.caseVisual} ${styles.placeholderCaseVisual}`}
+          data-debug-frame
+          role="img"
+        />
       ) : cover.type === "video" ? (
         <div className={styles.caseVisual} data-debug-frame>
           <AutoPlayCaseVideo
             className={`${styles.caseVideo} ${
-              cover.variant === "ccp"
-                ? styles.ccpCaseVideo
-                : styles.loopCaseVideo
+              cover.variant === "loop"
+                ? styles.loopCaseVideo
+                : cover.variant === "animator"
+                  ? styles.animatorCaseVideo
+                  : cover.variant === "steamify"
+                    ? styles.steamifyCaseVideo
+                  : styles.ccpCaseVideo
             }`}
             mobileSrc={cover.mobileSrc}
             src={cover.src}
@@ -419,12 +465,30 @@ export function PortfolioCase({
 
           {metadata?.length ? (
             <span className={styles.caseMetadata}>
-              {metadata.map((item, index) => (
-                <Fragment key={item}>
-                  {index > 0 ? <span aria-hidden="true">•</span> : null}
-                  <span>{item}</span>
-                </Fragment>
-              ))}
+              {metadata.map((item, index) => {
+                const metadataLink = metadataLinks?.find(
+                  (link) => link.item === item,
+                );
+
+                return (
+                  <Fragment key={item}>
+                    {index > 0 ? <span aria-hidden="true">•</span> : null}
+                    {metadataLink ? (
+                      <a
+                        className={`${styles.v2InlineLink} ${styles.caseMetadataLink}`}
+                        href={metadataLink.href}
+                        onClick={playTap}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        {item}
+                      </a>
+                    ) : (
+                      <span>{item}</span>
+                    )}
+                  </Fragment>
+                );
+              })}
             </span>
           ) : null}
         </div>

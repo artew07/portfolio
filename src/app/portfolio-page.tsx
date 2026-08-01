@@ -1,8 +1,9 @@
 import type { StaticImageData } from "next/image";
 import type { ReactNode } from "react";
-import safeCaseImage from "../../public/images/safe_case.png";
+import safeDesignSystemThumbnail from "../../public/images/safe_design_system_thumbnail.png";
 import styles from "./page.module.css";
 import { AboutMeContent } from "./about-me-content";
+import { CodexShimmer } from "./codex-shimmer";
 import { PortfolioCase } from "./portfolio-case";
 import { SoundProvider } from "./sound-provider";
 import {
@@ -12,14 +13,25 @@ import {
 } from "./portfolio-tabs";
 
 const workTabs = [
-  { id: "all", label: "All projects" },
-  { id: "case-study", label: "Case Study" },
-  { id: "concepts", label: "Concepts" },
+  { id: "favourites", label: "Favorites" },
+  { id: "case-study", label: "Work" },
+  { id: "my-products", label: "My products" },
+  { id: "craft", label: "Craft" },
 ];
 
 const portfolioCases: Array<{
   accent?: string;
   cover:
+    | {
+        foreground?: {
+          alt: string;
+          height: number;
+          src: string;
+          width: number;
+        };
+        src: string;
+        type: "background";
+      }
     | {
         alt: string;
         eager?: boolean;
@@ -32,58 +44,139 @@ const portfolioCases: Array<{
       }
     | { type: "interactive-card" }
     | { type: "phantom-glow" }
+    | { type: "placeholder" }
     | {
         mobileSrc?: string;
         src: string;
         type: "video";
-        variant: "loop" | "ccp";
+        variant: "loop" | "ccp" | "animator" | "steamify";
       };
   id: string;
   href?: string;
   metadata?: string[];
+  metadataLinks?: Array<{
+    href: string;
+    item: string;
+  }>;
   title: string | false;
 }> = [
   {
     accent: "20% to 50%",
+    // Static cover retained for a quick rollback.
+    // cover: {
+    //   alt: "",
+    //   eager: true,
+    //   height: 302,
+    //   src: "/images/steamify_2.webp",
+    //   type: "image",
+    //   unoptimized: true,
+    //   variant: "steamify",
+    //   width: 494,
+    // },
     cover: {
-      alt: "",
-      eager: true,
-      height: 302,
-      src: "/images/steamify_2.webp",
-      type: "image",
-      unoptimized: true,
+      src: "/videos/steamify_thumb_case.mp4?v=20260801-4",
+      type: "video",
       variant: "steamify",
-      width: 494,
     },
     id: "steamify-case",
     href: "/steamify-skins-cashout",
     metadata: ["Steamify", "2024"],
-    title: "How I increased CTR Web-to-Telegram button from",
+    metadataLinks: [
+      {
+        href: "https://steamify.io/cashout/cs2",
+        item: "Steamify",
+      },
+    ],
+    title: "Steam cash-out service: Increased Web-to-Telegram CTR from",
   },
-  { cover: { type: "interactive-card" }, id: "mesh-card-demo", title: "Interactive bank card" },
+  {
+    cover: { type: "interactive-card" },
+    id: "mesh-card-demo",
+    title: "Interactive bank card built with Paper Shaders",
+  },
   {
     cover: { alt: "", height: 1393, src: "/images/loop_case.png?v=20260706-2", type: "image", variant: "loop", width: 2544 },
     id: "steamify-case-2",
-    metadata: ["Personal research", "Concept", "2026", "Soon"],
-    title: "Managing end-to-end AI agents",
+    metadata: ["Personal research", "2026"],
+    title: "Workspace for managing AI agents",
+  },
+  {
+    cover: {
+      mobileSrc: "/videos/animator_demo_mobile.mp4",
+      src: "/videos/animator_demo.mp4",
+      type: "video",
+      variant: "animator",
+    },
+    href: "https://getanimator.xyz/",
+    id: "animator",
+    metadata: ["Animator", "2026", "Watch how I built it"],
+    metadataLinks: [
+      { href: "https://getanimator.xyz/", item: "Animator" },
+      {
+        href: "https://youtu.be/d9Nve2VaHQ4?si=Jy_Wdt_buRd10kKW",
+        item: "Watch how I built it",
+      },
+    ],
+    title: "Browser-based tool for seamless carousels",
+  },
+  {
+    cover: {
+      alt: "",
+      height: 697,
+      src: safeDesignSystemThumbnail,
+      type: "image",
+      variant: "safe",
+      width: 1272,
+    },
+    id: "ccp-design-system",
+    metadata: ["Safe {Wallet}", "2023"],
+    metadataLinks: [{ href: "https://safe.global/", item: "Safe {Wallet}" }],
+    title: "Open-source design system used by 1,500+ people",
+  },
+  {
+    cover: {
+      foreground: {
+        alt: "Steamify Trading Bot dashboard",
+        height: 697,
+        src: "/images/steamify_trading_bot_case_thumb.png",
+        width: 1272,
+      },
+      src: "/images/AI_Bg_083.png",
+      type: "background",
+    },
+    id: "orbit",
+    metadata: ["Steamify", "2023"],
+    metadataLinks: [
+      { href: "https://steamify.io/cashout/cs2", item: "Steamify" },
+    ],
+    title: "Steam trading management dashboard",
+  },
+  {
+    cover: {
+      foreground: {
+        alt: "Playdex game marketplace",
+        height: 2237,
+        src: "/images/playdex_thumbnail.png",
+        width: 3451,
+      },
+      src: "/images/AI_Bg_051.png",
+      type: "background",
+    },
+    id: "northstar",
+    metadata: ["Playdex", "2023"],
+    title: "Web3 NFT marketplace for gamers in Asia",
   },
   {
     cover: { mobileSrc: "/videos/Mobile_CCP_2_Animation_Compress.mp4", src: "/videos/Desktop_CCP_2_Animation_Compress.mp4", type: "video", variant: "ccp" },
     id: "s7-case",
-    metadata: ["KOTELOV", "iPad App", "2020", "Soon"],
-    title: "App for flight attendants that works offline",
+    metadata: ["KOTELOV", "2020"],
+    metadataLinks: [{ href: "https://kotelov.com/", item: "KOTELOV" }],
+    title: "Offline iPad app for flight attendants",
   },
   {
     cover: { type: "phantom-glow" },
     id: "glow-hover-effect",
-    metadata: ["Concept", "2026"],
-    title: "Phantom logo hover effect",
-  },
-  {
-    cover: { alt: "", height: 697, src: safeCaseImage, type: "image", variant: "safe", width: 1272 },
-    id: "steamify-case-3",
-    metadata: ["Safe {Wallet}", "Design System", "2024"],
-    title: "Open source design system with 1400 users",
+    title: "Interactive Phantom logo hover effect",
   },
 ];
 
@@ -103,6 +196,32 @@ export async function PortfolioPage({
       ? (await import("@/components/portfolio-debug-panel")).PortfolioDebugPanel
       : null;
 
+  function renderWork(caseIds: string[]) {
+    const selectedCases = caseIds.flatMap((caseId) => {
+      const portfolioCase = portfolioCases.find(({ id }) => id === caseId);
+      return portfolioCase ? [portfolioCase] : [];
+    });
+
+    return (
+      <section className={styles.work} id="work" aria-label="Selected work">
+        {selectedCases.map(
+          ({ accent, cover, href, id, metadata, metadataLinks, title }) => (
+            <PortfolioCase
+              accent={accent}
+              caseId={id}
+              cover={cover}
+              href={href}
+              key={id}
+              metadata={metadata}
+              metadataLinks={metadataLinks}
+              title={title}
+            />
+          ),
+        )}
+      </section>
+    );
+  }
+
   return (
     <main className={styles.viewport}>
       <SoundProvider>
@@ -113,20 +232,39 @@ export async function PortfolioPage({
             }`}
           >
             {hero}
-            {/* Temporarily hidden on the main V2 route. Restore when requested. */}
             {showTabs ? (
               <div className={styles.heroTabs}>
                 <PortfolioTabList tabs={workTabs} />
               </div>
             ) : null}
             <PortfolioTabPanels
-              work={
-                <section className={styles.work} id="work" aria-label="Selected work">
-                  {portfolioCases.map(({ accent, cover, href, id, metadata, title }) => (
-                    <PortfolioCase accent={accent} caseId={id} cover={cover} href={href} key={id} metadata={metadata} title={title} />
-                  ))}
-                </section>
-              }
+              panels={{
+                favourites: renderWork([
+                  "animator",
+                  "steamify-case",
+                  "s7-case",
+                ]),
+                "case-study": renderWork([
+                  "steamify-case",
+                  "orbit",
+                  "ccp-design-system",
+                  "northstar",
+                  "s7-case",
+                ]),
+                "my-products": renderWork(["animator"]),
+                craft: (
+                  <div className={styles.tabPanel}>
+                    <p className={styles.tabDescription}>
+                      Design engineering experiments made in <CodexShimmer />
+                    </p>
+                    {renderWork([
+                      "mesh-card-demo",
+                      "steamify-case-2",
+                      "glow-hover-effect",
+                    ])}
+                  </div>
+                ),
+              }}
             />
             {portfolioCases.map(({ id }) => <span className={styles.anchor} id={id} key={id} aria-hidden="true" />)}
             <span className={styles.anchor} id="tools" aria-hidden="true" />

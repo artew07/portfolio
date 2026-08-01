@@ -565,8 +565,8 @@
   padding: 0 32px;
 }
 
-.v2Name,
-.v2Description p {
+.v2Description p,
+.v2Tagline {
   margin: 0;
   color: #616b6a;
   font-size: 14px;
@@ -575,18 +575,19 @@
   letter-spacing: -0.14px;
 }
 
-.v2Content h1 {
-  width: min(540px, 100%);
+.v2Name {
   margin: 0;
   color: #051e1d;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.02em;
 }
 
-.v2DesktopBreak {
-  display: block;
+.v2Identity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .v2Description {
@@ -731,10 +732,10 @@
 }
 
 .v2Divider {
-  width: 100%;
+  width: calc(100% - 64px);
   height: 1px;
   display: block;
-  margin-top: 16px;
+  margin: 16px 32px 0;
   background: #eef1f1;
 }
 
@@ -750,6 +751,24 @@
   flex-direction: column;
   align-items: center;
   gap: 48px;
+}
+
+.tabPanel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.tabDescription {
+  width: 100%;
+  margin: 0;
+  color: #616b6a;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.14px;
 }
 
 .aboutSection {
@@ -876,10 +895,6 @@
   background: #f7f8f8;
 }
 
-.case[data-case-id="steamify-case-3"] .caseVisual {
-  border: 1px solid #f1f3f3;
-}
-
 .steamifyCaseVisual {
   background-image: url("/images/AI_Bg_01.webp");
   background-position: center;
@@ -904,6 +919,22 @@
 
 .phantomCaseVisual {
   background: #0b0b0e;
+}
+
+.placeholderCaseVisual {
+  background: #e5e5e5;
+}
+
+.backgroundCaseVisual {
+  background-position: center;
+  background-size: cover;
+}
+
+.backgroundCaseImage {
+  width: min(88%, 560px);
+  height: auto;
+  border-radius: 10px;
+  object-fit: contain;
 }
 
 .interactiveCaseMedia {
@@ -1391,14 +1422,24 @@
 }
 
 .safeCaseImage {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: auto;
+  top: -7px;
+  left: -10px;
+  width: calc(100% + 21px);
+  height: calc(100% + 14px);
+  max-width: none;
+  max-height: none;
+  margin: 0;
   object-fit: cover;
+  transform: none;
 }
 
 .caseVideo {
   position: absolute;
   display: block;
+  border-radius: inherit;
+  clip-path: inset(0 round 12px);
   object-fit: cover;
   background: #0e1010;
 }
@@ -1415,7 +1456,24 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  transform: scale(1.015);
+  transform: scale(1.025);
+}
+
+.steamifyCaseVideo {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.02);
+}
+
+.animatorCaseVideo {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: transparent;
+  clip-path: inset(0 round 12px);
+  transform: none;
 }
 
 .caseCaption {
@@ -1458,6 +1516,16 @@
   font-weight: 400;
   line-height: 20px;
   white-space: nowrap;
+}
+
+.caseMetadataLink {
+  z-index: 6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .caseMetadataLink:hover {
+    transform: none;
+  }
 }
 
 .caseMetric {
@@ -1543,12 +1611,9 @@
     padding: 0 16px;
   }
 
-  .v2Content h1 {
-    font-size: 28px;
-  }
-
-  .v2DesktopBreak {
-    display: none;
+  .v2Divider {
+    width: calc(100% - 32px);
+    margin-inline: 16px;
   }
 
   .heroToolbar {
@@ -1634,19 +1699,19 @@
   }
 
   .heroTabs > div {
-    width: min(377px, calc(100vw - 25px));
-    justify-content: stretch;
+    width: fit-content;
+    justify-content: flex-start;
     gap: 0;
   }
 
   .heroTabs > div > * + * {
-    margin-left: 0 !important;
+    margin-left: 4px !important;
   }
 
   .heroTabs button {
-    width: 25%;
-    height: 32px;
-    padding: 0;
+    width: auto;
+    height: auto;
+    padding: 6px 12px;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.14px;
@@ -1778,12 +1843,6 @@
 }
 
 @media (max-width: 411px) {
-  .v2Content h1 {
-    font-size: clamp(22px, 6.7vw, 26px);
-    letter-spacing: -0.02em;
-    text-wrap: balance;
-  }
-
   .heroActions {
     gap: max(4px, calc((100vw - 370px) / 4));
   }
