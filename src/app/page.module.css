@@ -1721,11 +1721,6 @@
     gap: 44px;
   }
 
-  .case[data-case-id="mesh-card-demo"],
-  .case[data-case-id="glow-hover-effect"] {
-    display: none;
-  }
-
   .case {
     gap: 16px;
   }
@@ -1739,6 +1734,10 @@
   .caseVisualFlushBottom {
     align-items: center;
     padding-bottom: 0;
+  }
+
+  .phantomCaseHint {
+    display: none;
   }
 
   .steamifyCaseImage,
@@ -1777,15 +1776,20 @@
   .safeCaseImage {
     position: absolute !important;
     inset: auto !important;
-    top: -10.6% !important;
-    left: -11.1% !important;
-    width: 122.4% !important;
-    height: 121.4% !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    height: 100% !important;
     max-width: none !important;
     max-height: none !important;
     margin: 0 !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
     transform: none !important;
+  }
+
+  .case[data-case-id="ccp-design-system"] .caseTitle {
+    max-width: none;
+    white-space: nowrap;
   }
 
   .phantomCaseLogo {

@@ -92,6 +92,7 @@ const portfolioCases: Array<{
   {
     cover: { type: "interactive-card" },
     id: "mesh-card-demo",
+    metadata: ["Design engineering practice"],
     title: "Interactive bank card built with Paper Shaders",
   },
   {
@@ -243,6 +244,7 @@ export async function PortfolioPage({
                   "animator",
                   "steamify-case",
                   "s7-case",
+                  "mesh-card-demo",
                 ]),
                 "case-study": renderWork([
                   "steamify-case",

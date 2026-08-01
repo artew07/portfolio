@@ -300,7 +300,7 @@
 @media (max-width: 760px) {
   .composition {
     justify-content: center;
-    gap: 0;
+    gap: 16px;
     transform: none;
   }
 
@@ -309,7 +309,7 @@
   }
 
   .selector {
-    display: none;
+    display: flex;
   }
 
   .controls {
