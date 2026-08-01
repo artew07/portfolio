@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import safeDesignSystemThumbnail from "../../public/images/safe_design_system_thumbnail.png";
 import styles from "./page.module.css";
 import { AboutMeContent } from "./about-me-content";
-import { CodexShimmer } from "./codex-shimmer";
 import { PortfolioCase } from "./portfolio-case";
 import { SoundProvider } from "./sound-provider";
 import {
@@ -59,6 +58,7 @@ const portfolioCases: Array<{
     item: string;
   }>;
   title: string | false;
+  titleLink?: string;
 }> = [
   {
     accent: "20% to 50%",
@@ -92,14 +92,13 @@ const portfolioCases: Array<{
   {
     cover: { type: "interactive-card" },
     id: "mesh-card-demo",
-    metadata: ["Design engineering practice"],
     title: "Interactive bank card built with Paper Shaders",
   },
   {
     cover: { alt: "", height: 1393, src: "/images/loop_case.png?v=20260706-2", type: "image", variant: "loop", width: 2544 },
     id: "steamify-case-2",
-    metadata: ["Personal research", "2026"],
     title: "Workspace for managing AI agents",
+    titleLink: "https://dashboard-playground-orcin.vercel.app/v2/overview",
   },
   {
     cover: {
@@ -205,7 +204,7 @@ export async function PortfolioPage({
     return (
       <section className={styles.work} id="work" aria-label="Selected work">
         {selectedCases.map(
-          ({ accent, cover, href, id, metadata, metadataLinks, title }) => (
+          ({ accent, cover, href, id, metadata, metadataLinks, title, titleLink }) => (
             <PortfolioCase
               accent={accent}
               caseId={id}
@@ -215,6 +214,7 @@ export async function PortfolioPage({
               metadata={metadata}
               metadataLinks={metadataLinks}
               title={title}
+              titleLink={titleLink}
             />
           ),
         )}
@@ -253,18 +253,11 @@ export async function PortfolioPage({
                   "s7-case",
                 ]),
                 "my-products": renderWork(["animator"]),
-                craft: (
-                  <div className={styles.tabPanel}>
-                    <p className={styles.tabDescription}>
-                      Design engineering experiments made in <CodexShimmer />
-                    </p>
-                    {renderWork([
-                      "mesh-card-demo",
-                      "steamify-case-2",
-                      "glow-hover-effect",
-                    ])}
-                  </div>
-                ),
+                craft: renderWork([
+                  "mesh-card-demo",
+                  "steamify-case-2",
+                  "glow-hover-effect",
+                ]),
               }}
             />
             {portfolioCases.map(({ id }) => <span className={styles.anchor} id={id} key={id} aria-hidden="true" />)}

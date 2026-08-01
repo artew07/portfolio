@@ -1583,6 +1583,11 @@
 }
 
 @media (max-width: 760px) {
+  .case[data-case-id="steamify-case-2"] .caseTitle .v2InlineLink {
+    pointer-events: none;
+    text-decoration: none;
+  }
+
   .viewport :global([data-sound-toggle]) {
     display: none !important;
   }

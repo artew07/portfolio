@@ -57,7 +57,7 @@ export function V2Description() {
         channel for designers and tech enthusiasts. Outside of work, I play
         tennis, go to the gym, and compete in Counter-Strike 2.
       </p>
-      <p>Based in Moscow, UTC+3</p>
+      {/* <p>Based in Moscow, UTC+3</p> */}
     </div>
   );
 }

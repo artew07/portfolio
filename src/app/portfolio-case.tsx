@@ -70,6 +70,7 @@ interface PortfolioCaseProps {
     item: string;
   }>;
   title?: string | false;
+  titleLink?: string;
 }
 
 const caseImageClassNames: Record<CaseImageVariant, string> = {
@@ -331,6 +332,7 @@ export function PortfolioCase({
   metadata,
   metadataLinks,
   title = false,
+  titleLink,
 }: PortfolioCaseProps) {
   const { playTap } = useInteractionSound();
   return (
@@ -443,7 +445,19 @@ export function PortfolioCase({
               centeredTitle ? styles.secondCaseTitle : styles.caseTitle
             }
           >
-            {title}
+            {titleLink ? (
+              <a
+                className={styles.v2InlineLink}
+                href={titleLink}
+                onClick={playTap}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {title}
+              </a>
+            ) : (
+              title
+            )}
             {accent ? (
               <>
                 {" "}
