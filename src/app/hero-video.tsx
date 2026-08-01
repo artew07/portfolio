@@ -262,14 +262,11 @@ export function HeroVideo({ className }: { className?: string }) {
   }
 
   useEffect(() => {
-    const supportsHover = window.matchMedia(
-      "(hover: hover) and (pointer: fine)",
-    ).matches;
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (!supportsHover || prefersReducedMotion) {
+    if (prefersReducedMotion) {
       return;
     }
 

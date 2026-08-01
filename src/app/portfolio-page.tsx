@@ -108,7 +108,6 @@ const portfolioCases: Array<{
       type: "video",
       variant: "animator",
     },
-    href: "https://getanimator.xyz/",
     id: "animator",
     metadata: ["Animator", "2026", "Watch how I built it"],
     metadataLinks: [
@@ -138,9 +137,9 @@ const portfolioCases: Array<{
     cover: {
       foreground: {
         alt: "Steamify Trading Bot dashboard",
-        height: 697,
-        src: "/images/steamify_trading_bot_case_thumb.png",
-        width: 1272,
+        height: 1038,
+        src: "/images/steamify_trading_bot_case_thumb.webp",
+        width: 1600,
       },
       src: "/images/AI_Bg_083.png",
       type: "background",
@@ -156,9 +155,9 @@ const portfolioCases: Array<{
     cover: {
       foreground: {
         alt: "Playdex game marketplace",
-        height: 2237,
-        src: "/images/playdex_thumbnail.png",
-        width: 3451,
+        height: 1038,
+        src: "/images/playdex_thumbnail.webp",
+        width: 1600,
       },
       src: "/images/AI_Bg_051.png",
       type: "background",

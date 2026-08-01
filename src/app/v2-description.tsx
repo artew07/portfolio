@@ -21,7 +21,17 @@ export function V2Description() {
         >
           Steamify
         </a>
-        {", where I built an ecosystem for gamers."}
+        {", where I built an ecosystem for gamers. I've also designed products for crypto companies like "}
+        <a
+          className={styles.v2InlineLink}
+          href="https://safe.global/"
+          onClick={playTap}
+          rel="noreferrer"
+          target="_blank"
+        >
+          Safe
+        </a>
+        {", with hands-on experience in Web3, wallets, and digital assets."}
       </p>
       <p>
         I also share practical insights on{" "}
