@@ -917,26 +917,12 @@
   text-decoration: none;
 }
 
-.case[data-case-id="steamify-case"] {
-  transition: opacity 160ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .case[data-case-id="steamify-case"]:hover {
-    opacity: 0.92;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .case[data-case-id="steamify-case"] {
-    transition: none;
-  }
-}
-
 .caseLinkOverlay {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto;
   z-index: 5;
+  width: 100%;
+  aspect-ratio: 636 / 348.19;
   border-radius: 12px;
 }
 
@@ -956,6 +942,22 @@
   border: 0;
   border-radius: 12px;
   background: #f7f8f8;
+}
+
+.case[data-case-id="steamify-case"] .caseVisual {
+  transition: opacity 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:hover) .caseVisual {
+    opacity: 0.92;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case[data-case-id="steamify-case"] .caseVisual {
+    transition: none;
+  }
 }
 
 .steamifyCaseVisual {
@@ -1065,8 +1067,8 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .case[data-case-id="steamify-case"]:hover .steamifyCaseImage,
-  .case[data-case-id="steamify-case"]:focus-within .steamifyCaseImage {
+  .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:hover) .steamifyCaseImage,
+  .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:focus-visible) .steamifyCaseImage {
     transform: scale(1.015);
   }
 }
@@ -1805,6 +1807,10 @@
     aspect-ratio: 37 / 30;
     padding: 0;
     border-radius: 12px;
+  }
+
+  .caseLinkOverlay {
+    aspect-ratio: 37 / 30;
   }
 
   .caseVisualFlushBottom {
