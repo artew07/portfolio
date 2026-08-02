@@ -18,6 +18,19 @@ const workTabs = [
   { id: "craft", label: "Craft" },
 ];
 
+type CaseDetails = {
+  company: string;
+  companyHref?: string;
+  description: string;
+  descriptionLink?: {
+    href: string;
+    label: string;
+  };
+  period: string;
+  role: string;
+  title: string;
+};
+
 const portfolioCases: Array<{
   accent?: string;
   cover:
@@ -51,6 +64,7 @@ const portfolioCases: Array<{
         variant: "loop" | "ccp" | "animator" | "steamify";
       };
   id: string;
+  details?: CaseDetails;
   href?: string;
   metadata?: string[];
   metadataLinks?: Array<{
@@ -79,6 +93,15 @@ const portfolioCases: Array<{
       variant: "steamify",
     },
     id: "steamify-case",
+    details: {
+      company: "Steamify",
+      companyHref: "https://steamify.io/cashout/cs2",
+      description:
+        "Designed the product from scratch and helped scale it to 50K MAU. Reworked the mobile-first cashout flow and connected it to a Telegram bot, increasing web-to-Telegram CTR from 20% to 50%.",
+      period: "2024–2025",
+      role: "Product Designer",
+      title: "Mobile cashout service for in-game assets",
+    },
     href: "/steamify-skins-cashout",
     metadata: ["Steamify", "2024"],
     metadataLinks: [
@@ -108,14 +131,19 @@ const portfolioCases: Array<{
       variant: "animator",
     },
     id: "animator",
-    metadata: ["Animator", "2026", "Watch how I built it"],
-    metadataLinks: [
-      { href: "https://getanimator.xyz/", item: "Animator" },
-      {
+    details: {
+      company: "Animator",
+      companyHref: "https://getanimator.xyz/",
+      description:
+        "Designed and built Animator from scratch — a browser-based tool for creating seamless carousels.",
+      descriptionLink: {
         href: "https://youtu.be/d9Nve2VaHQ4?si=Jy_Wdt_buRd10kKW",
-        item: "Watch how I built it",
+        label: "Watch how I built it",
       },
-    ],
+      period: "2026",
+      role: "Product Designer & Developer",
+      title: "Browser-based tool for seamless carousels",
+    },
     title: "Browser-based tool for seamless carousels",
   },
   {
@@ -128,8 +156,15 @@ const portfolioCases: Array<{
       width: 1272,
     },
     id: "ccp-design-system",
-    metadata: ["Safe {Wallet}", "2023"],
-    metadataLinks: [{ href: "https://safe.global/", item: "Safe {Wallet}" }],
+    details: {
+      company: "Safe {Wallet}",
+      companyHref: "https://safe.global/",
+      description:
+        "Designed and evolved an open-source design system for Safe, creating reusable foundations and components used by 1,500+ people. The release received 85+ likes on Figma Community and reached 33,000 people on X.",
+      period: "2023",
+      role: "Product Designer",
+      title: "Open-source design system used by 1,500+ people",
+    },
     title: "Open-source design system used by 1,500+ people",
   },
   {
@@ -144,10 +179,15 @@ const portfolioCases: Array<{
       type: "background",
     },
     id: "orbit",
-    metadata: ["Steamify", "2023"],
-    metadataLinks: [
-      { href: "https://steamify.io/cashout/cs2", item: "Steamify" },
-    ],
+    details: {
+      company: "Steamify",
+      companyHref: "https://steamify.io/cashout/cs2",
+      description:
+        "Designed a centralized dashboard for managing Steam trading operations, bringing inventory, listings, and transactions into one workspace.",
+      period: "2023",
+      role: "Product Designer",
+      title: "Steam trading management dashboard",
+    },
     title: "Steam trading management dashboard",
   },
   {
@@ -162,14 +202,28 @@ const portfolioCases: Array<{
       type: "background",
     },
     id: "northstar",
-    metadata: ["Playdex", "2023"],
+    details: {
+      company: "Playdex",
+      description:
+        "Designed a Web3 NFT marketplace for gamers in Asia, making it easier to discover and rent in-game assets.",
+      period: "2023",
+      role: "Product Designer",
+      title: "Web3 NFT marketplace for gamers in Asia",
+    },
     title: "Web3 NFT marketplace for gamers in Asia",
   },
   {
     cover: { mobileSrc: "/videos/Mobile_CCP_2_Animation_Compress.mp4", src: "/videos/Desktop_CCP_2_Animation_Compress.mp4", type: "video", variant: "ccp" },
     id: "s7-case",
-    metadata: ["KOTELOV", "2020"],
-    metadataLinks: [{ href: "https://kotelov.com/", item: "KOTELOV" }],
+    details: {
+      company: "KOTELOV",
+      companyHref: "https://kotelov.com/",
+      description:
+        "Flight attendants spent 30–60 minutes after each flight completing paper documentation by hand. I designed an offline iPad workflow that reduced this to 5 minutes, with over 60% of tasks now completed directly in the app.",
+      period: "2020",
+      role: "Product Designer",
+      title: "Offline iPad app for flight attendants",
+    },
     title: "Offline iPad app for flight attendants",
   },
   {
@@ -204,11 +258,12 @@ export async function PortfolioPage({
     return (
       <section className={styles.work} id="work" aria-label="Selected work">
         {selectedCases.map(
-          ({ accent, cover, href, id, metadata, metadataLinks, title, titleLink }) => (
+          ({ accent, cover, details, href, id, metadata, metadataLinks, title, titleLink }) => (
             <PortfolioCase
               accent={accent}
               caseId={id}
               cover={cover}
+              details={details}
               href={href}
               key={id}
               metadata={metadata}
@@ -270,10 +325,9 @@ export async function PortfolioPage({
               <AboutMeContent />
             </section>
           ) : null}
+          {DebugPanel ? <DebugPanel cases={portfolioCases.map(({ id, title }) => ({ id, label: title || id }))} /> : null}
         </PortfolioTabsProvider>
       </SoundProvider>
-
-      {DebugPanel ? <DebugPanel cases={portfolioCases.map(({ id, title }) => ({ id, label: title || id }))} /> : null}
     </main>
   );
 }

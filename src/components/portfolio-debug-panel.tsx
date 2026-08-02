@@ -1,7 +1,8 @@
 "use client";
 
-import { RotateCcw, Settings2, X } from "lucide-react";
+import { Check, RotateCcw, Settings2, X } from "lucide-react";
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { useInteractionSound } from "@/app/sound-provider";
 
 type MediaFit = "contain" | "cover" | "fill";
 
@@ -46,6 +47,7 @@ const debugStyleProperties = [
 ];
 
 export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
+  const { playTap } = useInteractionSound();
   const isLocalDebugHost = useSyncExternalStore(
     subscribeToDebugHost,
     getDebugHostSnapshot,
@@ -56,6 +58,9 @@ export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
   const [selectedCaseId, setSelectedCaseId] = useState(firstCaseId);
   const [settings, setSettings] =
     useState<MediaSettings>(initialSettings);
+  const [applyStatus, setApplyStatus] = useState<
+    "idle" | "applying" | "success" | "error"
+  >("idle");
 
   useEffect(() => {
     const savedSettings = readSavedSettings();
@@ -73,10 +78,12 @@ export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
   const selectCase = (caseId: string) => {
     setSelectedCaseId(caseId);
     setSettings(readMediaSettings(caseId));
+    setApplyStatus("idle");
   };
 
   const updateSettings = (nextSettings: MediaSettings) => {
     setSettings(nextSettings);
+    setApplyStatus("idle");
     applyMediaSettings(selectedCaseId, nextSettings);
 
     const savedSettings = readSavedSettings();
@@ -97,6 +104,39 @@ export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
     delete savedSettings[selectedCaseId];
     window.localStorage.setItem(storageKey, JSON.stringify(savedSettings));
     setSettings(readMediaSettings(selectedCaseId));
+  };
+
+  const applySelectedCase = async () => {
+    setApplyStatus("applying");
+
+    try {
+      const response = await fetch("/api/debug/case-media", {
+        body: JSON.stringify({ caseId: selectedCaseId, settings }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to apply media settings");
+      }
+
+      const media = getMediaElement(selectedCaseId);
+
+      if (media) {
+        for (const property of debugStyleProperties) {
+          media.style.removeProperty(property);
+        }
+      }
+
+      const savedSettings = readSavedSettings();
+      delete savedSettings[selectedCaseId];
+      window.localStorage.setItem(storageKey, JSON.stringify(savedSettings));
+      setSettings(readMediaSettings(selectedCaseId));
+      setApplyStatus("success");
+      playTap();
+    } catch {
+      setApplyStatus("error");
+    }
   };
 
   if (!isLocalDebugHost) {
@@ -224,6 +264,26 @@ export function PortfolioDebugPanel({ cases }: { cases: DebugCase[] }) {
         <RotateCcw aria-hidden="true" size={14} strokeWidth={1.75} />
         Reset selected case
       </button>
+
+      <button
+        className="mt-2 flex h-9 w-full items-center justify-center gap-2 rounded-full bg-black text-xs font-medium text-white disabled:cursor-wait disabled:opacity-60"
+        disabled={applyStatus === "applying"}
+        onClick={applySelectedCase}
+        type="button"
+      >
+        <Check aria-hidden="true" size={14} strokeWidth={1.75} />
+        {applyStatus === "applying" ? "Applying…" : "Apply to code"}
+      </button>
+      {applyStatus === "success" ? (
+        <p className="mt-2 text-center text-xs text-black/60">
+          Applied to page.module.css
+        </p>
+      ) : null}
+      {applyStatus === "error" ? (
+        <p className="mt-2 text-center text-xs text-red-700">
+          Couldn&apos;t apply the settings. Keep the local dev server running.
+        </p>
+      ) : null}
     </aside>
   );
 }

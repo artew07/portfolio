@@ -63,6 +63,18 @@ interface PortfolioCaseProps {
   caseId: string;
   centeredTitle?: boolean;
   cover: CaseCover;
+  details?: {
+    company: string;
+    companyHref?: string;
+    description: string;
+    descriptionLink?: {
+      href: string;
+      label: string;
+    };
+    period: string;
+    role: string;
+    title: string;
+  };
   href?: string;
   metadata?: string[];
   metadataLinks?: Array<{
@@ -328,6 +340,7 @@ export function PortfolioCase({
   caseId,
   centeredTitle = false,
   cover,
+  details,
   href,
   metadata,
   metadataLinks,
@@ -438,7 +451,53 @@ export function PortfolioCase({
         </div>
       )}
 
-      {title ? (
+      {details ? (
+        <section className={styles.caseDetails}>
+          <h3>{details.title}</h3>
+          <p>
+            {details.description}{" "}
+            {details.descriptionLink ? (
+              <a
+                className={styles.v2InlineLink}
+                href={details.descriptionLink.href}
+                onClick={playTap}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {details.descriptionLink.label}
+              </a>
+            ) : null}
+          </p>
+          <dl>
+            <div>
+              <dt>Company</dt>
+              <dd>
+                {details.companyHref ? (
+                  <a
+                    className={`${styles.v2InlineLink} ${styles.caseDetailsLink}`}
+                    href={details.companyHref}
+                    onClick={playTap}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {details.company}
+                  </a>
+                ) : (
+                  details.company
+                )}
+              </dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd>{details.role}</dd>
+            </div>
+            <div>
+              <dt>Period</dt>
+              <dd>{details.period}</dd>
+            </div>
+          </dl>
+        </section>
+      ) : title ? (
         <div className={styles.caseCaption}>
           <span
             className={

@@ -1548,6 +1548,111 @@
   gap: 4px;
 }
 
+.caseDetails {
+  width: 100%;
+  padding: 0;
+  color: #051e1d;
+}
+
+.caseDetails h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  text-wrap: balance;
+}
+
+.caseDetails > p {
+  max-width: 580px;
+  margin: 8px 0 16px;
+  color: #616b6a;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-wrap: pretty;
+}
+
+.caseDetails dl {
+  margin: 0;
+}
+
+.caseDetails dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  padding: 10px 0;
+  border-top: 1px solid #eef1f1;
+}
+
+.caseDetails dl > div:first-child {
+  border-top: 0;
+}
+
+.caseDetails dl > div:last-child {
+  border-bottom: 1px solid #eef1f1;
+}
+
+.caseDetails dt {
+  color: #616b6a;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.caseDetails dd {
+  margin: 0;
+  color: #051e1d;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: right;
+}
+
+.caseDetailsLink,
+.caseDetailsLink:active {
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+.caseDetailsLink:hover {
+    color: #616b6a;
+    transform: none;
+  }
+}
+
+/* CASE_MEDIA_DEBUG_OVERRIDES_START */
+/* orbit */
+.case[data-case-id="orbit"] [data-debug-media] {
+  position: absolute;
+  inset: auto;
+  top: -2px;
+  left: 38px;
+  width: 560px;
+  height: 363px;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  flex: none;
+  object-fit: contain;
+  transform: none;
+}
+/* northstar */
+.case[data-case-id="northstar"] [data-debug-media] {
+  position: absolute;
+  inset: auto;
+  top: -2px;
+  left: 38px;
+  width: 560px;
+  height: 363px;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  flex: none;
+  object-fit: contain;
+  transform: none;
+}
+/* CASE_MEDIA_DEBUG_OVERRIDES_END */
+
 .caseTitle,
 .secondCaseTitle {
   position: relative;
@@ -1801,6 +1906,26 @@
 
   .case {
     gap: 16px;
+  }
+
+  .caseDetails {
+    padding: 0;
+  }
+
+  .caseDetails h3 {
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .caseDetails > p {
+    margin: 8px 0 16px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .caseDetails dl > div {
+    gap: 16px;
+    padding: 12px 0;
   }
 
   .caseVisual {
