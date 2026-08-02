@@ -12,7 +12,7 @@ export function ResumeButton({ className }: { className: string }) {
     <a
       aria-label="Resume"
       className={className}
-      href="https://drive.google.com/file/d/1DFugk_jB2YUO_BCmnY79TxxghzCLXdQ4/view"
+      href="https://drive.google.com/file/d/1P8XKiDdLtftVHvlIbEwT0LWX7UPoKrZ1/view?usp=sharing"
       onClick={playTap}
       onPointerEnter={(event) => {
         const supportsHover = window.matchMedia(
