@@ -6,12 +6,13 @@
   color: #051e1d;
   font-family: var(--font-geist-sans), Geist, system-ui, sans-serif;
 }
-.caseStudy { width: 700px; min-height: calc(100vh - 48px); margin: 0 auto; padding: 32px; border-radius: 12px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / 10%), 0 1px 2px rgb(0 0 0 / 6%); }
+.caseStudy { width: 700px; min-height: calc(100vh - 48px); margin: 0 auto; padding: 32px; border-radius: 12px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / 10%), 0 1px 2px rgb(0 0 0 / 6%); opacity: 1; transform: translateY(0); transition: opacity 180ms cubic-bezier(.23, 1, .32, 1), transform 180ms cubic-bezier(.23, 1, .32, 1); }
+@starting-style { .caseStudy { opacity: 0; transform: translateY(8px); } }
 .caseToolbar { width: 100%; display: flex; justify-content: flex-start; padding-bottom: 8px; }
 .caseLogo { width: 24px; height: 24px; }
-.homeButton { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; color: #616b6a; font-size: 14px; line-height: 20px; text-decoration: none; transition: color 150ms ease, transform 140ms cubic-bezier(.23,1,.32,1); }
-.homeButton img { flex: 0 0 auto; }
-.homeButton:hover { color: #051e1d; }
+.homeButton { min-height: 32px; display: inline-flex; align-items: center; gap: 4px; padding: 0 12px 0 8px; border: 0.5px solid #e6e6e6; border-radius: 999px; background: #fff; color: #051e1d; font-size: 14px; line-height: 20px; text-decoration: none; transition: transform 140ms cubic-bezier(.23,1,.32,1), border-color 160ms ease, background-color 160ms ease; }
+.homeButton svg { flex: 0 0 auto; }
+.homeButton:hover { border-color: #d7dddd; background: #f7f9f9; }
 .homeButton:active { transform: scale(.97); }
 .homeButton:focus-visible { outline: 2px solid #051e1d; outline-offset: 2px; }
 .intro { display: flex; flex-direction: column; gap: 22px; }
@@ -94,6 +95,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .caseStudy { transform: none; transition: opacity 120ms ease; }
+  @starting-style { .caseStudy { opacity: 0; transform: none; } }
   :global(.t-modal) { transition: none !important; }
   .modalBackdrop, .modalBackdropClosing, .expandButton, .closeButton { transition: none !important; }
 }

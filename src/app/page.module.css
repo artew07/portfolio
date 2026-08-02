@@ -950,7 +950,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:hover) .caseVisual {
-    opacity: 0.92;
+    opacity: 0.8;
   }
 }
 

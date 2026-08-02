@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Maximize2, X } from "lucide-react";
+import { ChevronLeft, Maximize2, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInteractionSound } from "./sound-provider";
@@ -17,7 +17,12 @@ export function SteamifyCaseContent() {
         <section className={styles.intro}>
           <div className={styles.caseToolbar}>
             <Link className={styles.homeButton} href="/" onClick={playTap}>
-              <Image alt="" aria-hidden="true" height={20} src="/images/steamify-case/chevron-left.svg" width={7} />
+              <ChevronLeft
+                aria-hidden="true"
+                height={18}
+                strokeWidth={1.5}
+                width={18}
+              />
               <span>Home</span>
             </Link>
           </div>
