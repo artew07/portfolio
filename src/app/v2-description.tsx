@@ -2,6 +2,7 @@
 
 import styles from "./page.module.css";
 import { useInteractionSound } from "./sound-provider";
+import { SocialPreviewLink } from "./social-preview-link";
 
 export function V2Description() {
   const { playTap } = useInteractionSound();
@@ -35,15 +36,12 @@ export function V2Description() {
       </p>
       <p>
         I also share practical insights on{" "}
-        <a
-          className={styles.v2InlineLink}
+        <SocialPreviewLink
           href="https://www.youtube.com/@artem_uxdesign"
-          onClick={playTap}
-          rel="noreferrer"
-          target="_blank"
+          previewSrc="/videos/youtube_tooltip.mp4"
         >
           YouTube
-        </a>{" "}
+        </SocialPreviewLink>{" "}
         and run a{" "}
         <a
           className={styles.v2InlineLink}
