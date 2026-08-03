@@ -298,7 +298,6 @@ export async function PortfolioPage({
                   "animator",
                   "steamify-case",
                   "s7-case",
-                  "mesh-card-demo",
                 ]),
                 "case-study": renderWork([
                   "steamify-case",
