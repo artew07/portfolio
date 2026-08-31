@@ -28,6 +28,7 @@ type CaseDetails = {
   };
   period: string;
   role: string;
+  showMetadata?: boolean;
   title: string;
 };
 
@@ -61,10 +62,11 @@ const portfolioCases: Array<{
         mobileSrc?: string;
         src: string;
         type: "video";
-        variant: "loop" | "ccp" | "animator" | "steamify";
+        variant: "loop" | "ccp" | "animator" | "steamify" | "quick-stickers";
       };
   id: string;
   details?: CaseDetails;
+  description?: string;
   href?: string;
   metadata?: string[];
   metadataLinks?: Array<{
@@ -74,6 +76,25 @@ const portfolioCases: Array<{
   title: string | false;
   titleLink?: string;
 }> = [
+  {
+    cover: {
+      src: "/videos/telegram-quick-stickers.mp4",
+      type: "video",
+      variant: "quick-stickers",
+    },
+    id: "telegram-quick-stickers",
+    details: {
+      company: "Personal concept",
+      companyHref: "https://github.com/artew07/tg-attach-stickers",
+      description:
+        "Rebuilt Telegram’s iOS chat in UIKit and explored a quicker way to send stickers: press, slide, release. A long press on the sticker button fans out four choices; releasing on one sends it straight into the chat.",
+      period: "2026",
+      role: "Design Engineer",
+      showMetadata: false,
+      title: "Quick stickers for Telegram on iPhone",
+    },
+    title: "Quick stickers for Telegram on iPhone",
+  },
   {
     accent: "20% to 50%",
     // Static cover retained for a quick rollback.
@@ -114,14 +135,17 @@ const portfolioCases: Array<{
   },
   {
     cover: { type: "interactive-card" },
+    description:
+      "An interactive card experiment that explores how Paper Shaders can turn a familiar payment surface into a tactile, playful object.",
     id: "mesh-card-demo",
     title: "Interactive bank card built with Paper Shaders",
   },
   {
     cover: { alt: "", height: 1393, src: "/images/loop_case.png?v=20260706-2", type: "image", variant: "loop", width: 2544 },
+    description:
+      "A UI exploration for supervising AI agents — designed to make parallel runs, statuses, and handoffs easy to scan at a glance.",
     id: "steamify-case-2",
     title: "Workspace for managing AI agents",
-    titleLink: "https://dashboard-playground-orcin.vercel.app/v2/overview",
   },
   {
     cover: {
@@ -228,6 +252,8 @@ const portfolioCases: Array<{
   },
   {
     cover: { type: "phantom-glow" },
+    description:
+      "A motion and lighting study that uses a responsive glow to give the Phantom mark depth, focus, and a sense of movement.",
     id: "glow-hover-effect",
     title: "Interactive Phantom logo hover effect",
   },
@@ -258,11 +284,12 @@ export async function PortfolioPage({
     return (
       <section className={styles.work} id="work" aria-label="Selected work">
         {selectedCases.map(
-          ({ accent, cover, details, href, id, metadata, metadataLinks, title, titleLink }) => (
+          ({ accent, cover, description, details, href, id, metadata, metadataLinks, title, titleLink }) => (
             <PortfolioCase
               accent={accent}
               caseId={id}
               cover={cover}
+              description={description}
               details={details}
               href={href}
               key={id}
@@ -295,6 +322,7 @@ export async function PortfolioPage({
             <PortfolioTabPanels
               panels={{
                 favourites: renderWork([
+                  "telegram-quick-stickers",
                   "animator",
                   "steamify-case",
                   "s7-case",
@@ -308,6 +336,7 @@ export async function PortfolioPage({
                 ]),
                 "my-products": renderWork(["animator"]),
                 craft: renderWork([
+                  "telegram-quick-stickers",
                   "mesh-card-demo",
                   "steamify-case-2",
                   "glow-hover-effect",

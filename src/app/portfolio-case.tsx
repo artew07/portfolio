@@ -55,7 +55,7 @@ type CaseCover =
       mobileSrc?: string;
       type: "video";
       src: string;
-      variant: "loop" | "ccp" | "animator" | "steamify";
+      variant: "loop" | "ccp" | "animator" | "steamify" | "quick-stickers";
     };
 
 interface PortfolioCaseProps {
@@ -63,6 +63,7 @@ interface PortfolioCaseProps {
   caseId: string;
   centeredTitle?: boolean;
   cover: CaseCover;
+  description?: string;
   details?: {
     company: string;
     companyHref?: string;
@@ -73,6 +74,7 @@ interface PortfolioCaseProps {
     };
     period: string;
     role: string;
+    showMetadata?: boolean;
     title: string;
   };
   href?: string;
@@ -340,6 +342,7 @@ export function PortfolioCase({
   caseId,
   centeredTitle = false,
   cover,
+  description,
   details,
   href,
   metadata,
@@ -392,6 +395,12 @@ export function PortfolioCase({
         />
       ) : cover.type === "video" ? (
         <div className={styles.caseVisual} data-debug-frame>
+          {cover.variant === "quick-stickers" ? (
+            <AutoPlayCaseVideo
+              className={`${styles.caseVideo} ${styles.quickStickersCaseBackdrop}`}
+              src={cover.src}
+            />
+          ) : null}
           <AutoPlayCaseVideo
             className={`${styles.caseVideo} ${
               cover.variant === "loop"
@@ -400,7 +409,9 @@ export function PortfolioCase({
                   ? styles.animatorCaseVideo
                   : cover.variant === "steamify"
                     ? styles.steamifyCaseVideo
-                  : styles.ccpCaseVideo
+                    : cover.variant === "quick-stickers"
+                      ? styles.quickStickersCaseVideo
+                      : styles.ccpCaseVideo
             }`}
             mobileSrc={cover.mobileSrc}
             src={cover.src}
@@ -468,34 +479,36 @@ export function PortfolioCase({
               </a>
             ) : null}
           </p>
-          <dl>
-            <div>
-              <dt>Company</dt>
-              <dd>
-                {details.companyHref ? (
-                  <a
-                    className={`${styles.v2InlineLink} ${styles.caseDetailsLink}`}
-                    href={details.companyHref}
-                    onClick={playTap}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {details.company}
-                  </a>
-                ) : (
-                  details.company
-                )}
-              </dd>
-            </div>
-            <div>
-              <dt>Role</dt>
-              <dd>{details.role}</dd>
-            </div>
-            <div>
-              <dt>Period</dt>
-              <dd>{details.period}</dd>
-            </div>
-          </dl>
+          {details.showMetadata !== false ? (
+            <dl>
+              <div>
+                <dt>Company</dt>
+                <dd>
+                  {details.companyHref ? (
+                    <a
+                      className={`${styles.v2InlineLink} ${styles.caseDetailsLink}`}
+                      href={details.companyHref}
+                      onClick={playTap}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      {details.company}
+                    </a>
+                  ) : (
+                    details.company
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt>Role</dt>
+                <dd>{details.role}</dd>
+              </div>
+              <div>
+                <dt>Period</dt>
+                <dd>{details.period}</dd>
+              </div>
+            </dl>
+          ) : null}
         </section>
       ) : title ? (
         <div className={styles.caseCaption}>
@@ -563,6 +576,9 @@ export function PortfolioCase({
                 );
               })}
             </span>
+          ) : null}
+          {description ? (
+            <p className={styles.caseShortDescription}>{description}</p>
           ) : null}
         </div>
       ) : null}
