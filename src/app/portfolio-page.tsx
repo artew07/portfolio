@@ -62,7 +62,13 @@ const portfolioCases: Array<{
         mobileSrc?: string;
         src: string;
         type: "video";
-        variant: "loop" | "ccp" | "animator" | "steamify" | "quick-stickers";
+        variant:
+          | "loop"
+          | "ccp"
+          | "animator"
+          | "steamify"
+          | "quick-stickers"
+          | "freelance-tracker";
       };
   id: string;
   details?: CaseDetails;
@@ -94,6 +100,17 @@ const portfolioCases: Array<{
       title: "Quick stickers for Telegram on iPhone",
     },
     title: "Quick stickers for Telegram on iPhone",
+  },
+  {
+    cover: {
+      src: "/videos/freelance_tracker_demo_2.mp4",
+      type: "video",
+      variant: "freelance-tracker",
+    },
+    description:
+      "A personal macOS app for freelance work that brings time, project rates, and earnings into one place — making workload and monthly income easier to plan with confidence.",
+    id: "freelance-tracker",
+    title: "Personal freelance tracker",
   },
   {
     accent: "20% to 50%",
@@ -337,6 +354,7 @@ export async function PortfolioPage({
                 "my-products": renderWork(["animator"]),
                 craft: renderWork([
                   "telegram-quick-stickers",
+                  "freelance-tracker",
                   "mesh-card-demo",
                   "steamify-case-2",
                   "glow-hover-effect",

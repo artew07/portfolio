@@ -55,7 +55,13 @@ type CaseCover =
       mobileSrc?: string;
       type: "video";
       src: string;
-      variant: "loop" | "ccp" | "animator" | "steamify" | "quick-stickers";
+      variant:
+        | "loop"
+        | "ccp"
+        | "animator"
+        | "steamify"
+        | "quick-stickers"
+        | "freelance-tracker";
     };
 
 interface PortfolioCaseProps {
@@ -411,7 +417,9 @@ export function PortfolioCase({
                     ? styles.steamifyCaseVideo
                     : cover.variant === "quick-stickers"
                       ? styles.quickStickersCaseVideo
-                      : styles.ccpCaseVideo
+                      : cover.variant === "freelance-tracker"
+                        ? styles.freelanceTrackerCaseVideo
+                        : styles.ccpCaseVideo
             }`}
             mobileSrc={cover.mobileSrc}
             src={cover.src}

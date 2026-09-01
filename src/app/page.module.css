@@ -1561,6 +1561,14 @@
   transform: scale(1.08);
 }
 
+.freelanceTrackerCaseVideo {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+}
+
 .caseCaption {
   display: flex;
   flex-direction: column;
@@ -1691,14 +1699,16 @@
 
 .case[data-case-id="mesh-card-demo"] .caseCaption,
 .case[data-case-id="steamify-case-2"] .caseCaption,
-.case[data-case-id="glow-hover-effect"] .caseCaption {
+.case[data-case-id="glow-hover-effect"] .caseCaption,
+.case[data-case-id="freelance-tracker"] .caseCaption {
   width: 100%;
   align-items: flex-start;
 }
 
 .case[data-case-id="mesh-card-demo"] .caseTitle,
 .case[data-case-id="steamify-case-2"] .caseTitle,
-.case[data-case-id="glow-hover-effect"] .caseTitle {
+.case[data-case-id="glow-hover-effect"] .caseTitle,
+.case[data-case-id="freelance-tracker"] .caseTitle {
   font-size: 15px;
   line-height: 20px;
   text-align: left;
@@ -1978,6 +1988,10 @@
     aspect-ratio: 37 / 30;
     padding: 0;
     border-radius: 12px;
+  }
+
+  .case[data-case-id="freelance-tracker"] .caseVisual {
+    aspect-ratio: 16 / 9;
   }
 
   .caseLinkOverlay {
