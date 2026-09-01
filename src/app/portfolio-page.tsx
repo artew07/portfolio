@@ -93,7 +93,7 @@ const portfolioCases: Array<{
       company: "Personal concept",
       companyHref: "https://github.com/artew07/tg-attach-stickers",
       description:
-        "Rebuilt Telegram’s iOS chat in UIKit and explored a quicker way to send stickers: press, slide, release. A long press on the sticker button fans out four choices; releasing on one sends it straight into the chat.",
+        "Rebuilt Telegram’s iOS chat in UIKit and explored a quicker way to send stickers: press, slide, release. A long press on the sticker button fans out four choices; releasing on one sends it straight into the chat. Built with Codex.",
       period: "2026",
       role: "Design Engineer",
       showMetadata: false,
