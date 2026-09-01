@@ -1545,20 +1545,9 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   background: transparent;
   z-index: 1;
-}
-
-.quickStickersCaseBackdrop {
-  inset: -12%;
-  width: 124%;
-  height: 124%;
-  border-radius: 0;
-  clip-path: none;
-  filter: blur(32px) saturate(1.1);
-  opacity: 0.96;
-  transform: scale(1.08);
 }
 
 .freelanceTrackerCaseVideo {

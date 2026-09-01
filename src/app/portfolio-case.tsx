@@ -401,12 +401,6 @@ export function PortfolioCase({
         />
       ) : cover.type === "video" ? (
         <div className={styles.caseVisual} data-debug-frame>
-          {cover.variant === "quick-stickers" ? (
-            <AutoPlayCaseVideo
-              className={`${styles.caseVideo} ${styles.quickStickersCaseBackdrop}`}
-              src={cover.src}
-            />
-          ) : null}
           <AutoPlayCaseVideo
             className={`${styles.caseVideo} ${
               cover.variant === "loop"
