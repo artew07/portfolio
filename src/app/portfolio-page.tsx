@@ -84,7 +84,7 @@ const portfolioCases: Array<{
 }> = [
   {
     cover: {
-      src: "/videos/telegram-quick-stickers.mp4",
+      src: "/videos/telegram-quick-stickers.mp4?v=c485a029f0b2",
       type: "video",
       variant: "quick-stickers",
     },
