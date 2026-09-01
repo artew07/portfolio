@@ -37,7 +37,7 @@ function usePortfolioTabs() {
 }
 
 export function PortfolioTabsProvider({ children }: { children: ReactNode }) {
-  const [activeTab, setActiveTab] = useState("favourites");
+  const [activeTab, setActiveTab] = useState("case-study");
   const [shouldAnimatePanel, setShouldAnimatePanel] = useState(false);
   const selectTab = (tabId: string, shouldAnimate: boolean) => {
     setShouldAnimatePanel(shouldAnimate);
@@ -60,7 +60,7 @@ export function PortfolioTabList({ tabs }: { tabs: Tab[] }) {
 
   return (
     <AnimatedTabs
-      defaultTab="favourites"
+      defaultTab="case-study"
       onChange={selectTab}
       tabs={tabs}
     />

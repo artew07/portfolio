@@ -12,8 +12,8 @@ import {
 } from "./portfolio-tabs";
 
 const workTabs = [
-  { id: "favourites", label: "Favorites" },
   { id: "case-study", label: "Work" },
+  { id: "favourites", label: "Favorites" },
   { id: "my-products", label: "My products" },
   { id: "craft", label: "Craft" },
 ];
@@ -338,17 +338,17 @@ export async function PortfolioPage({
             ) : null}
             <PortfolioTabPanels
               panels={{
-                favourites: renderWork([
-                  "telegram-quick-stickers",
-                  "animator",
-                  "steamify-case",
-                  "s7-case",
-                ]),
                 "case-study": renderWork([
                   "steamify-case",
                   "orbit",
                   "ccp-design-system",
                   "northstar",
+                  "s7-case",
+                ]),
+                favourites: renderWork([
+                  "telegram-quick-stickers",
+                  "animator",
+                  "steamify-case",
                   "s7-case",
                 ]),
                 "my-products": renderWork(["animator"]),
