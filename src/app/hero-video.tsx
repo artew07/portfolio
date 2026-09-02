@@ -5,7 +5,6 @@ import type { MouseEvent } from "react";
 import type { TransitionEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
-import { mediaUrl } from "./media";
 
 type ReactionPhase = "idle" | "waiting" | "playing" | "holding" | "fading";
 type HeroMaskSettings = {
@@ -306,9 +305,9 @@ export function HeroVideo({ className }: { className?: string }) {
           loop
           muted
           playsInline
-          poster={mediaUrl("/videos/base-loop-poster.webp?v=20260706-fast")}
+          poster="/videos/base-loop-poster.webp?v=20260706-fast"
           preload="auto"
-          src={mediaUrl("/videos/base-loop-short.mp4?v=20260706-fast")}
+          src="/videos/base-loop-short.mp4?v=20260706-fast"
         />
 
         <video
@@ -322,7 +321,7 @@ export function HeroVideo({ className }: { className?: string }) {
           playsInline
           preload="auto"
         >
-          <source src={mediaUrl("/videos/reaction.mp4")} type="video/mp4" />
+          <source src="/videos/reaction.mp4" type="video/mp4" />
         </video>
       </div>
 

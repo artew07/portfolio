@@ -4,12 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { InlineLink } from "./inline-link";
-import { mediaUrl } from "./media";
 import { useInteractionSound } from "./sound-provider";
 import styles from "./animator-case.module.css";
 
-const imagePath = mediaUrl("/images/animator-case");
-const logoPath = "/images/animator-case/logo.svg";
+const imagePath = "/images/animator-case";
 
 function CaseImage({ alt, name }: { alt: string; name: string }) {
   return (
@@ -35,7 +33,7 @@ export function AnimatorCaseRussianContent() {
             Back
           </Link>
           <div className={styles.productName}>
-            <Image alt="Animator" height={20} src={logoPath} width={20} />
+            <Image alt="Animator" height={20} src={`${imagePath}/logo.svg`} width={20} />
             <span>Animator</span>
           </div>
           <h1>Создание готовых зацикленных MP4-шоукейсов</h1>
@@ -52,7 +50,7 @@ export function AnimatorCaseRussianContent() {
             playsInline
             poster={`${imagePath}/03.png`}
           >
-            <source src={mediaUrl("/videos/animator_demo.faststart.mp4")} type="video/mp4" />
+            <source src="/videos/animator_demo.mp4" type="video/mp4" />
           </video>
         </section>
 

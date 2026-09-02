@@ -9,9 +9,9 @@ const contentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""};
   style-src 'self' 'unsafe-inline';
-  img-src 'self' blob: data: https://media.artemsuslov.com;
+  img-src 'self' blob: data:;
   font-src 'self' data:;
-  media-src 'self' blob: https://media.artemsuslov.com;
+  media-src 'self' blob:;
   connect-src 'self';
   worker-src 'self' blob:;
   object-src 'none';
@@ -61,13 +61,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     minimumCacheTTL: 604800,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "media.artemsuslov.com",
-        pathname: "/images/**",
-      },
-    ],
   },
   turbopack: {
     root,
