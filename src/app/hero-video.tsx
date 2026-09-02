@@ -56,6 +56,7 @@ export function HeroVideo({ className }: { className?: string }) {
   const hasHeldRef = useRef(false);
   const isIntroductionRef = useRef(false);
   const phaseRef = useRef<ReactionPhase>("idle");
+  const [isBaseVideoReady, setIsBaseVideoReady] = useState(false);
   const [phase, setPhase] = useState<ReactionPhase>("idle");
   const [cursorLabel, setCursorLabel] = useState({
     isVisible: false,
@@ -295,8 +296,14 @@ export function HeroVideo({ className }: { className?: string }) {
       <div
         className={styles.heroVideo}
         data-reaction-phase={phase}
+        data-ready={isBaseVideoReady}
         style={getMaskStyle(maskSettings)}
       >
+        <div
+          aria-hidden="true"
+          className={styles.heroVideoSkeleton}
+        />
+
         <video
           ref={baseVideoRef}
           aria-hidden="true"
@@ -304,6 +311,7 @@ export function HeroVideo({ className }: { className?: string }) {
           className={styles.heroVideoLayer}
           loop
           muted
+          onLoadedData={() => setIsBaseVideoReady(true)}
           playsInline
           poster="/videos/base-loop-poster.webp?v=20260706-fast"
           preload="auto"
