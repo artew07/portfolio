@@ -1496,11 +1496,9 @@
 
 .safeCaseImage {
   position: absolute;
-  inset: auto;
-  top: -7px;
-  left: -10px;
-  width: calc(100% + 21px);
-  height: calc(100% + 14px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   max-width: none;
   max-height: none;
   margin: 0;
@@ -1719,6 +1717,21 @@
   margin: 0;
   flex: none;
   object-fit: contain;
+  transform: none;
+}
+/* ccp-design-system */
+.case[data-case-id="ccp-design-system"] [data-debug-media] {
+  position: absolute;
+  inset: auto;
+  top: 0px;
+  left: 0px;
+  width: 636px;
+  height: 348px;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  flex: none;
+  object-fit: cover;
   transform: none;
 }
 /* CASE_MEDIA_DEBUG_OVERRIDES_END */
@@ -2084,15 +2097,13 @@
 
   .safeCaseImage {
     position: absolute !important;
-    inset: auto !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: auto !important;
+    inset: 0 !important;
+    width: 100% !important;
     height: 100% !important;
     max-width: none !important;
     max-height: none !important;
     margin: 0 !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     transform: none !important;
   }
 
