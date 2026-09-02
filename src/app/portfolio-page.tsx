@@ -1,10 +1,9 @@
-import type { StaticImageData } from "next/image";
 import type { ReactNode } from "react";
-import safeDesignSystemThumbnail from "../../public/images/safe_design_system_thumbnail.png";
 import styles from "./page.module.css";
 import { AboutMeContent } from "./about-me-content";
 import { PortfolioCase } from "./portfolio-case";
 import { SoundProvider } from "./sound-provider";
+import { mediaUrl } from "./media";
 import {
   PortfolioTabList,
   PortfolioTabPanels,
@@ -49,7 +48,7 @@ const portfolioCases: Array<{
         alt: string;
         eager?: boolean;
         height: number;
-        src: string | StaticImageData;
+        src: string;
         type: "image";
         unoptimized?: boolean;
         variant: "steamify" | "loop" | "ccp" | "safe";
@@ -84,7 +83,7 @@ const portfolioCases: Array<{
 }> = [
   {
     cover: {
-      src: "/videos/telegram-quick-stickers.mp4?v=c485a029f0b2",
+      src: mediaUrl("/videos/telegram-quick-stickers.mp4?v=c485a029f0b2"),
       type: "video",
       variant: "quick-stickers",
     },
@@ -103,7 +102,7 @@ const portfolioCases: Array<{
   },
   {
     cover: {
-      src: "/videos/freelance_tracker_demo_2.mp4",
+      src: mediaUrl("/videos/freelance_tracker_demo_2.mp4"),
       type: "video",
       variant: "freelance-tracker",
     },
@@ -126,7 +125,7 @@ const portfolioCases: Array<{
     //   width: 494,
     // },
     cover: {
-      src: "/videos/steamify_thumb_case.mp4?v=20260801-4",
+      src: mediaUrl("/videos/steamify_thumb_case.faststart.mp4"),
       type: "video",
       variant: "steamify",
     },
@@ -158,7 +157,7 @@ const portfolioCases: Array<{
     title: "Interactive bank card built with Paper Shaders",
   },
   {
-    cover: { alt: "", height: 1393, src: "/images/loop_case.png?v=20260706-2", type: "image", variant: "loop", width: 2544 },
+    cover: { alt: "", height: 1393, src: mediaUrl("/images/loop_case.png?v=20260706-2"), type: "image", variant: "loop", width: 2544 },
     description:
       "A UI exploration for supervising AI agents — designed to make parallel runs, statuses, and handoffs easy to scan at a glance.",
     id: "steamify-case-2",
@@ -166,8 +165,8 @@ const portfolioCases: Array<{
   },
   {
     cover: {
-      mobileSrc: "/videos/animator_demo_mobile.mp4",
-      src: "/videos/animator_demo.mp4",
+      mobileSrc: mediaUrl("/videos/animator_demo_mobile.mp4"),
+      src: mediaUrl("/videos/animator_demo.faststart.mp4"),
       type: "video",
       variant: "animator",
     },
@@ -192,7 +191,7 @@ const portfolioCases: Array<{
     cover: {
       alt: "",
       height: 697,
-      src: safeDesignSystemThumbnail,
+      src: mediaUrl("/images/safe_design_system_thumbnail.png"),
       type: "image",
       variant: "safe",
       width: 1272,
@@ -214,10 +213,10 @@ const portfolioCases: Array<{
       foreground: {
         alt: "Steamify Trading Bot dashboard",
         height: 1038,
-        src: "/images/steamify_trading_bot_case_thumb.webp",
+        src: mediaUrl("/images/steamify_trading_bot_case_thumb.webp"),
         width: 1600,
       },
-      src: "/images/AI_Bg_083.png",
+      src: mediaUrl("/images/AI_Bg_083.png"),
       type: "background",
     },
     id: "orbit",
@@ -237,10 +236,10 @@ const portfolioCases: Array<{
       foreground: {
         alt: "Playdex game marketplace",
         height: 1038,
-        src: "/images/playdex_thumbnail.webp",
+        src: mediaUrl("/images/playdex_thumbnail.webp"),
         width: 1600,
       },
-      src: "/images/AI_Bg_051.png",
+      src: mediaUrl("/images/AI_Bg_051.png"),
       type: "background",
     },
     id: "northstar",
@@ -255,7 +254,7 @@ const portfolioCases: Array<{
     title: "Web3 NFT marketplace for gamers in Asia",
   },
   {
-    cover: { mobileSrc: "/videos/Mobile_CCP_2_Animation_Compress.mp4", src: "/videos/Desktop_CCP_2_Animation_Compress.mp4", type: "video", variant: "ccp" },
+    cover: { mobileSrc: mediaUrl("/videos/Mobile_CCP_2_Animation_Compress.mp4"), src: mediaUrl("/videos/Desktop_CCP_2_Animation_Compress.mp4"), type: "video", variant: "ccp" },
     id: "s7-case",
     details: {
       company: "KOTELOV",

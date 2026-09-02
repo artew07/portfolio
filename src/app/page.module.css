@@ -969,19 +969,19 @@
 }
 
 .steamifyCaseVisual {
-  background-image: url("/images/AI_Bg_01.webp");
+  background-image: url("https://media.artemsuslov.com/images/AI_Bg_01.webp");
   background-position: center;
   background-size: cover;
 }
 
 .loopCaseVisual {
-  background-image: url("/images/AI_Bg_02.webp");
+  background-image: url("https://media.artemsuslov.com/images/AI_Bg_02.webp");
   background-position: center;
   background-size: cover;
 }
 
 .ccpCaseVisual {
-  background-image: url("/images/AI_Bg_03.webp");
+  background-image: url("https://media.artemsuslov.com/images/AI_Bg_03.webp");
   background-position: center;
   background-size: cover;
 }

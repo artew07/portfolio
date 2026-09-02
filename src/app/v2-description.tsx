@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
+import { mediaUrl } from "./media";
 import { useInteractionSound } from "./sound-provider";
 import { SocialPreviewLink } from "./social-preview-link";
 
@@ -38,7 +39,7 @@ export function V2Description() {
         I also share practical insights on{" "}
         <SocialPreviewLink
           href="https://www.youtube.com/@artem_uxdesign"
-          previewSrc="/videos/youtube_tooltip.mp4"
+          previewSrc={mediaUrl("/videos/youtube_tooltip.mp4")}
         >
           YouTube
         </SocialPreviewLink>{" "}

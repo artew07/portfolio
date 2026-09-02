@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { InlineLink } from "./inline-link";
+import { mediaUrl } from "./media";
 import { useInteractionSound } from "./sound-provider";
 import styles from "./animator-case.module.css";
 
-const imagePath = "/images/animator-case";
+const imagePath = mediaUrl("/images/animator-case");
+const logoPath = "/images/animator-case/logo.svg";
 
 function CaseImage({ alt, name }: { alt: string; name: string }) {
   return <Image alt={alt} className={styles.media} height={1192} src={`${imagePath}/${name}`} width={2032} />;
@@ -25,13 +27,13 @@ export function AnimatorCaseContent() {
             Back
           </Link>
           <div className={styles.productName}>
-            <Image alt="Animator" height={20} src={`${imagePath}/logo.svg`} width={20} />
+            <Image alt="Animator" height={20} src={logoPath} width={20} />
             <span>Animator</span>
           </div>
           <h1>Creating ready-to-use looping MP4 showcases</h1>
           <p className={styles.lede}>Animator is a web tool for uploading a set of images, choosing a motion preset, and quickly exporting a looping carousel as an MP4.</p>
           <video autoPlay className={styles.heroVideo} loop muted playsInline poster={`${imagePath}/03.png`}>
-            <source src="/videos/animator_demo.mp4" type="video/mp4" />
+            <source src={mediaUrl("/videos/animator_demo.faststart.mp4")} type="video/mp4" />
           </video>
         </section>
 
