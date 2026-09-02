@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { StaticImageData } from "next/image";
 import dynamic from "next/dynamic";
+import { Pause, Play } from "lucide";
+import { MorphIcon } from "morphicons/react";
 import {
   Fragment,
   useCallback,
@@ -12,6 +14,7 @@ import {
   useRef,
   useState,
   type PointerEvent,
+  type RefObject,
 } from "react";
 import { InteractiveCardCover } from "@/components/interactive-card-cover";
 import { DashboardCasePreview } from "./dashboard-case-preview";
@@ -316,10 +319,12 @@ function AutoPlayCaseVideo({
   className,
   mobileSrc,
   src,
+  videoRef,
 }: {
   className: string;
   mobileSrc?: string;
   src: string;
+  videoRef?: RefObject<HTMLVideoElement | null>;
 }) {
   return (
     <video
@@ -331,6 +336,7 @@ function AutoPlayCaseVideo({
       muted
       playsInline
       preload="metadata"
+      ref={videoRef}
       {...(mobileSrc ? {} : { src })}
     >
       {mobileSrc ? (
@@ -357,6 +363,42 @@ export function PortfolioCase({
   titleLink,
 }: PortfolioCaseProps) {
   const { playTap } = useInteractionSound();
+  const caseVideoRef = useRef<HTMLVideoElement>(null);
+  const [isCaseVideoPaused, setIsCaseVideoPaused] = useState(false);
+  const hasVideoControl =
+    [
+      "steamify-case",
+      "s7-case",
+      "telegram-quick-stickers",
+      "animator",
+    ].includes(caseId) &&
+    cover.type === "video";
+
+  function toggleCaseVideo() {
+    const video = caseVideoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    if (video.paused) {
+      void video
+        .play()
+        .then(() => {
+          setIsCaseVideoPaused(false);
+          playTap();
+        })
+        .catch(() => {
+          setIsCaseVideoPaused(true);
+        });
+      return;
+    }
+
+    video.pause();
+    setIsCaseVideoPaused(true);
+    playTap();
+  }
+
   return (
     <article className={styles.case} data-case-id={caseId}>
       {cover.type === "background" ? (
@@ -417,7 +459,30 @@ export function PortfolioCase({
             }`}
             mobileSrc={cover.mobileSrc}
             src={cover.src}
+            videoRef={hasVideoControl ? caseVideoRef : undefined}
           />
+          {hasVideoControl ? (
+            <button
+              aria-label={
+                isCaseVideoPaused ? "Play case video" : "Pause case video"
+              }
+              className={styles.caseVideoControl}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                toggleCaseVideo();
+              }}
+              type="button"
+            >
+              <MorphIcon
+                aria-hidden="true"
+                icon={isCaseVideoPaused ? Play : Pause}
+                size={16}
+                strokeWidth={1.75}
+                viewBox="0 0 24 24"
+              />
+            </button>
+          ) : null}
         </div>
       ) : (
         <div

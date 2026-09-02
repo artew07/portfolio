@@ -182,9 +182,10 @@ const portfolioCases: Array<{
         label: "Watch how I built it",
       },
       period: "2026",
-      role: "Product Designer & Developer",
+      role: "Design Engineer",
       title: "Browser-based tool for seamless carousels",
     },
+    href: "/animator",
     title: "Browser-based tool for seamless carousels",
   },
   {

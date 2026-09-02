@@ -402,7 +402,7 @@
   gap: 10px;
   padding: 12px;
   border: 1px solid #28282f;
-  border-radius: 8px;
+  border-radius: 12px;
   background: rgb(15 15 16 / 0.96);
   box-shadow: 0 16px 40px rgb(0 0 0 / 0.28);
   color: #f5f5f5;
@@ -944,7 +944,10 @@
   background: #f7f8f8;
 }
 
-.case[data-case-id="steamify-case"] .caseVisual {
+.case[data-case-id="steamify-case"] .caseVisual,
+.case[data-case-id="animator"] .caseVisual {
+  z-index: 6;
+  pointer-events: none;
   transition: opacity 160ms ease;
 }
 
@@ -952,10 +955,15 @@
   .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:hover) .caseVisual {
     opacity: 0.8;
   }
+
+  .case[data-case-id="animator"]:has(.caseLinkOverlay:hover) .caseVisual {
+    opacity: 0.8;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case[data-case-id="steamify-case"] .caseVisual {
+  .case[data-case-id="steamify-case"] .caseVisual,
+  .case[data-case-id="animator"] .caseVisual {
     transition: none;
   }
 }
@@ -1507,6 +1515,51 @@
   clip-path: inset(0 round 12px);
   object-fit: cover;
   background: #0e1010;
+}
+
+.caseVideoControl {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  min-height: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(17 17 17 / 56%);
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition:
+    transform 140ms ease-out,
+    background-color 160ms ease;
+}
+
+.caseVideoControl svg {
+  width: 16px;
+  height: 16px;
+}
+
+.caseVideoControl:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.caseVideoControl:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .caseVideoControl:hover {
+    background: rgb(43 43 43 / 56%);
+  }
 }
 
 .loopCaseVideo {
