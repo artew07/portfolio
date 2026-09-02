@@ -59,6 +59,7 @@ const portfolioCases: Array<{
     | { type: "placeholder" }
     | {
         mobileSrc?: string;
+        poster?: string;
         src: string;
         type: "video";
         variant:
@@ -83,6 +84,7 @@ const portfolioCases: Array<{
 }> = [
   {
     cover: {
+      poster: "/images/video-posters/telegram-quick-stickers.webp",
       src: mediaUrl("/videos/telegram-quick-stickers.mp4?v=c485a029f0b2"),
       type: "video",
       variant: "quick-stickers",
@@ -102,6 +104,7 @@ const portfolioCases: Array<{
   },
   {
     cover: {
+      poster: "/images/video-posters/freelance-tracker.webp",
       src: mediaUrl("/videos/freelance_tracker_demo_2.mp4"),
       type: "video",
       variant: "freelance-tracker",
@@ -125,6 +128,7 @@ const portfolioCases: Array<{
     //   width: 494,
     // },
     cover: {
+      poster: "/images/video-posters/steamify.webp",
       src: mediaUrl("/videos/steamify_thumb_case.faststart.mp4"),
       type: "video",
       variant: "steamify",
@@ -166,6 +170,7 @@ const portfolioCases: Array<{
   {
     cover: {
       mobileSrc: mediaUrl("/videos/animator_demo_mobile.mp4"),
+      poster: "/images/video-posters/animator.webp",
       src: mediaUrl("/videos/animator_demo.faststart.mp4"),
       type: "video",
       variant: "animator",
@@ -254,7 +259,13 @@ const portfolioCases: Array<{
     title: "Web3 NFT marketplace for gamers in Asia",
   },
   {
-    cover: { mobileSrc: mediaUrl("/videos/Mobile_CCP_2_Animation_Compress.mp4"), src: mediaUrl("/videos/Desktop_CCP_2_Animation_Compress.mp4"), type: "video", variant: "ccp" },
+    cover: {
+      mobileSrc: mediaUrl("/videos/Mobile_CCP_2_Animation_Compress.mp4"),
+      poster: "/images/video-posters/ccp.webp",
+      src: mediaUrl("/videos/Desktop_CCP_2_Animation_Compress.mp4"),
+      type: "video",
+      variant: "ccp",
+    },
     id: "s7-case",
     details: {
       company: "KOTELOV",

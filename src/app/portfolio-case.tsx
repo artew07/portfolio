@@ -56,6 +56,7 @@ type CaseCover =
     }
   | {
       mobileSrc?: string;
+      poster?: string;
       type: "video";
       src: string;
       variant:
@@ -318,11 +319,13 @@ function PhantomGlowCover() {
 function AutoPlayCaseVideo({
   className,
   mobileSrc,
+  poster,
   src,
   videoRef,
 }: {
   className: string;
   mobileSrc?: string;
+  poster?: string;
   src: string;
   videoRef?: RefObject<HTMLVideoElement | null>;
 }) {
@@ -335,6 +338,7 @@ function AutoPlayCaseVideo({
       loop
       muted
       playsInline
+      poster={poster}
       preload="metadata"
       ref={videoRef}
       {...(mobileSrc ? {} : { src })}
@@ -458,6 +462,7 @@ export function PortfolioCase({
                         : styles.ccpCaseVideo
             }`}
             mobileSrc={cover.mobileSrc}
+            poster={cover.poster}
             src={cover.src}
             videoRef={hasVideoControl ? caseVideoRef : undefined}
           />
