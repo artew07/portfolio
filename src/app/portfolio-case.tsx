@@ -386,6 +386,7 @@ export function PortfolioCase({
       "s7-case",
       "telegram-quick-stickers",
       "animator",
+      "freelance-tracker",
     ].includes(caseId) &&
     cover.type === "video";
 
