@@ -13,6 +13,7 @@ import {
   useId,
   useRef,
   useState,
+  type CSSProperties,
   type PointerEvent,
   type RefObject,
 } from "react";
@@ -55,7 +56,9 @@ type CaseCover =
       unoptimized?: boolean;
     }
   | {
+      mobilePoster?: string;
       mobileSrc?: string;
+      poster?: string;
       type: "video";
       src: string;
       variant:
@@ -317,15 +320,26 @@ function PhantomGlowCover() {
 
 function AutoPlayCaseVideo({
   className,
+  mobilePoster,
   mobileSrc,
+  poster,
   src,
   videoRef,
 }: {
   className: string;
+  mobilePoster?: string;
   mobileSrc?: string;
+  poster?: string;
   src: string;
   videoRef?: RefObject<HTMLVideoElement | null>;
 }) {
+  // The first frame is painted as a background image so the mobile source can
+  // carry its own poster through a media query; `poster` takes a single value.
+  const posterStyle = {
+    ...(poster ? { "--case-poster": `url(${poster})` } : {}),
+    ...(mobilePoster ? { "--case-poster-mobile": `url(${mobilePoster})` } : {}),
+  } as CSSProperties;
+
   return (
     <video
       aria-hidden="true"
@@ -337,6 +351,7 @@ function AutoPlayCaseVideo({
       playsInline
       preload="metadata"
       ref={videoRef}
+      style={posterStyle}
       {...(mobileSrc ? {} : { src })}
     >
       {mobileSrc ? (
@@ -457,7 +472,9 @@ export function PortfolioCase({
                         ? styles.freelanceTrackerCaseVideo
                         : styles.ccpCaseVideo
             }`}
+            mobilePoster={cover.mobilePoster}
             mobileSrc={cover.mobileSrc}
+            poster={cover.poster}
             src={cover.src}
             videoRef={hasVideoControl ? caseVideoRef : undefined}
           />

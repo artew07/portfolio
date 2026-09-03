@@ -315,7 +315,7 @@ export function HeroVideo({ className }: { className?: string }) {
           playsInline
           poster="/videos/base-loop-poster.webp?v=20260706-fast"
           preload="auto"
-          src="/videos/base-loop-short.mp4?v=20260706-fast"
+          src="/videos/base-loop-short.mp4?v=20260903-fs"
         />
 
         <video
@@ -329,7 +329,7 @@ export function HeroVideo({ className }: { className?: string }) {
           playsInline
           preload="auto"
         >
-          <source src="/videos/reaction.mp4" type="video/mp4" />
+          <source src="/videos/reaction.mp4?v=20260903-fs" type="video/mp4" />
         </video>
       </div>
 

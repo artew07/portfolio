@@ -59,7 +59,9 @@ const portfolioCases: Array<{
     | { type: "phantom-glow" }
     | { type: "placeholder" }
     | {
+        mobilePoster?: string;
         mobileSrc?: string;
+        poster?: string;
         src: string;
         type: "video";
         variant:
@@ -84,7 +86,8 @@ const portfolioCases: Array<{
 }> = [
   {
     cover: {
-      src: "/videos/telegram-quick-stickers.mp4?v=c485a029f0b2",
+      poster: "/images/video-posters/telegram-quick-stickers.webp",
+      src: "/videos/telegram-quick-stickers.mp4?v=20260903-fs",
       type: "video",
       variant: "quick-stickers",
     },
@@ -103,7 +106,8 @@ const portfolioCases: Array<{
   },
   {
     cover: {
-      src: "/videos/freelance_tracker_demo_2.mp4",
+      poster: "/images/video-posters/freelance-tracker.webp",
+      src: "/videos/freelance_tracker_demo_2.mp4?v=20260903-fs",
       type: "video",
       variant: "freelance-tracker",
     },
@@ -126,7 +130,8 @@ const portfolioCases: Array<{
     //   width: 494,
     // },
     cover: {
-      src: "/videos/steamify_thumb_case.mp4?v=20260801-4",
+      poster: "/images/video-posters/steamify.webp",
+      src: "/videos/steamify_thumb_case.mp4?v=20260903-fs",
       type: "video",
       variant: "steamify",
     },
@@ -166,8 +171,10 @@ const portfolioCases: Array<{
   },
   {
     cover: {
-      mobileSrc: "/videos/animator_demo_mobile.mp4",
-      src: "/videos/animator_demo.mp4",
+      mobilePoster: "/images/video-posters/animator-mobile.webp",
+      mobileSrc: "/videos/animator_demo_mobile.mp4?v=20260903-fs",
+      poster: "/images/video-posters/animator.webp",
+      src: "/videos/animator_demo.mp4?v=20260903-fs",
       type: "video",
       variant: "animator",
     },
@@ -255,7 +262,7 @@ const portfolioCases: Array<{
     title: "Web3 NFT marketplace for gamers in Asia",
   },
   {
-    cover: { mobileSrc: "/videos/Mobile_CCP_2_Animation_Compress.mp4", src: "/videos/Desktop_CCP_2_Animation_Compress.mp4", type: "video", variant: "ccp" },
+    cover: { mobilePoster: "/images/video-posters/ccp-mobile.webp", mobileSrc: "/videos/Mobile_CCP_2_Animation_Compress.mp4?v=20260903-fs", poster: "/images/video-posters/ccp.webp", src: "/videos/Desktop_CCP_2_Animation_Compress.mp4?v=20260903-fs", type: "video", variant: "ccp" },
     id: "s7-case",
     details: {
       company: "KOTELOV",
