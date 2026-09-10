@@ -1694,6 +1694,10 @@
   text-wrap: balance;
 }
 
+.case[data-case-id="steamify-case"] .caseDetails h3 {
+  text-wrap: nowrap;
+}
+
 .caseDetails > p {
   max-width: 580px;
   margin: 8px 0 16px;
