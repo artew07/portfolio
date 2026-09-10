@@ -49,10 +49,11 @@ const portfolioCases: Array<{
         alt: string;
         eager?: boolean;
         height: number;
+        mobileSrc?: string;
         src: string | StaticImageData;
         type: "image";
         unoptimized?: boolean;
-        variant: "steamify" | "loop" | "ccp" | "safe";
+        variant: "steamify" | "steamify-experiment" | "loop" | "ccp" | "safe";
         width: number;
       }
     | { type: "interactive-card" }
@@ -70,8 +71,20 @@ const portfolioCases: Array<{
           | "animator"
           | "steamify"
           | "quick-stickers"
-          | "freelance-tracker";
+        | "freelance-tracker";
       };
+  coverExperiment?: {
+    id: string;
+    newCover: {
+      alt: string;
+      height: number;
+      mobileSrc?: string;
+      src: string;
+      type: "image";
+      variant: "steamify-experiment";
+      width: number;
+    };
+  };
   id: string;
   details?: CaseDetails;
   description?: string;
@@ -135,15 +148,27 @@ const portfolioCases: Array<{
       type: "video",
       variant: "steamify",
     },
+    coverExperiment: {
+      id: "steamify-cover-v1",
+      newCover: {
+        alt: "Steamify payout flow before and after introducing an earlier Telegram offer",
+        height: 620,
+        mobileSrc: "/images/steamify-case-v2/steamify_thumb_2_mobile.png?v=20260910-1302",
+        src: "/images/steamify_thumb_2.png",
+        type: "image",
+        variant: "steamify-experiment",
+        width: 1272,
+      },
+    },
     id: "steamify-case",
     details: {
       company: "Steamify",
       companyHref: "https://steamify.io/cashout/cs2",
       description:
-        "Designed the product from scratch and helped scale it to 50K MAU. Reworked the mobile-first cashout flow and connected it to a Telegram bot, increasing web-to-Telegram CTR from 20% to 50%.",
+        "Redesigned the payout waiting step to introduce Telegram earlier, using usability testing and A/B-tested offers to raise web-to-Telegram conversion from 20% to 50%.",
       period: "2024–2025",
       role: "Product Designer",
-      title: "Mobile cashout service for in-game assets",
+      title: "How I turned payout waiting into Telegram conversion",
     },
     href: "/steamify-skins-cashout",
     metadata: ["Steamify", "2024"],
@@ -153,7 +178,7 @@ const portfolioCases: Array<{
         item: "Steamify",
       },
     ],
-    title: "Steam cash-out service: Increased Web-to-Telegram CTR from",
+    title: "How I turned payout waiting into Telegram conversion",
   },
   {
     cover: { type: "interactive-card" },
@@ -183,17 +208,17 @@ const portfolioCases: Array<{
       company: "Animator",
       companyHref: "https://getanimator.xyz/",
       description:
-        "Designed and built Animator from scratch — a browser-based tool for creating seamless carousels.",
+        "Designed and built Animator from scratch — a browser-based tool for creating looping MP4 showcases.",
       descriptionLink: {
         href: "https://youtu.be/d9Nve2VaHQ4?si=Jy_Wdt_buRd10kKW",
         label: "Watch how I built it",
       },
       period: "2026",
       role: "Design Engineer",
-      title: "Browser-based tool for seamless carousels",
+      title: "Tool for creating looping MP4 showcases",
     },
     href: "/animator",
-    title: "Browser-based tool for seamless carousels",
+    title: "Tool for creating looping MP4 showcases",
   },
   {
     cover: {
@@ -309,11 +334,12 @@ export async function PortfolioPage({
     return (
       <section className={styles.work} id="work" aria-label="Selected work">
         {selectedCases.map(
-          ({ accent, cover, description, details, href, id, metadata, metadataLinks, title, titleLink }) => (
+          ({ accent, cover, coverExperiment, description, details, href, id, metadata, metadataLinks, title, titleLink }) => (
             <PortfolioCase
               accent={accent}
               caseId={id}
               cover={cover}
+              coverExperiment={coverExperiment}
               description={description}
               details={details}
               href={href}

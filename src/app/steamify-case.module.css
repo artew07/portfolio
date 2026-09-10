@@ -25,7 +25,7 @@
 .lede { max-width: var(--case-copy-measure); margin: 0; color: #616b6a; font-size: var(--case-body-size); line-height: 1.5; letter-spacing: 0; text-wrap: pretty; }
 .details { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0; padding: 16px 0; }
 .details div { display: grid; gap: 4px; }
-.details dd { margin: 0; color: #051e1d; font-size: 16px; line-height: 24px; }
+.details dd { margin: 0; color: #051e1d; font-size: 16px; line-height: 22px; }
 .details dd span { display: block; }
 .heroVideo, .mediaVideo, .media { width: 100%; height: auto; display: block; border-radius: 12px; background: #f4f6f5; }
 .expandableMedia { position: relative; width: 100%; }

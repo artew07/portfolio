@@ -4,7 +4,7 @@ import { SoundProvider } from "../sound-provider";
 
 export const metadata: Metadata = {
   title: "Animator | Artem Suslov",
-  description: "How I designed and built Animator, a browser tool for MP4 carousel showcases.",
+  description: "How I designed and built Animator, a browser tool for creating looping MP4 showcases.",
 };
 
 export default function AnimatorPage() {

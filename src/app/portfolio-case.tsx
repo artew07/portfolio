@@ -13,6 +13,7 @@ import {
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
   type CSSProperties,
   type PointerEvent,
   type RefObject,
@@ -22,7 +23,7 @@ import { DashboardCasePreview } from "./dashboard-case-preview";
 import { useInteractionSound } from "./sound-provider";
 import styles from "./page.module.css";
 
-type CaseImageVariant = "steamify" | "loop" | "ccp" | "safe";
+type CaseImageVariant = "steamify" | "steamify-experiment" | "loop" | "ccp" | "safe";
 
 type CaseCover =
   | {
@@ -51,6 +52,7 @@ type CaseCover =
       eager?: boolean;
       width: number;
       height: number;
+      mobileSrc?: string;
       variant: CaseImageVariant;
       sizes?: string;
       unoptimized?: boolean;
@@ -75,6 +77,10 @@ interface PortfolioCaseProps {
   caseId: string;
   centeredTitle?: boolean;
   cover: CaseCover;
+  coverExperiment?: {
+    id: string;
+    newCover: Extract<CaseCover, { type: "image" }>;
+  };
   description?: string;
   details?: {
     company: string;
@@ -101,10 +107,43 @@ interface PortfolioCaseProps {
 
 const caseImageClassNames: Record<CaseImageVariant, string> = {
   steamify: styles.steamifyCaseImage,
+  "steamify-experiment": styles.steamifyExperimentCaseImage,
   loop: styles.loopCaseImage,
   ccp: styles.ccpCaseImage,
   safe: styles.safeCaseImage,
 };
+
+declare global {
+  interface Window {
+    ym?: (counterId: number, method: "reachGoal", goalName: string) => void;
+  }
+}
+
+const yandexMetricaCounterId = 110413593;
+
+function trackMetricaGoal(goalName: string) {
+  window.ym?.(yandexMetricaCounterId, "reachGoal", goalName);
+}
+
+function subscribeToCoverExperiment() {
+  return () => {};
+}
+
+function getCoverExperimentVariant(experimentId?: string): "current" | "new" {
+  if (!experimentId || typeof window === "undefined") {
+    return "current";
+  }
+
+  const assignmentKey = `portfolio-cover-experiment:${experimentId}:assignment`;
+  const storedVariant = window.localStorage.getItem(assignmentKey);
+  if (storedVariant === "current" || storedVariant === "new") {
+    return storedVariant;
+  }
+
+  const nextVariant = Math.random() < 0.5 ? "current" : "new";
+  window.localStorage.setItem(assignmentKey, nextVariant);
+  return nextVariant;
+}
 
 const phantomPath =
   "M215.715 1518C448.348 1518 623.175 1315.69 727.504 1155.83C714.817 1191.2 707.769 1226.56 707.769 1260.52C707.769 1353.89 761.343 1420.39 867.089 1420.39C1012.3 1420.39 1167.4 1293.06 1247.76 1155.83C1242.12 1175.64 1239.3 1194.03 1239.3 1211C1239.3 1276.08 1275.96 1317.11 1350.68 1317.11C1586.13 1317.11 1823 899.767 1823 534.766C1823 250.406 1679.19 0 1318.26 0C683.798 0 0 775.271 0 1276.08C0 1472.73 105.742 1518 215.715 1518ZM1099.72 503.642C1099.72 432.906 1139.2 383.391 1197.01 383.391C1253.4 383.391 1292.88 432.906 1292.88 503.642C1292.88 574.379 1253.4 625.308 1197.01 625.308C1139.2 625.308 1099.72 574.379 1099.72 503.642ZM1401.44 503.642C1401.44 432.906 1440.92 383.391 1498.72 383.391C1555.12 383.391 1594.59 432.906 1594.59 503.642C1594.59 574.379 1555.12 625.308 1498.72 625.308C1440.92 625.308 1401.44 574.379 1401.44 503.642Z";
@@ -368,7 +407,8 @@ export function PortfolioCase({
   accent,
   caseId,
   centeredTitle = false,
-  cover,
+  cover: defaultCover,
+  coverExperiment,
   description,
   details,
   href,
@@ -378,8 +418,62 @@ export function PortfolioCase({
   titleLink,
 }: PortfolioCaseProps) {
   const { playTap } = useInteractionSound();
+  const cardRef = useRef<HTMLElement>(null);
   const caseVideoRef = useRef<HTMLVideoElement>(null);
   const [isCaseVideoPaused, setIsCaseVideoPaused] = useState(false);
+  const experimentId = coverExperiment?.id;
+  const coverVariant = useSyncExternalStore(
+    subscribeToCoverExperiment,
+    () => getCoverExperimentVariant(experimentId),
+    () => "current",
+  );
+  const cover = coverExperiment && coverVariant === "new" ? coverExperiment.newCover : defaultCover;
+
+  useEffect(() => {
+    if (!experimentId) {
+      return;
+    }
+
+    const visual = cardRef.current?.querySelector<HTMLElement>("[data-debug-frame]");
+    if (!visual) {
+      return;
+    }
+
+    const impressionKey = `portfolio-cover-experiment:${experimentId}:impression`;
+    if (window.localStorage.getItem(impressionKey) === coverVariant) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.5) {
+          return;
+        }
+
+        window.localStorage.setItem(impressionKey, coverVariant);
+        trackMetricaGoal(`steamify_cover_${coverVariant}_viewed`);
+        observer.disconnect();
+      },
+      { threshold: 0.5 },
+    );
+
+    observer.observe(visual);
+    return () => observer.disconnect();
+  }, [coverVariant, experimentId]);
+
+  function trackExperimentOpen() {
+    if (!experimentId) {
+      return;
+    }
+
+    const openKey = `portfolio-cover-experiment:${experimentId}:opened`;
+    if (window.localStorage.getItem(openKey) === coverVariant) {
+      return;
+    }
+
+    window.localStorage.setItem(openKey, coverVariant);
+    trackMetricaGoal(`steamify_cover_${coverVariant}_opened`);
+  }
   const hasVideoControl =
     [
       "steamify-case",
@@ -416,7 +510,7 @@ export function PortfolioCase({
   }
 
   return (
-    <article className={styles.case} data-case-id={caseId}>
+    <article className={styles.case} data-case-id={caseId} ref={cardRef}>
       {cover.type === "background" ? (
         <div
           className={`${styles.caseVisual} ${styles.backgroundCaseVisual}`}
@@ -507,6 +601,8 @@ export function PortfolioCase({
           className={`${styles.caseVisual} ${
             cover.variant === "steamify"
               ? styles.steamifyCaseVisual
+              : cover.variant === "steamify-experiment"
+                ? styles.steamifyExperimentCaseVisual
               : ""
           } ${
             cover.variant === "loop" ? styles.loopCaseVisual : ""
@@ -528,6 +624,21 @@ export function PortfolioCase({
               }
               src={cover.src}
             />
+          ) : cover.mobileSrc ? (
+            <picture className={styles.steamifyExperimentPicture}>
+              <source media="(max-width: 760px)" srcSet={cover.mobileSrc} />
+              <Image
+                alt={cover.alt}
+                className={`${styles.caseImage} ${caseImageClassNames[cover.variant]}`}
+                data-debug-media
+                height={cover.height}
+                preload={cover.eager ? true : undefined}
+                sizes={cover.sizes ?? "(max-width: 760px) 100vw, 700px"}
+                src={cover.src}
+                unoptimized={cover.unoptimized}
+                width={cover.width}
+              />
+            </picture>
           ) : (
             <Image
               alt={cover.alt}
@@ -535,10 +646,7 @@ export function PortfolioCase({
               data-debug-media
               height={cover.height}
               preload={cover.eager ? true : undefined}
-              sizes={
-                cover.sizes ??
-                "(max-width: 760px) 100vw, 700px"
-              }
+              sizes={cover.sizes ?? "(max-width: 760px) 100vw, 700px"}
               src={cover.src}
               unoptimized={cover.unoptimized}
               width={cover.width}
@@ -673,7 +781,10 @@ export function PortfolioCase({
           aria-label={title}
           className={styles.caseLinkOverlay}
           href={href}
-          onClick={playTap}
+          onClick={() => {
+            trackExperimentOpen();
+            playTap();
+          }}
         />
       ) : null}
     </article>

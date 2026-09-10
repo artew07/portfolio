@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { SoundProvider } from "../sound-provider";
-import { SteamifyCaseContent } from "../steamify-case-content";
+import { CashoutCase } from "../steamify-skins-cashout-2/cashout-case";
 
 export const metadata: Metadata = {
-  title: "Steamify — Skins Cashout | Artem Suslov",
+  title: "Steamify — Web-to-Telegram Conversion | Artem Suslov",
   description:
-    "How I increased web-to-Telegram button CTR from 20% to 50% for Steamify.",
+    "How I increased Steamify’s web-to-Telegram conversion from 20% to 50% through usability testing and a redesigned payout flow.",
+  alternates: { canonical: "https://artemsuslov.com/steamify-skins-cashout" },
 };
 
 export default function SteamifySkinsCashoutPage() {
   return (
     <SoundProvider>
-      <SteamifyCaseContent />
+      <CashoutCase />
     </SoundProvider>
   );
 }

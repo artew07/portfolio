@@ -1088,6 +1088,46 @@
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.steamifyExperimentCaseImage {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  flex: none !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+.steamifyExperimentCaseVisual {
+  aspect-ratio: auto;
+  background: transparent;
+}
+
+.steamifyExperimentPicture {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.case[data-case-id="steamify-case"] .steamifyExperimentCaseImage {
+  position: static !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  object-fit: contain !important;
+}
+
+.case[data-case-id="steamify-case"]:has(.steamifyExperimentCaseVisual) .caseLinkOverlay {
+  aspect-ratio: 1272 / 620;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:hover) .steamifyCaseImage,
   .case[data-case-id="steamify-case"]:has(.caseLinkOverlay:focus-visible) .steamifyCaseImage {
@@ -1758,6 +1798,21 @@
   object-fit: cover;
   transform: none;
 }
+/* telegram-quick-stickers */
+.case[data-case-id="telegram-quick-stickers"] [data-debug-media] {
+  position: absolute;
+  inset: auto;
+  top: 0px;
+  left: 0px;
+  width: 636px;
+  height: 348px;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  flex: none;
+  object-fit: contain;
+  transform: none;
+}
 /* CASE_MEDIA_DEBUG_OVERRIDES_END */
 
 .caseTitle,
@@ -2067,6 +2122,26 @@
     aspect-ratio: 37 / 30;
     padding: 0;
     border-radius: 12px;
+  }
+
+  .case[data-case-id="steamify-case"] .steamifyExperimentCaseVisual {
+    aspect-ratio: auto;
+    align-items: stretch;
+  }
+
+  .case[data-case-id="steamify-case"] .steamifyExperimentPicture {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .case[data-case-id="steamify-case"] .steamifyExperimentCaseImage {
+    aspect-ratio: 1120 / 726;
+    width: 100% !important;
+    min-width: 100%;
+  }
+
+  .case[data-case-id="steamify-case"]:has(.steamifyExperimentCaseVisual) .caseLinkOverlay {
+    aspect-ratio: 1120 / 726;
   }
 
   .case[data-case-id="freelance-tracker"] .caseVisual {
