@@ -49,9 +49,7 @@
 .comparison figure + figure { margin-top: 24px; }
 .caption { max-width: 560px; }
 .after { gap: 16px; }
-.testing { display: flex; flex-direction: column; gap: 16px; padding-top: 40px; border-top: 1px solid #eaeaea; }
-.results { display: flex; flex-direction: column; gap: 16px; padding-top: 40px; border-top: 1px solid #eaeaea; }
-.results h2 { font-size: 28px; letter-spacing: -.56px; }
+.testing, .results { display: flex; flex-direction: column; gap: 16px; padding-top: 40px; border-top: 1px solid #eaeaea; }
 
 @media (max-width: 760px) {
   .page { padding: 0; background: #fff; }
@@ -65,7 +63,7 @@
   .metrics dd { font-size: 28px; line-height: 34px; }
   .caseDetails { grid-template-columns: 1fr; gap: 16px; }
   .hero, .media { border-radius: 0; }
-  .results { padding: 24px 20px; }
+  .results { padding: 32px 0 0; }
 }
 
 .layout { display: grid; grid-template-columns: 200px minmax(0, 800px); align-items: start; gap: 32px; max-width: 1032px; margin: 0 auto; }
