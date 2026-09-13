@@ -15,17 +15,14 @@ export function PaperIntro() {
 
     if (window.matchMedia("(max-width: 760px)").matches) return;
 
-    const navigation = performance.getEntriesByType(
-      "navigation",
-    )[0] as PerformanceNavigationTiming | undefined;
     const documentId = String(performance.timeOrigin);
     const storageKey = "portfolio-paper-intro-document";
     const hasPlayedInThisDocument =
       sessionStorage.getItem(storageKey) === documentId;
 
-    // A client-side route change keeps the original navigation entry. Track the
-    // current document separately so a return from a case study stays immediate.
-    if (navigation?.type !== "reload" || hasPlayedInThisDocument) return;
+    // A page load creates a new document; an in-app return keeps the current
+    // one. This makes the intro reliable on first visit and refresh only.
+    if (hasPlayedInThisDocument) return;
 
     sessionStorage.setItem(storageKey, documentId);
     document.documentElement.dataset.paperIntro = "playing";
@@ -45,9 +42,6 @@ export function PaperIntro() {
       cover.hidden = false;
       introTimer = window.setTimeout(skip, 2600);
     };
-
-    // Restored scroll positions and anchor links should open directly on content.
-    if (window.scrollY > 0 || window.location.hash) skip();
 
     const events = ["wheel", "touchstart", "pointerdown", "keydown", "focusin", "scroll", "resize"] as const;
     const cleanup = () => {
