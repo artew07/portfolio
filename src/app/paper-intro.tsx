@@ -21,18 +21,37 @@ export function PaperIntro() {
     }
 
     document.documentElement.dataset.paperIntro = "playing";
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
+    let scrollResetFrame: number | undefined = window.requestAnimationFrame(() => {
+      // A browser can restore its previous position after hydration, so reset it
+      // once more on the next frame while the cover is already visible.
+      window.scrollTo(0, 0);
+      scrollResetFrame = undefined;
+    });
+
     let hasFinished = false;
+    const restoreScrollRestoration = () => {
+      if (scrollResetFrame !== undefined) {
+        window.cancelAnimationFrame(scrollResetFrame);
+        scrollResetFrame = undefined;
+      }
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
     const skip = () => {
       if (hasFinished) return;
 
       hasFinished = true;
+      restoreScrollRestoration();
       cover.hidden = true;
       delete document.documentElement.dataset.paperIntro;
       document.documentElement.dataset.paperIntroPlayed = "true";
       window.dispatchEvent(new Event(paperIntroFinishedEvent));
     };
 
-    const events = ["wheel", "touchstart", "pointerdown", "keydown", "focusin", "scroll", "resize"] as const;
+    const events = ["wheel", "touchstart", "pointerdown", "keydown", "focusin", "resize"] as const;
     const cleanup = () => {
       events.forEach((event) => window.removeEventListener(event, skip));
     };
@@ -42,6 +61,7 @@ export function PaperIntro() {
     return () => {
       window.clearTimeout(introTimer);
       cleanup();
+      restoreScrollRestoration();
     };
   }, []);
 
