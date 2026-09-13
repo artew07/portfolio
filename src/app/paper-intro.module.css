@@ -1,0 +1,97 @@
+.cover {
+  --paper-top: 24px;
+  --roll-entry: -64px;
+  position: fixed;
+  inset: 0 0 auto;
+  height: calc(100lvh + 100px);
+  z-index: 80;
+  pointer-events: none;
+  background: #f2f2f2;
+  contain: paint;
+  backface-visibility: hidden;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: unroll 1900ms cubic-bezier(0.65, 0, 0.35, 1) 500ms both;
+}
+
+.cover[hidden] {
+  display: none;
+}
+
+.roll {
+  position: relative;
+  width: 700px;
+  height: 48px;
+  margin-inline: auto;
+  border-radius: 50% / 5px;
+  background: linear-gradient(
+    to bottom,
+    #dededc 0%,
+    #f6f6f4 9%,
+    #fff 27%,
+    #fafaf9 46%,
+    #eaeae7 70%,
+    #cececa 89%,
+    #b9b9b5 97%,
+    #e1e1df 100%
+  );
+  box-shadow:
+    0 -1px 1px rgb(0 0 0 / 5%),
+    0 8px 9px -5px rgb(0 0 0 / 20%),
+    0 22px 24px -14px rgb(0 0 0 / 18%);
+  /* Keep the detailed gradient and shadow static: scaling this layer repaints it
+     while the page is loading, which is visible as a hitch midway through. */
+  backface-visibility: hidden;
+  transform: translate3d(0, var(--roll-entry), 0);
+  will-change: transform;
+  animation: rollEnter 1900ms cubic-bezier(0.23, 1, 0.32, 1) 500ms both;
+}
+
+.roll::before,
+.roll::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  width: 6px;
+  border: 1px solid rgb(0 0 0 / 9%);
+  border-radius: 50%;
+  background: linear-gradient(90deg, #dededb, #fafaf8 65%, #d1d1ce);
+}
+
+.roll::before { left: 0; }
+.roll::after { right: 0; }
+
+.edge {
+  position: absolute;
+  inset: 0 6px auto;
+  height: 1px;
+  background: rgb(255 255 255 / 80%);
+}
+
+@keyframes unroll {
+  0%, 24% { transform: translate3d(0, 0, 0); }
+  /*
+   * Move the cover's leading edge to the roll precisely when the roll finishes
+   * entering. Their combined position stays unchanged, so the paper begins at
+   * the roll instead of 24px above it.
+   */
+  24.01% { transform: translate3d(0, var(--paper-top), 0); }
+  99.9% { visibility: visible; }
+  100% { transform: translate3d(0, calc(100lvh + 64px), 0); visibility: hidden; }
+}
+
+@keyframes rollEnter {
+  0% { transform: translate3d(0, var(--roll-entry), 0); }
+  24% { transform: translate3d(0, var(--paper-top), 0); }
+  24.01%, 100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (max-width: 760px) {
+  .cover { --paper-top: 0px; --roll-entry: -48px; background: #fff; }
+  .roll { width: 100%; height: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover { display: none; animation: none; }
+}
