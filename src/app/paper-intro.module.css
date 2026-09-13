@@ -18,6 +18,10 @@
   display: none;
 }
 
+:global(html[data-paper-intro-played="true"]) .cover {
+  display: none;
+}
+
 .roll {
   position: relative;
   width: 700px;
