@@ -20,7 +20,6 @@ type HeroMaskSettings = {
 
 const MAX_SYNC_WAIT_MS = 100;
 const REACTION_HOLD_TIME = 3;
-const paperIntroFinishedEvent = "portfolio-paper-intro-finished";
 const MATCHING_BASE_WINDOWS = [
   [0, 0.8],
   [2.47, 3.33],
@@ -271,31 +270,14 @@ export function HeroVideo({ className }: { className?: string }) {
       return;
     }
 
-    let introductionTimer: number | undefined;
-    const startIntroduction = () => {
-      introductionTimer = window.setTimeout(() => {
-        isIntroductionRef.current = true;
-        updatePhase("waiting");
-        waitForMatchingFrame(window.performance.now());
-      }, 0);
-    };
-
-    const shouldWaitForPaperIntro =
-      document.documentElement.dataset.paperIntro === "playing";
-
-    if (shouldWaitForPaperIntro) {
-      window.addEventListener(paperIntroFinishedEvent, startIntroduction, {
-        once: true,
-      });
-    } else {
-      startIntroduction();
-    }
+    const introductionTimer = window.setTimeout(() => {
+      isIntroductionRef.current = true;
+      updatePhase("waiting");
+      waitForMatchingFrame(window.performance.now());
+    }, 0);
 
     return () => {
-      if (introductionTimer !== undefined) {
-        window.clearTimeout(introductionTimer);
-      }
-      window.removeEventListener(paperIntroFinishedEvent, startIntroduction);
+      window.clearTimeout(introductionTimer);
     };
 
     // The introduction should run once when this mounted hero is hydrated.

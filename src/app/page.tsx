@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PortfolioPage } from "./portfolio-page";
 import { V2Hero } from "./v2-hero";
-import { PaperIntro } from "./paper-intro";
 
 export const metadata: Metadata = {
   title: "Artem Suslov — Software Designer",
@@ -10,14 +9,11 @@ export const metadata: Metadata = {
 
 export default function NewPortfolioPage() {
   return (
-    <>
-      <PaperIntro />
-      <PortfolioPage
-        hero={<V2Hero />}
-        showAbout={false}
-        showTabs
-        variant="v2"
-      />
-    </>
+    <PortfolioPage
+      hero={<V2Hero />}
+      showAbout={false}
+      showTabs
+      variant="v2"
+    />
   );
 }
