@@ -13,9 +13,8 @@ import {
 
 const workTabs = [
   { id: "case-study", label: "Work" },
-  { id: "favourites", label: "Favorites" },
-  { id: "my-products", label: "My products" },
   { id: "craft", label: "Craft" },
+  { id: "my-products", label: "My products" },
 ];
 
 type CaseDetails = {
@@ -377,12 +376,6 @@ export async function PortfolioPage({
                   "orbit",
                   "ccp-design-system",
                   "northstar",
-                  "s7-case",
-                ]),
-                favourites: renderWork([
-                  "telegram-quick-stickers",
-                  "animator",
-                  "steamify-case",
                   "s7-case",
                 ]),
                 "my-products": renderWork(["animator"]),
