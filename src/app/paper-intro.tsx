@@ -13,6 +13,8 @@ export function PaperIntro() {
     const cover = coverRef.current;
     if (!cover) return;
 
+    if (window.matchMedia("(max-width: 760px)").matches) return;
+
     const navigation = performance.getEntriesByType(
       "navigation",
     )[0] as PerformanceNavigationTiming | undefined;

@@ -88,8 +88,7 @@
 }
 
 @media (max-width: 760px) {
-  .cover { --paper-top: 0px; --roll-entry: -48px; background: #fff; }
-  .roll { width: 100%; height: 38px; }
+  .cover { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
